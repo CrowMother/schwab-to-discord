@@ -12,9 +12,9 @@
 
 import logging
 
-from app.config import load_config
-from app.services.processor import get_greeting
-from app.utils.logging import setup_logging
+from .config import load_config
+from .services.processor import get_greeting
+from .utils.logging import setup_logging
 
 logger = logging.getLogger(__name__)
 
