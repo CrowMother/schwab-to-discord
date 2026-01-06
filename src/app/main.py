@@ -13,7 +13,6 @@
 import logging
 
 from .config import load_config
-from .services.processor import get_greeting
 from .utils.logging import setup_logging
 from .api.schwab import SchwabApi
 
@@ -25,13 +24,9 @@ def main() -> None:
 
     logger.info("Starting %s", config.app_name)
 
-    greeting = get_greeting("World")
-    logger.info("Greeting generated: %s", greeting)
-
-    print(greeting)
-
     client = SchwabApi(config.schwab_app_key, config.schwab_app_secret)
 
     print(f"client created: {client}")
 if __name__ == "__main__":
     main()
+

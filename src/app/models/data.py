@@ -5,3 +5,6 @@ class Trade:
     symbol: str
     price: float
     volume: int
+
+
+
