@@ -12,7 +12,7 @@
 
 import logging
 
-from .config import load_config
+from .models.config import load_config
 from .utils.logging import setup_logging
 from .api.schwab import SchwabApi
 
@@ -24,7 +24,7 @@ def main() -> None:
 
     logger.info("Starting %s", config.app_name)
 
-    client = SchwabApi(config.schwab_app_key, config.schwab_app_secret)
+    client = SchwabApi(config)
 
     print(f"client created: {client}")
 
