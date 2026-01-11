@@ -27,6 +27,7 @@ def main() -> None:
     client = SchwabApi(config.schwab_app_key, config.schwab_app_secret)
 
     print(f"client created: {client}")
+
 if __name__ == "__main__":
     main()
 
