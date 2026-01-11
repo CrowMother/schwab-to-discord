@@ -8,8 +8,8 @@ logger = logging.getLogger(__name__)
 class SchwabApi:
     def __init__(self, config: Config):
         logging.debug("Initializing Schwabdev client")
-        self.client = schwabdev.Client(config.schwab_app_key,
-                                        config.schwab_app_secret,
+        self.client = schwabdev.Client(app_key=config.schwab_app_key,
+                                        app_secret=config.schwab_app_secret,
                                         callback_url=config.callback_url,
                                         tokens_db=config.tokens_db,
                                         timeout=config.schwab_timeout,

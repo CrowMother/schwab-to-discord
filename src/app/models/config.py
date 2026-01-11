@@ -24,14 +24,14 @@ def _opt_int(key: str, alt=None) -> int | None:
 
 def load_config() -> Config:
     return Config(
-        app_name=os.environ["APP_NAME"],
-        schwab_app_key=os.environ["SCHWAB_APP_KEY"],
-        schwab_app_secret = os.environ["SCHWAB_APP_SECRET"],
-        discord_channel=os.environ["DISCORD_CHANNEL_ID"],
-        discord_webhook=os.environ["DISCORD_WEBHOOK"],
-        db_path=os.environ["DB_PATH"],
-        callback_url=os.environ["CALLBACK_URL"],
-        tokens_db=os.environ["TOKENS_DB"],
+        app_name=_opt_str("APP_NAME"),
+        schwab_app_key=_opt_str("SCHWAB_APP_KEY"),
+        schwab_app_secret = _opt_str("SCHWAB_APP_SECRET"),
+        discord_channel=_opt_str("DISCORD_CHANNEL_ID"),
+        discord_webhook=_opt_str("DISCORD_WEBHOOK"),
+        db_path=_opt_str("DB_PATH"),
+        callback_url=_opt_str("CALLBACK_URL"),
+        tokens_db=_opt_str("TOKENS_DB"),
         schwab_timeout=_opt_int("SCHWAB_TIMEOUT",10),
         call_on_auth=_opt_str("CALL_ON_AUTH")
     )
