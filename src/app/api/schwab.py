@@ -1,5 +1,6 @@
 import schwabdev
 import logging
+from app.utils.time import time_delta_to_iso_days
 
 from app.models.config import Config
 
@@ -15,8 +16,9 @@ class SchwabApi:
                                         timeout=config.schwab_timeout,
                                         call_on_auth=config.call_on_auth)
 
-    def get_orders(self, start_iso: str, end_iso: str, status: str | None = None):
+    def get_orders(self, config: Config):
         # adapt args to the schwabdev method you’re using
-        resp = self.client.account_orders_all(start_iso, end_iso, None, status)
+        start_iso, end_iso = time_delta_to_iso_days(config.time_delta_days)
+        resp = self.client.account_orders_all(start_iso, end_iso, None, config.status)
         resp.raise_for_status()
         return resp.json()

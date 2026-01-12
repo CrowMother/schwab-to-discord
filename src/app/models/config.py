@@ -13,6 +13,8 @@ class Config:
     tokens_db: str
     schwab_timeout: int
     call_on_auth: str | None
+    time_delta_days: int
+    status: str | None
 
 def _opt_str(key: str, alt = None) -> str | None:
     val = os.getenv(key)
@@ -33,5 +35,7 @@ def load_config() -> Config:
         callback_url=_opt_str("CALLBACK_URL"),
         tokens_db=_opt_str("TOKENS_DB"),
         schwab_timeout=_opt_int("SCHWAB_TIMEOUT",10),
-        call_on_auth=_opt_str("CALL_ON_AUTH")
+        call_on_auth=_opt_str("CALL_ON_AUTH"),
+        time_delta_days=_opt_int("TIME_DELTA_DAYS",7),
+        status=_opt_str("ORDER_STATUS")
     )

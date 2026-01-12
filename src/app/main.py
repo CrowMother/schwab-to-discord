@@ -28,6 +28,9 @@ def main() -> None:
 
     print(f"client created: {client}")
 
+    orders = client.get_orders(config)
+    print(f"orders: {orders}")
+
 if __name__ == "__main__":
     main()
 
