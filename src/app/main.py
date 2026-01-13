@@ -37,9 +37,18 @@ def main() -> None:
         logger.debug(f"loading trade: {order}")
         trade = load_trade(order)
         logger.debug(f"Loaded trade: {trade}")
-    
-    
 
+        # store trade
+        # normailze / format trade for discord
+        # post to discord
+        
+    # Figure out if I want to create a list for all these trades or process them directly after loading
+
+    
+    # After figuring out data flow, implement storing to DB 
+    # Figure out DB schema or how to make it flexible to structure changes
+    # 
+    # and then posting to Discord
 
 if __name__ == "__main__":
     main()
