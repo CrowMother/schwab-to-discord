@@ -24,6 +24,16 @@ def _opt_int(key: str, alt=None) -> int | None:
     val = os.getenv(key)
     return int(val) if val is not None and val != "" else alt
 
+def _opt_bool(key: str, alt=None) -> bool | None:
+    val = os.getenv(key)
+    if val is not None and val != "":
+        return val.lower() in ("1", "true", "yes", "on")
+    return alt
+
+def _opt_float(key: str, alt=None) -> float | None:
+    val = os.getenv(key)
+    return float(val) if val is not None and val != "" else alt
+
 def load_config() -> Config:
     return Config(
         app_name=_opt_str("APP_NAME"),

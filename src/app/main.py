@@ -12,6 +12,8 @@
 
 import logging
 
+from app.models.data import load_trade
+
 from .models.config import load_config
 from .utils.logging import setup_logging
 from .api.schwab import SchwabApi
@@ -28,8 +30,16 @@ def main() -> None:
 
     print(f"client created: {client}")
 
-    orders = client.get_orders(config)
-    print(f"orders: {orders}")
+    raw_orders = client.get_orders(config)
+
+    #load into dataclass
+    for order in raw_orders:
+        logger.debug(f"loading trade: {order}")
+        trade = load_trade(order)
+        logger.debug(f"Loaded trade: {trade}")
+    
+    
+
 
 if __name__ == "__main__":
     main()
