@@ -1,3 +1,4 @@
+# src/app/db/trade_state_db.py
 from __future__ import annotations
 
 import os
@@ -18,17 +19,15 @@ def _apply_pragmas(conn: sqlite3.Connection) -> None:
 
 
 def init_trade_state_db(db_path: str, conn: Optional[sqlite3.Connection] = None) -> None:
-    """
-    Creates the `trade_state` table and related indexes.
-    If conn is provided, uses it and does not close it.
-    """
     _ensure_parent_dir(db_path)
 
     should_close = conn is None
     if conn is None:
         conn = sqlite3.connect(db_path)
+
     try:
         _apply_pragmas(conn)
+
         conn.execute(
             """
             CREATE TABLE IF NOT EXISTS trade_state (
@@ -38,7 +37,8 @@ def init_trade_state_db(db_path: str, conn: Optional[sqlite3.Connection] = None)
               posted_at TEXT,
               discord_message_id TEXT,
 
-              open_qty REAL NOT NULL DEFAULT 0,
+              -- foundation fields (FIFO/open tracking later)
+              open_qty REAL,
               updated_at TEXT NOT NULL
             );
             """

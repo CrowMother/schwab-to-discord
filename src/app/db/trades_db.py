@@ -1,3 +1,4 @@
+# src/app/db/trades_db.py
 from __future__ import annotations
 
 import os
@@ -12,75 +13,59 @@ def _ensure_parent_dir(db_path: str) -> None:
 
 
 def _apply_pragmas(conn: sqlite3.Connection) -> None:
-    # Keep it sane + fast for a small bot
     conn.execute("PRAGMA foreign_keys = ON;")
     conn.execute("PRAGMA journal_mode = WAL;")
     conn.execute("PRAGMA synchronous = NORMAL;")
 
 
 def init_trades_db(db_path: str, conn: Optional[sqlite3.Connection] = None) -> None:
-    """
-    Creates the `trades` table and related indexes.
-    If conn is provided, uses it and does not close it.
-    """
     _ensure_parent_dir(db_path)
 
     should_close = conn is None
     if conn is None:
         conn = sqlite3.connect(db_path)
+
     try:
         _apply_pragmas(conn)
+
         conn.execute(
             """
             CREATE TABLE IF NOT EXISTS trades (
               trade_id TEXT PRIMARY KEY,
 
-              source TEXT NOT NULL DEFAULT 'schwab',
-              account_id TEXT,
-
-              order_id TEXT,
-              leg_id TEXT,
-              execution_id TEXT,
-
+              -- trade dataclass fields (raw, columnized)
+              order_id INTEGER NOT NULL,
               symbol TEXT NOT NULL,
               asset_type TEXT NOT NULL,
-              side TEXT NOT NULL,
+              instruction TEXT NOT NULL,
 
               quantity REAL NOT NULL,
+              filled_quantity REAL NOT NULL,
+              remaining_quantity REAL NOT NULL,
+
               price REAL,
-              status TEXT,
+              status TEXT NOT NULL,
 
-              exp_date TEXT,
-              strike REAL,
-              call_put TEXT,
+              entered_time TEXT NOT NULL,
+              close_time TEXT,
 
-              event_time TEXT NOT NULL,
-              ingested_at TEXT NOT NULL,
-
-              position_effect TEXT
+              ingested_at TEXT NOT NULL
             );
             """
         )
 
-        # Dedupe helper: you can safely insert repeatedly
+        # Dedupe: one order_id row for now (simple foundation)
         conn.execute(
             """
-            CREATE UNIQUE INDEX IF NOT EXISTS ux_trades_source_keys
-              ON trades(source, account_id, order_id, leg_id, execution_id);
+            CREATE UNIQUE INDEX IF NOT EXISTS ux_trades_order_id
+              ON trades(order_id);
             """
         )
 
         conn.execute(
             """
-            CREATE INDEX IF NOT EXISTS idx_trades_symbol_time
-              ON trades(symbol, event_time);
-            """
-        )
-
-        conn.execute(
-            """
-            CREATE INDEX IF NOT EXISTS idx_trades_order
-              ON trades(order_id, leg_id);
+            CREATE INDEX IF NOT EXISTS idx_trades_symbol_entered
+              ON trades(symbol, entered_time);
             """
         )
 

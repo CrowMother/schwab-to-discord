@@ -16,6 +16,7 @@ from app.db.trade_state_db import init_trade_state_db
 
 import logging
 
+from app.db.trades_repo import store_trade
 from app.models.data import load_trade
 
 from .models.config import load_config
@@ -27,6 +28,12 @@ logger = logging.getLogger(__name__)
 def main() -> None:
     setup_logging()
     config = load_config()
+
+    #create conn
+    os.makedirs(os.path.dirname(config.db_path) or ".", exist_ok=True)
+    conn = sqlite3.connect(config.db_path)
+    init_trades_db(config.db_path, conn)
+    init_trade_state_db(config.db_path, conn)
 
     logger.info("Starting %s", config.app_name)
 
@@ -43,11 +50,11 @@ def main() -> None:
         logger.debug(f"Loaded trade: {trade}")
 
         # store trade
-        os.makedirs(os.path.dirname(config.db_path) or ".", exist_ok=True)
-        conn = sqlite3.connect(config.db_path)
-        init_trades_db(config.db_path, conn)
-        init_trade_state_db(config.db_path, conn)
-        conn.close()
+        trade_id = store_trade(conn, trade)
+        logger.info(f"Stored trade with ID: {trade_id}")
+        
+    conn.commit()
+    conn.close()
         # normailze / format trade for discord
         # post to discord
         
