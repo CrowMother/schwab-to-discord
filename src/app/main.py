@@ -9,6 +9,10 @@
 #     processed = process_data(schwab_data)
 #     store_results(db, processed)
 #     post_to_discord(processed)
+import os
+import sqlite3
+from app.db.trades_db import init_trades_db
+from app.db.trade_state_db import init_trade_state_db
 
 import logging
 
@@ -39,6 +43,11 @@ def main() -> None:
         logger.debug(f"Loaded trade: {trade}")
 
         # store trade
+        os.makedirs(os.path.dirname(config.db_path) or ".", exist_ok=True)
+        conn = sqlite3.connect(config.db_path)
+        init_trades_db(config.db_path, conn)
+        init_trade_state_db(config.db_path, conn)
+        conn.close()
         # normailze / format trade for discord
         # post to discord
         
