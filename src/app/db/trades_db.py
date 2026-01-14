@@ -17,6 +17,15 @@ def _apply_pragmas(conn: sqlite3.Connection) -> None:
     conn.execute("PRAGMA journal_mode = WAL;")
     conn.execute("PRAGMA synchronous = NORMAL;")
 
+    
+
+
+def _add_column_if_missing(conn: sqlite3.Connection, table_name: str, column_name: str, column_type: str) -> None:
+    cursor = conn.execute(f"PRAGMA table_info({table_name})")
+    columns = [col[1] for col in cursor.fetchall()]
+    if column_name not in columns:
+        conn.execute(f"ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type}")
+
 
 def init_trades_db(db_path: str, conn: Optional[sqlite3.Connection] = None) -> None:
     _ensure_parent_dir(db_path)
@@ -38,6 +47,8 @@ def init_trades_db(db_path: str, conn: Optional[sqlite3.Connection] = None) -> N
               symbol TEXT NOT NULL,
               asset_type TEXT NOT NULL,
               instruction TEXT NOT NULL,
+
+               description TEXT,            -- NEW
 
               quantity REAL NOT NULL,
               filled_quantity REAL NOT NULL,
@@ -68,6 +79,7 @@ def init_trades_db(db_path: str, conn: Optional[sqlite3.Connection] = None) -> N
               ON trades(symbol, entered_time);
             """
         )
+        _add_column_if_missing(conn, "trades", "description", "TEXT")
 
         conn.commit()
     finally:

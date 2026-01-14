@@ -5,6 +5,7 @@ class Trade:
     order_id: int | None
     symbol: str
     instruction: str | None
+    description: str | None
     asset_type: str | None
     price: float
     quantity: int
@@ -30,6 +31,7 @@ def load_trade(data: dict) -> Trade:
         order_id=_safe_int(data.get("orderId")),
         symbol=str(symbol),
         instruction=leg.get("instruction"),
+        description=inst.get("description"),
         asset_type=inst.get("assetType") or leg.get("orderLegType"),
         price=float(data.get("price") or 0.0),
         quantity=_safe_int(data.get("quantity")) or 0,

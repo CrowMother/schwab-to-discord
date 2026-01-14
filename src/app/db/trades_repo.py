@@ -25,27 +25,31 @@ def store_trade(conn: sqlite3.Connection, trade) -> str:
     conn.execute(
         """
         INSERT INTO trades (
-          trade_id,
-          order_id, symbol, asset_type, instruction,
-          quantity, filled_quantity, remaining_quantity,
-          price, status,
-          entered_time, close_time,
-          ingested_at
+        trade_id,
+        order_id, symbol, asset_type, instruction, description,
+        quantity, filled_quantity, remaining_quantity,
+        price, status,
+        entered_time, close_time,
+        ingested_at
         )
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        VALUES (?, ?, ?, ?, ?, ?,
+                ?, ?, ?,
+                ?, ?,
+                ?, ?,
+                ?)
         ON CONFLICT(order_id) DO UPDATE SET
-          -- keep it "raw latest snapshot" for now
-          symbol = excluded.symbol,
-          asset_type = excluded.asset_type,
-          instruction = excluded.instruction,
-          quantity = excluded.quantity,
-          filled_quantity = excluded.filled_quantity,
-          remaining_quantity = excluded.remaining_quantity,
-          price = excluded.price,
-          status = excluded.status,
-          entered_time = excluded.entered_time,
-          close_time = excluded.close_time,
-          ingested_at = excluded.ingested_at;
+        symbol = excluded.symbol,
+        asset_type = excluded.asset_type,
+        instruction = excluded.instruction,
+        description = excluded.description,
+        quantity = excluded.quantity,
+        filled_quantity = excluded.filled_quantity,
+        remaining_quantity = excluded.remaining_quantity,
+        price = excluded.price,
+        status = excluded.status,
+        entered_time = excluded.entered_time,
+        close_time = excluded.close_time,
+        ingested_at = excluded.ingested_at;
         """,
         (
             trade_id,
@@ -53,6 +57,7 @@ def store_trade(conn: sqlite3.Connection, trade) -> str:
             trade.symbol,
             trade.asset_type,
             trade.instruction,
+            trade.description,          # now matches a column
             trade.quantity,
             trade.filled_quantity,
             trade.remaining_quantity,
@@ -63,6 +68,7 @@ def store_trade(conn: sqlite3.Connection, trade) -> str:
             _now_iso(),
         ),
     )
+
 
     return trade_id
 
