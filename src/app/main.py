@@ -25,6 +25,7 @@ from app.models.data import load_trade
 from .models.config import load_config
 from .utils.logging import setup_logging
 from .api.schwab import SchwabApi
+from app.models import config
 
 logger = logging.getLogger(__name__)
 
@@ -54,29 +55,26 @@ def main() -> None:
 
         # store trade
         trade_id = store_trade(conn, trade)
-        logger.info(f"Stored trade with ID: {trade_id}")
+        logger.debug(f"Stored trade with ID: {trade_id}")
         ensure_trade_state(conn, trade_id)
     
     conn.commit()
-    trades = []
 
     #pull unposted trades
 
     unposted_trade_ids = get_unposted_trade_ids(conn)
+
     for trade_id in unposted_trade_ids:
         trade = load_trade_from_db(conn, trade_id)
-        if trade:
-            trades.append(trade)
+        if not trade:
+            continue
 
-    #post to discord
-
-    for trade in trades:
         msg = build_discord_message(trade)
         resp = post_webhook(config.discord_webhook, msg, timeout=config.schwab_timeout)
 
-        # If you want to save discord message id later, we'd need ?wait=true on webhook.
         with conn:
             mark_posted(conn, trade_id, discord_message_id=None)
+
     
         # normailze / format trade for discord
         

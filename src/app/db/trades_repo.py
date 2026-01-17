@@ -90,7 +90,7 @@ def ensure_trade_state(conn: sqlite3.Connection, trade_id: str) -> None:
 
 
 def mark_posted(conn: sqlite3.Connection, trade_id: str, discord_message_id: Optional[str] = None) -> None:
-    conn.execute(
+    cur = conn.execute(
         """
         UPDATE trade_state
         SET posted = 1,
@@ -101,6 +101,8 @@ def mark_posted(conn: sqlite3.Connection, trade_id: str, discord_message_id: Opt
         """,
         (_now_iso(), discord_message_id, _now_iso(), trade_id),
     )
+    if cur.rowcount != 1:
+        raise RuntimeError(f"mark_posted updated {cur.rowcount} rows for trade_id={trade_id}")
 
 def load_trade_from_db(conn: sqlite3.Connection, trade_id: str) -> Optional[Trade]:
     """
