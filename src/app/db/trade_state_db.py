@@ -55,3 +55,4 @@ def init_trade_state_db(db_path: str, conn: Optional[sqlite3.Connection] = None)
     finally:
         if should_close:
             conn.close()
+            

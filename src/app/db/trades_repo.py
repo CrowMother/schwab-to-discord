@@ -3,6 +3,7 @@ from __future__ import annotations
 import sqlite3
 from datetime import datetime, timezone
 from typing import Optional
+from app.models.data import Trade
 
 
 def _now_iso() -> str:
@@ -99,4 +100,40 @@ def mark_posted(conn: sqlite3.Connection, trade_id: str, discord_message_id: Opt
         WHERE trade_id = ?;
         """,
         (_now_iso(), discord_message_id, _now_iso(), trade_id),
+    )
+
+def load_trade_from_db(conn: sqlite3.Connection, trade_id: str) -> Optional[Trade]:
+    """
+    Loads a Trade dataclass from the `trades` table using trade_id.
+    Returns None if not found.
+    """
+    row = conn.execute(
+        """
+        SELECT
+          order_id, symbol, asset_type, instruction, description,
+          quantity, filled_quantity, remaining_quantity,
+          price, status,
+          entered_time, close_time
+        FROM trades
+        WHERE trade_id = ?;
+        """,
+        (trade_id,),
+    ).fetchone()
+
+    if row is None:
+        return None
+
+    return Trade(
+        order_id=row[0],
+        symbol=row[1],
+        asset_type=row[2],
+        instruction=row[3],
+        description=row[4],
+        quantity=row[5],
+        filled_quantity=row[6],
+        remaining_quantity=row[7],
+        price=row[8],
+        status=row[9],
+        entered_time=row[10],
+        close_time=row[11],
     )

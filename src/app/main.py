@@ -13,10 +13,13 @@ import os
 import sqlite3
 from app.db.trades_db import init_trades_db
 from app.db.trade_state_db import init_trade_state_db
+from app.db.queries import get_unposted_trade_ids
 
 import logging
 
-from app.db.trades_repo import store_trade
+from app.db.trades_repo import ensure_trade_state, load_trade_from_db, mark_posted, store_trade
+from app.discord.discord_message import build_discord_message
+from app.discord.discord_webhook import post_webhook
 from app.models.data import load_trade
 
 from .models.config import load_config
@@ -52,15 +55,37 @@ def main() -> None:
         # store trade
         trade_id = store_trade(conn, trade)
         logger.info(f"Stored trade with ID: {trade_id}")
-        
+        ensure_trade_state(conn, trade_id)
+    
     conn.commit()
-    conn.close()
+    trades = []
+
+    #pull unposted trades
+
+    unposted_trade_ids = get_unposted_trade_ids(conn)
+    for trade_id in unposted_trade_ids:
+        trade = load_trade_from_db(conn, trade_id)
+        if trade:
+            trades.append(trade)
+
+    #post to discord
+
+    for trade in trades:
+        msg = build_discord_message(trade)
+        resp = post_webhook(config.discord_webhook, msg, timeout=config.schwab_timeout)
+
+        # If you want to save discord message id later, we'd need ?wait=true on webhook.
+        with conn:
+            mark_posted(conn, trade_id, discord_message_id=None)
+    
         # normailze / format trade for discord
+        
         # post to discord
         
     # Figure out if I want to create a list for all these trades or process them directly after loading
 
-    
+    conn.commit()
+    conn.close()
     # After figuring out data flow, implement storing to DB 
     # Figure out DB schema or how to make it flexible to structure changes
     # 
