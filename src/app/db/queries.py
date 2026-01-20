@@ -2,13 +2,7 @@ from typing import List
 import sqlite3
 
 
-def insert_trade(conn, trade):
-    cursor = conn.cursor()
-    cursor.execute(
-        "INSERT INTO trades (symbol, price) VALUES (?, ?)",
-        (trade.symbol, trade.price),
-    )
-    conn.commit()
+
 
 
 def get_unposted_trade_ids(conn: sqlite3.Connection) -> List[str]:

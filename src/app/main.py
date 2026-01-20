@@ -25,7 +25,6 @@ from app.models.data import load_trade
 from .models.config import load_config
 from .utils.logging import setup_logging
 from .api.schwab import SchwabApi
-from app.models import config
 
 logger = logging.getLogger(__name__)
 
