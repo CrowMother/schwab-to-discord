@@ -34,3 +34,25 @@ def build_discord_message(trade, state: Optional[object] = None) -> str:
             lines.append(f"Posted: `{bool(posted)}`")
 
     return "\n".join(lines)
+
+def build_discord_message_template(template: str, trade, state: Optional[object] = None) -> str:
+    """
+    Compile a Discord message from a template string and a Trade dataclass.
+    The template can use placeholders like {symbol}, {instruction}, etc.
+    """
+    message = template.format(
+        symbol=trade.symbol,
+        instruction=trade.instruction,
+        asset_type=trade.asset_type,
+        status=trade.status,
+        quantity=trade.quantity,
+        filled_quantity=trade.filled_quantity,
+        remaining_quantity=trade.remaining_quantity,
+        price=getattr(trade, "price", "N/A"),
+        description=getattr(trade, "description", "N/A"),
+        entered_time=getattr(trade, "entered_time", "N/A"),
+        close_time=getattr(trade, "close_time", "N/A"),
+    )
+    return message
+
+

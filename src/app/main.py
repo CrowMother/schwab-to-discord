@@ -18,11 +18,11 @@ from app.db.queries import get_unposted_trade_ids
 import logging
 
 from app.db.trades_repo import ensure_trade_state, load_trade_from_db, mark_posted, store_trade
-from app.discord.discord_message import build_discord_message
+from app.discord.discord_message import build_discord_message, build_discord_message_template
 from app.discord.discord_webhook import post_webhook
 from app.models.data import load_trade
 
-from .models.config import load_config
+from .models.config import load_single_value, load_config
 from .utils.logging import setup_logging
 from .api.schwab import SchwabApi
 
@@ -67,8 +67,10 @@ def main() -> None:
         trade = load_trade_from_db(conn, trade_id)
         if not trade:
             continue
+        
+        template = load_single_value("TEMPLATE", None)
 
-        msg = build_discord_message(trade)
+        msg = build_discord_message_template(template, trade)
         resp = post_webhook(config.discord_webhook, msg, timeout=config.schwab_timeout)
 
         with conn:
