@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import logging
+import time
 from typing import Any, Optional
 
 import requests
@@ -34,6 +35,13 @@ def post_webhook(
 
     logger.debug("Posting to Discord webhook...")
     resp = requests.post(webhook_url, json=payload, timeout=timeout)
+
+    if resp.status_code == 429:
+        while resp.status_code == 429:
+            retry_after = resp.json().get("retry_after", 5) 
+            logger.warning(f"Rate limited by Discord webhook, retrying after {retry_after} seconds...")
+            time.sleep(retry_after)
+            resp = requests.post(webhook_url, json=payload, timeout=timeout)
 
     if resp.status_code < 200 or resp.status_code >= 300:
         raise DiscordWebhookError(

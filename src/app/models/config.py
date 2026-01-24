@@ -49,3 +49,6 @@ def load_config() -> Config:
         time_delta_days=_opt_int("TIME_DELTA_DAYS",7),
         status=_opt_str("ORDER_STATUS")
     )
+def load_single_value(key: str, alt=None):
+    val = os.getenv(key)
+    return val if val is not None and val != "" else alt
