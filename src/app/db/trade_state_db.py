@@ -1,4 +1,3 @@
-# src/app/db/trade_state_db.py
 from __future__ import annotations
 
 import os
@@ -31,23 +30,26 @@ def init_trade_state_db(db_path: str, conn: Optional[sqlite3.Connection] = None)
         conn.execute(
             """
             CREATE TABLE IF NOT EXISTS trade_state (
-              trade_id TEXT PRIMARY KEY REFERENCES trades(trade_id) ON DELETE CASCADE,
+              account_number TEXT NOT NULL,
+              instrument_id INTEGER NOT NULL,
 
-              posted INTEGER NOT NULL DEFAULT 0,
-              posted_at TEXT,
-              discord_message_id TEXT,
+              symbol TEXT,
+              open_qty REAL NOT NULL DEFAULT 0,
 
-              -- foundation fields (FIFO/open tracking later)
-              open_qty REAL,
-              updated_at TEXT NOT NULL
+              last_trade_id TEXT,
+              last_event_time TEXT,
+
+              updated_at TEXT NOT NULL,
+
+              PRIMARY KEY (account_number, instrument_id)
             );
             """
         )
 
         conn.execute(
             """
-            CREATE INDEX IF NOT EXISTS idx_trade_state_posted
-              ON trade_state(posted, updated_at);
+            CREATE INDEX IF NOT EXISTS idx_trade_state_open_qty
+              ON trade_state(open_qty);
             """
         )
 
@@ -55,4 +57,3 @@ def init_trade_state_db(db_path: str, conn: Optional[sqlite3.Connection] = None)
     finally:
         if should_close:
             conn.close()
-            

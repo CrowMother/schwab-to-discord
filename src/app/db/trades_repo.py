@@ -3,147 +3,148 @@ from __future__ import annotations
 import sqlite3
 from datetime import datetime, timezone
 from typing import Optional
-from app.models.data import Trade
 
 
 def _now_iso() -> str:
     return datetime.now(timezone.utc).isoformat()
 
 
-def make_trade_id(order_id: int) -> str:
-    # deterministic, stable, tied to Schwab order id
-    return f"schwab-order:{order_id}"
+def make_trade_id(trade) -> str:
+    return (
+        "schwab-fill:"
+        f"{trade.account_number}|{trade.instrument_id}|{trade.order_id}|"
+        f"{trade.leg_id or ''}|{trade.execution_time}|"
+        f"{trade.fill_quantity}|{trade.fill_price or ''}"
+    )
 
 
-def store_trade(conn: sqlite3.Connection, trade) -> str:
+
+def store_trade_fill(conn: sqlite3.Connection, trade) -> str:
     """
-    Stores the trade dataclass into `trades` (raw, no cleaning).
-    `trade` is your existing Trade dataclass instance.
-    Returns trade_id.
+    Store ONE fill-level trade event into `trades`.
+    Idempotent via UNIQUE index.
     """
-    trade_id = make_trade_id(trade.order_id)
+    trade_id = make_trade_id(trade)
 
     conn.execute(
         """
-        INSERT INTO trades (
-        trade_id,
-        order_id, symbol, asset_type, instruction, description,
-        quantity, filled_quantity, remaining_quantity,
-        price, status,
-        entered_time, close_time,
-        ingested_at
+        INSERT OR IGNORE INTO trades (
+          trade_id,
+          account_number, instrument_id,
+          order_id, leg_id, execution_time,
+          symbol, asset_type, instruction, position_effect,
+          fill_quantity, fill_price,
+          status, description, entered_time, close_time,
+          posted, posted_at, discord_message_id,
+          ingested_at
         )
-        VALUES (?, ?, ?, ?, ?, ?,
+        VALUES (?, ?, ?,
                 ?, ?, ?,
+                ?, ?, ?, ?,
                 ?, ?,
-                ?, ?,
-                ?)
-        ON CONFLICT(order_id) DO UPDATE SET
-        symbol = excluded.symbol,
-        asset_type = excluded.asset_type,
-        instruction = excluded.instruction,
-        description = excluded.description,
-        quantity = excluded.quantity,
-        filled_quantity = excluded.filled_quantity,
-        remaining_quantity = excluded.remaining_quantity,
-        price = excluded.price,
-        status = excluded.status,
-        entered_time = excluded.entered_time,
-        close_time = excluded.close_time,
-        ingested_at = excluded.ingested_at;
+                ?, ?, ?, ?,
+                0, NULL, NULL,
+                ?);
         """,
         (
             trade_id,
+            trade.account_number,
+            trade.instrument_id,
             trade.order_id,
+            trade.leg_id,
+            trade.execution_time,
             trade.symbol,
             trade.asset_type,
             trade.instruction,
-            trade.description,          # now matches a column
-            trade.quantity,
-            trade.filled_quantity,
-            trade.remaining_quantity,
-            trade.price,
-            trade.status,
-            trade.entered_time,
-            trade.close_time,
+            getattr(trade, "position_effect", None),
+            trade.fill_quantity,
+            getattr(trade, "fill_price", None),
+            getattr(trade, "status", None),
+            getattr(trade, "description", None),
+            getattr(trade, "entered_time", None),
+            getattr(trade, "close_time", None),
+            _now_iso(),
+        ),
+    )
+
+    return trade_id
+
+
+def update_position_state(conn: sqlite3.Connection, trade_id: str, trade) -> None:
+    """
+    Foundation position tracking:
+      OPENING  -> +fill_quantity
+      CLOSING  -> -fill_quantity
+
+    NOTE: This assumes "long opens add, closes subtract".
+    If you later support short options, you’ll refine this using instruction (STO/BTC).
+    """
+    pe = getattr(trade, "position_effect", None)
+    if pe == "OPENING":
+        delta = float(trade.fill_quantity)
+    elif pe == "CLOSING":
+        delta = -float(trade.fill_quantity)
+    else:
+        delta = 0.0  # unknown / not implemented yet
+
+    conn.execute(
+        """
+        INSERT INTO trade_state (
+          account_number, instrument_id,
+          symbol, open_qty,
+          last_trade_id, last_event_time,
+          updated_at
+        )
+        VALUES (?, ?, ?, ?,
+                ?, ?,
+                ?)
+        ON CONFLICT(account_number, instrument_id) DO UPDATE SET
+          symbol = COALESCE(excluded.symbol, trade_state.symbol),
+          open_qty = trade_state.open_qty + excluded.open_qty,
+          last_trade_id = excluded.last_trade_id,
+          last_event_time = excluded.last_event_time,
+          updated_at = excluded.updated_at;
+        """,
+        (
+            trade.account_number,
+            trade.instrument_id,
+            getattr(trade, "symbol", None),
+            delta,
+            trade_id,
+            trade.execution_time,
             _now_iso(),
         ),
     )
 
 
-    return trade_id
-
-
-def ensure_trade_state(conn: sqlite3.Connection, trade_id: str) -> None:
-    """
-    Creates state row if missing. Leaves future fields NULL.
-    """
-    conn.execute(
+def fetch_unposted_fills(conn: sqlite3.Connection, limit: int = 200):
+    return conn.execute(
         """
-        INSERT OR IGNORE INTO trade_state (
-          trade_id, posted, posted_at, discord_message_id, open_qty, updated_at
-        )
-        VALUES (?, 0, NULL, NULL, NULL, ?);
+        SELECT
+          trade_id,
+          symbol, instruction, asset_type, position_effect,
+          fill_quantity, fill_price,
+          status, description,
+          execution_time,
+          account_number, instrument_id,
+          order_id, leg_id
+        FROM trades
+        WHERE posted = 0
+        ORDER BY execution_time ASC
+        LIMIT ?;
         """,
-        (trade_id, _now_iso()),
-    )
+        (limit,),
+    ).fetchall()
 
 
 def mark_posted(conn: sqlite3.Connection, trade_id: str, discord_message_id: Optional[str] = None) -> None:
-    cur = conn.execute(
+    conn.execute(
         """
-        UPDATE trade_state
+        UPDATE trades
         SET posted = 1,
-            posted_at = COALESCE(posted_at, ?),
-            discord_message_id = COALESCE(?, discord_message_id),
-            updated_at = ?
+            posted_at = ?,
+            discord_message_id = COALESCE(?, discord_message_id)
         WHERE trade_id = ?;
         """,
-        (_now_iso(), discord_message_id, _now_iso(), trade_id),
+        (_now_iso(), discord_message_id, trade_id),
     )
-    if cur.rowcount != 1:
-        raise RuntimeError(f"mark_posted updated {cur.rowcount} rows for trade_id={trade_id}")
-
-def load_trade_from_db(conn: sqlite3.Connection, trade_id: str) -> Optional[Trade]:
-    """
-    Loads a Trade dataclass from the `trades` table using trade_id.
-    Returns None if not found.
-    """
-    row = conn.execute(
-        """
-        SELECT
-          order_id, symbol, asset_type, instruction, description,
-          quantity, filled_quantity, remaining_quantity,
-          price, status,
-          entered_time, close_time
-        FROM trades
-        WHERE trade_id = ?;
-        """,
-        (trade_id,),
-    ).fetchone()
-
-    if row is None:
-        return None
-
-    return Trade(
-        order_id=row[0],
-        symbol=row[1],
-        asset_type=row[2],
-        instruction=row[3],
-        description=row[4],
-        quantity=row[5],
-        filled_quantity=row[6],
-        remaining_quantity=row[7],
-        price=row[8],
-        status=row[9],
-        entered_time=row[10],
-        close_time=row[11],
-    )
-
-def insert_trade(conn, trade):
-    cursor = conn.cursor()
-    cursor.execute(
-        "INSERT INTO trades (symbol, price) VALUES (?, ?)",
-        (trade.symbol, trade.price),
-    )
-    conn.commit()

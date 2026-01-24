@@ -1,0 +1,5366 @@
+[
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 1.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "CDRG",
+        "price": 3.14,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0QQQ..MU60612000",
+                    "symbol": "QQQ   260130P00612000",
+                    "description": "INVESCO QQQ TR 01/30/2026 $612 Put",
+                    "instrumentId": 241947379,
+                    "type": "VANILLA",
+                    "putCall": "PUT",
+                    "underlyingSymbol": "QQQ",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "QQQ",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "BUY_TO_OPEN",
+                "positionEffect": "OPENING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005222793357,
+        "cancelable": false,
+        "editable": false,
+        "status": "FILLED",
+        "enteredTime": "2026-01-23T20:38:07+0000",
+        "closeTime": "2026-01-23T20:38:08+0000",
+        "tag": "API_TOS:TRADE_ALL",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110863830296,
+                "executionType": "FILL",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 3.12,
+                        "time": "2026-01-23T20:38:08+0000",
+                        "instrumentId": 241947379
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 1.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "DFIN",
+        "price": 2.74,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0TSLA.MU60412500",
+                    "symbol": "TSLA  260130P00412500",
+                    "description": "TESLA INC 01/30/2026 $412.5 Put",
+                    "instrumentId": 246186241,
+                    "type": "VANILLA",
+                    "putCall": "PUT",
+                    "underlyingSymbol": "TSLA",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "TSLA",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "SELL_TO_CLOSE",
+                "positionEffect": "CLOSING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005222792330,
+        "cancelable": false,
+        "editable": false,
+        "status": "FILLED",
+        "enteredTime": "2026-01-23T20:18:43+0000",
+        "closeTime": "2026-01-23T20:18:47+0000",
+        "tag": "API_TOS:POS_STMT",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110861563601,
+                "executionType": "FILL",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 2.74,
+                        "time": "2026-01-23T20:18:47+0000",
+                        "instrumentId": 246186241
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 1.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "SIGQ",
+        "price": 2.84,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0TSLA.MU60412500",
+                    "symbol": "TSLA  260130P00412500",
+                    "description": "TESLA INC 01/30/2026 $412.5 Put",
+                    "instrumentId": 246186241,
+                    "type": "VANILLA",
+                    "putCall": "PUT",
+                    "underlyingSymbol": "TSLA",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "TSLA",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "BUY_TO_OPEN",
+                "positionEffect": "OPENING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005222792012,
+        "cancelable": false,
+        "editable": false,
+        "status": "FILLED",
+        "enteredTime": "2026-01-23T20:12:05+0000",
+        "closeTime": "2026-01-23T20:12:05+0000",
+        "tag": "API_TOS:TRADE_ALL",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110858936654,
+                "executionType": "FILL",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 2.84,
+                        "time": "2026-01-23T20:12:05+0000",
+                        "instrumentId": 246186241
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 1.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "DFIN",
+        "price": 1.7,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0QQQ..MQ60621000",
+                    "symbol": "QQQ   260126P00621000",
+                    "description": "INVESCO QQQ TR 01/26/2026 $621 Put",
+                    "instrumentId": 245419723,
+                    "type": "VANILLA",
+                    "putCall": "PUT",
+                    "underlyingSymbol": "QQQ",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "QQQ",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "SELL_TO_CLOSE",
+                "positionEffect": "CLOSING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005221753738,
+        "cancelable": false,
+        "editable": false,
+        "status": "FILLED",
+        "enteredTime": "2026-01-23T20:07:35+0000",
+        "closeTime": "2026-01-23T20:07:52+0000",
+        "tag": "API_TOS:TRADE_ALL",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110858935093,
+                "executionType": "FILL",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 1.7,
+                        "time": "2026-01-23T20:07:52+0000",
+                        "instrumentId": 245419723
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 1.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "DFIN",
+        "price": 1.94,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0COST.AU61010000",
+                    "symbol": "COST  260130C01010000",
+                    "description": "COSTCO WHSL CORP NEW 01/30/2026 $1010 Call",
+                    "instrumentId": 244094307,
+                    "type": "VANILLA",
+                    "putCall": "CALL",
+                    "underlyingSymbol": "COST",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "COST",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "SELL_TO_CLOSE",
+                "positionEffect": "CLOSING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005221753580,
+        "cancelable": false,
+        "editable": false,
+        "status": "FILLED",
+        "enteredTime": "2026-01-23T20:04:46+0000",
+        "closeTime": "2026-01-23T20:04:46+0000",
+        "tag": "API_TOS:POS_STMT",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110858934079,
+                "executionType": "FILL",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 1.94,
+                        "time": "2026-01-23T20:04:46+0000",
+                        "instrumentId": 244094307
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 0.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "SIGQ",
+        "price": 1.96,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0COST.AU61010000",
+                    "symbol": "COST  260130C01010000",
+                    "description": "COSTCO WHSL CORP NEW 01/30/2026 $1010 Call",
+                    "instrumentId": 244094307,
+                    "type": "VANILLA",
+                    "putCall": "CALL",
+                    "underlyingSymbol": "COST",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "COST",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "SELL_TO_CLOSE",
+                "positionEffect": "CLOSING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005221753565,
+        "cancelable": false,
+        "editable": false,
+        "status": "REPLACED",
+        "enteredTime": "2026-01-23T20:04:28+0000",
+        "closeTime": "2026-01-23T20:04:46+0000",
+        "tag": "API_TOS:POS_STMT",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110858934072,
+                "executionType": "CANCELED",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 0.0,
+                        "time": "2026-01-23T20:04:46+0000",
+                        "instrumentId": 244094307
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 0.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "DFIN",
+        "price": 1.98,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0COST.AU61010000",
+                    "symbol": "COST  260130C01010000",
+                    "description": "COSTCO WHSL CORP NEW 01/30/2026 $1010 Call",
+                    "instrumentId": 244094307,
+                    "type": "VANILLA",
+                    "putCall": "CALL",
+                    "underlyingSymbol": "COST",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "COST",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "SELL_TO_CLOSE",
+                "positionEffect": "CLOSING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005221753562,
+        "cancelable": false,
+        "editable": false,
+        "status": "REPLACED",
+        "enteredTime": "2026-01-23T20:04:24+0000",
+        "closeTime": "2026-01-23T20:04:29+0000",
+        "tag": "API_TOS:POS_STMT",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110858934007,
+                "executionType": "CANCELED",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 0.0,
+                        "time": "2026-01-23T20:04:29+0000",
+                        "instrumentId": 244094307
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 0.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "DFIN",
+        "price": 2.0,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0COST.AU61010000",
+                    "symbol": "COST  260130C01010000",
+                    "description": "COSTCO WHSL CORP NEW 01/30/2026 $1010 Call",
+                    "instrumentId": 244094307,
+                    "type": "VANILLA",
+                    "putCall": "CALL",
+                    "underlyingSymbol": "COST",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "COST",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "SELL_TO_CLOSE",
+                "positionEffect": "CLOSING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005221753553,
+        "cancelable": false,
+        "editable": false,
+        "status": "REPLACED",
+        "enteredTime": "2026-01-23T20:04:18+0000",
+        "closeTime": "2026-01-23T20:04:24+0000",
+        "tag": "API_TOS:POS_STMT",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110858933981,
+                "executionType": "CANCELED",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 0.0,
+                        "time": "2026-01-23T20:04:24+0000",
+                        "instrumentId": 244094307
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 1.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "CDRG",
+        "price": 1.56,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0QQQ..MQ60621000",
+                    "symbol": "QQQ   260126P00621000",
+                    "description": "INVESCO QQQ TR 01/26/2026 $621 Put",
+                    "instrumentId": 245419723,
+                    "type": "VANILLA",
+                    "putCall": "PUT",
+                    "underlyingSymbol": "QQQ",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "QQQ",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "BUY_TO_OPEN",
+                "positionEffect": "OPENING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005221752822,
+        "cancelable": false,
+        "editable": false,
+        "status": "FILLED",
+        "enteredTime": "2026-01-23T19:47:42+0000",
+        "closeTime": "2026-01-23T19:47:43+0000",
+        "tag": "API_TOS:TRADE_ALL",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110856189660,
+                "executionType": "FILL",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 1.55,
+                        "time": "2026-01-23T19:47:43+0000",
+                        "instrumentId": 245419723
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 1.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "JNST",
+        "price": 1.75,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0COST.AU61010000",
+                    "symbol": "COST  260130C01010000",
+                    "description": "COSTCO WHSL CORP NEW 01/30/2026 $1010 Call",
+                    "instrumentId": 244094307,
+                    "type": "VANILLA",
+                    "putCall": "CALL",
+                    "underlyingSymbol": "COST",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "COST",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "BUY_TO_OPEN",
+                "positionEffect": "OPENING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005221752207,
+        "cancelable": false,
+        "editable": false,
+        "status": "FILLED",
+        "enteredTime": "2026-01-23T19:32:43+0000",
+        "closeTime": "2026-01-23T19:32:43+0000",
+        "tag": "API_TOS:TRADE_ALL",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110853480934,
+                "executionType": "FILL",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 1.75,
+                        "time": "2026-01-23T19:32:43+0000",
+                        "instrumentId": 244094307
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 1.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "DFIN",
+        "price": 1.34,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0MP...AU60075000",
+                    "symbol": "MP    260130C00075000",
+                    "description": "MP MATLS CORP 01/30/2026 $75 Call",
+                    "instrumentId": 244268168,
+                    "type": "VANILLA",
+                    "putCall": "CALL",
+                    "underlyingSymbol": "MP",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "MP",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "SELL_TO_CLOSE",
+                "positionEffect": "CLOSING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005220509414,
+        "cancelable": false,
+        "editable": false,
+        "status": "FILLED",
+        "enteredTime": "2026-01-23T19:15:16+0000",
+        "closeTime": "2026-01-23T19:15:16+0000",
+        "tag": "API_TOS:POS_STMT",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110850216098,
+                "executionType": "FILL",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 1.34,
+                        "time": "2026-01-23T19:15:16+0000",
+                        "instrumentId": 244268168
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 0.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "CDRG",
+        "price": 1.36,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0MP...AU60075000",
+                    "symbol": "MP    260130C00075000",
+                    "description": "MP MATLS CORP 01/30/2026 $75 Call",
+                    "instrumentId": 244268168,
+                    "type": "VANILLA",
+                    "putCall": "CALL",
+                    "underlyingSymbol": "MP",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "MP",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "SELL_TO_CLOSE",
+                "positionEffect": "CLOSING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005220509409,
+        "cancelable": false,
+        "editable": false,
+        "status": "REPLACED",
+        "enteredTime": "2026-01-23T19:15:10+0000",
+        "closeTime": "2026-01-23T19:15:16+0000",
+        "tag": "API_TOS:POS_STMT",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110850216091,
+                "executionType": "CANCELED",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 0.0,
+                        "time": "2026-01-23T19:15:16+0000",
+                        "instrumentId": 244268168
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 1.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "WEXM",
+        "price": 1.18,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0COST.AU61015000",
+                    "symbol": "COST  260130C01015000",
+                    "description": "COSTCO WHSL CORP NEW 01/30/2026 $1015 Call",
+                    "instrumentId": 244218246,
+                    "type": "VANILLA",
+                    "putCall": "CALL",
+                    "underlyingSymbol": "COST",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "COST",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "SELL_TO_CLOSE",
+                "positionEffect": "CLOSING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005220509394,
+        "cancelable": false,
+        "editable": false,
+        "status": "FILLED",
+        "enteredTime": "2026-01-23T19:14:42+0000",
+        "closeTime": "2026-01-23T19:14:43+0000",
+        "tag": "API_TOS:POS_STMT",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110850215975,
+                "executionType": "FILL",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 1.18,
+                        "time": "2026-01-23T19:14:43+0000",
+                        "instrumentId": 244218246
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 0.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "DFIN",
+        "price": 1.2,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0COST.AU61015000",
+                    "symbol": "COST  260130C01015000",
+                    "description": "COSTCO WHSL CORP NEW 01/30/2026 $1015 Call",
+                    "instrumentId": 244218246,
+                    "type": "VANILLA",
+                    "putCall": "CALL",
+                    "underlyingSymbol": "COST",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "COST",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "SELL_TO_CLOSE",
+                "positionEffect": "CLOSING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005220509389,
+        "cancelable": false,
+        "editable": false,
+        "status": "REPLACED",
+        "enteredTime": "2026-01-23T19:14:36+0000",
+        "closeTime": "2026-01-23T19:14:42+0000",
+        "tag": "API_TOS:POS_STMT",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110850215956,
+                "executionType": "CANCELED",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 0.0,
+                        "time": "2026-01-23T19:14:42+0000",
+                        "instrumentId": 244218246
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 0.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "SIGQ",
+        "price": 1.24,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0COST.AU61015000",
+                    "symbol": "COST  260130C01015000",
+                    "description": "COSTCO WHSL CORP NEW 01/30/2026 $1015 Call",
+                    "instrumentId": 244218246,
+                    "type": "VANILLA",
+                    "putCall": "CALL",
+                    "underlyingSymbol": "COST",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "COST",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "SELL_TO_CLOSE",
+                "positionEffect": "CLOSING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005220509386,
+        "cancelable": false,
+        "editable": false,
+        "status": "REPLACED",
+        "enteredTime": "2026-01-23T19:14:31+0000",
+        "closeTime": "2026-01-23T19:14:36+0000",
+        "tag": "API_TOS:POS_STMT",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110850215918,
+                "executionType": "CANCELED",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 0.0,
+                        "time": "2026-01-23T19:14:36+0000",
+                        "instrumentId": 244218246
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 1.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "CDRG",
+        "price": 2.47,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0QQQ..MU60610000",
+                    "symbol": "QQQ   260130P00610000",
+                    "description": "INVESCO QQQ TR 01/30/2026 $610 Put",
+                    "instrumentId": 241950413,
+                    "type": "VANILLA",
+                    "putCall": "PUT",
+                    "underlyingSymbol": "QQQ",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "QQQ",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "SELL_TO_CLOSE",
+                "positionEffect": "CLOSING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005220508311,
+        "cancelable": false,
+        "editable": false,
+        "status": "FILLED",
+        "enteredTime": "2026-01-23T18:42:51+0000",
+        "closeTime": "2026-01-23T18:42:51+0000",
+        "tag": "API_TOS:TRADE_ALL",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110846874070,
+                "executionType": "FILL",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 2.47,
+                        "time": "2026-01-23T18:42:51+0000",
+                        "instrumentId": 241950413
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 1.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "SIGQ",
+        "price": 2.81,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0QQQ..MU60610000",
+                    "symbol": "QQQ   260130P00610000",
+                    "description": "INVESCO QQQ TR 01/30/2026 $610 Put",
+                    "instrumentId": 241950413,
+                    "type": "VANILLA",
+                    "putCall": "PUT",
+                    "underlyingSymbol": "QQQ",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "QQQ",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "BUY_TO_OPEN",
+                "positionEffect": "OPENING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005219396335,
+        "cancelable": false,
+        "editable": false,
+        "status": "FILLED",
+        "enteredTime": "2026-01-23T17:59:51+0000",
+        "closeTime": "2026-01-23T17:59:51+0000",
+        "tag": "API_TOS:TRADE_ALL",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110838456009,
+                "executionType": "FILL",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 2.8,
+                        "time": "2026-01-23T17:59:51+0000",
+                        "instrumentId": 241950413
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 2.0,
+        "filledQuantity": 2.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "WEXM",
+        "price": 0.74,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0IBIT.ND60048500",
+                    "symbol": "IBIT  260213P00048500",
+                    "description": "ISHR BITCOIN TR ETF 02/13/2026 $48.5 Put",
+                    "instrumentId": 245068787,
+                    "type": "VANILLA",
+                    "putCall": "PUT",
+                    "underlyingSymbol": "IBIT",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "IBIT",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "SELL_TO_CLOSE",
+                "positionEffect": "CLOSING",
+                "quantity": 2.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005219396132,
+        "cancelable": false,
+        "editable": false,
+        "status": "FILLED",
+        "enteredTime": "2026-01-23T17:55:45+0000",
+        "closeTime": "2026-01-23T17:55:50+0000",
+        "tag": "API_TOS:POS_STMT",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110838454734,
+                "executionType": "FILL",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 0.74,
+                        "time": "2026-01-23T17:55:50+0000",
+                        "instrumentId": 245068787
+                    }
+                ]
+            },
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110838454731,
+                "executionType": "FILL",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 1.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 0.74,
+                        "time": "2026-01-23T17:55:50+0000",
+                        "instrumentId": 245068787
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 2.0,
+        "filledQuantity": 0.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "SIGQ",
+        "price": 0.75,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0IBIT.ND60048500",
+                    "symbol": "IBIT  260213P00048500",
+                    "description": "ISHR BITCOIN TR ETF 02/13/2026 $48.5 Put",
+                    "instrumentId": 245068787,
+                    "type": "VANILLA",
+                    "putCall": "PUT",
+                    "underlyingSymbol": "IBIT",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "IBIT",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "SELL_TO_CLOSE",
+                "positionEffect": "CLOSING",
+                "quantity": 2.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005219396116,
+        "cancelable": false,
+        "editable": false,
+        "status": "REPLACED",
+        "enteredTime": "2026-01-23T17:55:38+0000",
+        "closeTime": "2026-01-23T17:55:49+0000",
+        "tag": "API_TOS:POS_STMT",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110838454721,
+                "executionType": "CANCELED",
+                "quantity": 2.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 2.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 0.0,
+                        "time": "2026-01-23T17:55:49+0000",
+                        "instrumentId": 245068787
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 2.0,
+        "filledQuantity": 0.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "WEXM",
+        "price": 0.76,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0IBIT.ND60048500",
+                    "symbol": "IBIT  260213P00048500",
+                    "description": "ISHR BITCOIN TR ETF 02/13/2026 $48.5 Put",
+                    "instrumentId": 245068787,
+                    "type": "VANILLA",
+                    "putCall": "PUT",
+                    "underlyingSymbol": "IBIT",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "IBIT",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "SELL_TO_CLOSE",
+                "positionEffect": "CLOSING",
+                "quantity": 2.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005219396104,
+        "cancelable": false,
+        "editable": false,
+        "status": "REPLACED",
+        "enteredTime": "2026-01-23T17:55:27+0000",
+        "closeTime": "2026-01-23T17:55:38+0000",
+        "tag": "API_TOS:POS_STMT",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110838454638,
+                "executionType": "CANCELED",
+                "quantity": 2.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 2.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 0.0,
+                        "time": "2026-01-23T17:55:38+0000",
+                        "instrumentId": 245068787
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 1.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "DFIN",
+        "price": 1.45,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0COST.AU61015000",
+                    "symbol": "COST  260130C01015000",
+                    "description": "COSTCO WHSL CORP NEW 01/30/2026 $1015 Call",
+                    "instrumentId": 244218246,
+                    "type": "VANILLA",
+                    "putCall": "CALL",
+                    "underlyingSymbol": "COST",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "COST",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "BUY_TO_OPEN",
+                "positionEffect": "OPENING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005218398691,
+        "cancelable": false,
+        "editable": false,
+        "status": "FILLED",
+        "enteredTime": "2026-01-23T17:30:08+0000",
+        "closeTime": "2026-01-23T17:30:09+0000",
+        "tag": "API_TOS:TRADE_ALL",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110833370401,
+                "executionType": "FILL",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 1.45,
+                        "time": "2026-01-23T17:30:09+0000",
+                        "instrumentId": 244218246
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 1.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "WEXM",
+        "price": 3.3,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0COST.AU61000000",
+                    "symbol": "COST  260130C01000000",
+                    "description": "COSTCO WHSL CORP NEW 01/30/2026 $1000 Call",
+                    "instrumentId": 244333148,
+                    "type": "VANILLA",
+                    "putCall": "CALL",
+                    "underlyingSymbol": "COST",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "COST",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "SELL_TO_CLOSE",
+                "positionEffect": "CLOSING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005214541497,
+        "cancelable": false,
+        "editable": false,
+        "status": "FILLED",
+        "enteredTime": "2026-01-23T15:45:51+0000",
+        "closeTime": "2026-01-23T15:45:51+0000",
+        "tag": "API_TOS:TRADE_ALL",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110812453284,
+                "executionType": "FILL",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 3.3,
+                        "time": "2026-01-23T15:45:51+0000",
+                        "instrumentId": 244333148
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 1.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "DFIN",
+        "price": 1.01,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0MP...AU60075000",
+                    "symbol": "MP    260130C00075000",
+                    "description": "MP MATLS CORP 01/30/2026 $75 Call",
+                    "instrumentId": 244268168,
+                    "type": "VANILLA",
+                    "putCall": "CALL",
+                    "underlyingSymbol": "MP",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "MP",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "BUY_TO_OPEN",
+                "positionEffect": "OPENING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005214540960,
+        "cancelable": false,
+        "editable": false,
+        "status": "FILLED",
+        "enteredTime": "2026-01-23T15:38:36+0000",
+        "closeTime": "2026-01-23T15:38:37+0000",
+        "tag": "API_TOS:TRADE_ALL",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110810144926,
+                "executionType": "FILL",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 1.01,
+                        "time": "2026-01-23T15:38:37+0000",
+                        "instrumentId": 244268168
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 2.0,
+        "filledQuantity": 2.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "WEXM",
+        "price": 1.61,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0XOM..CK60145000",
+                    "symbol": "XOM   260320C00145000",
+                    "description": "EXXON MOBIL CORP 03/20/2026 $145 Call",
+                    "instrumentId": 230299369,
+                    "type": "VANILLA",
+                    "putCall": "CALL",
+                    "underlyingSymbol": "XOM",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "XOM",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "BUY_TO_OPEN",
+                "positionEffect": "OPENING",
+                "quantity": 2.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005214540480,
+        "cancelable": false,
+        "editable": false,
+        "status": "FILLED",
+        "enteredTime": "2026-01-23T15:33:03+0000",
+        "closeTime": "2026-01-23T15:33:03+0000",
+        "tag": "API_TOS:TRADE_ALL",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110807771866,
+                "executionType": "FILL",
+                "quantity": 2.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 2.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 1.61,
+                        "time": "2026-01-23T15:33:03+0000",
+                        "instrumentId": 230299369
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 1.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "DFIN",
+        "price": 1.87,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0QQQ..MU60603000",
+                    "symbol": "QQQ   260130P00603000",
+                    "description": "INVESCO QQQ TR 01/30/2026 $603 Put",
+                    "instrumentId": 241883503,
+                    "type": "VANILLA",
+                    "putCall": "PUT",
+                    "underlyingSymbol": "QQQ",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "QQQ",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "SELL_TO_CLOSE",
+                "positionEffect": "CLOSING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005212196624,
+        "cancelable": false,
+        "editable": false,
+        "status": "FILLED",
+        "enteredTime": "2026-01-23T14:45:56+0000",
+        "closeTime": "2026-01-23T14:45:56+0000",
+        "tag": "API_TOS:POS_STMT",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110794305005,
+                "executionType": "FILL",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 1.87,
+                        "time": "2026-01-23T14:45:56+0000",
+                        "instrumentId": 241883503
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 1.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "DFIN",
+        "price": 2.75,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0CVX..CK60175000",
+                    "symbol": "CVX   260320C00175000",
+                    "description": "CHEVRON CORP NEW 03/20/2026 $175 Call",
+                    "instrumentId": 230020399,
+                    "type": "VANILLA",
+                    "putCall": "CALL",
+                    "underlyingSymbol": "CVX",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "CVX",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "BUY_TO_OPEN",
+                "positionEffect": "OPENING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005211463098,
+        "cancelable": false,
+        "editable": false,
+        "status": "FILLED",
+        "enteredTime": "2026-01-23T14:34:37+0000",
+        "closeTime": "2026-01-23T14:34:38+0000",
+        "tag": "API_TOS:TRADE_ALL",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110790599680,
+                "executionType": "FILL",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 2.75,
+                        "time": "2026-01-23T14:34:38+0000",
+                        "instrumentId": 230020399
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 1.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "CDRG",
+        "price": 2.75,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0COST.AU61000000",
+                    "symbol": "COST  260130C01000000",
+                    "description": "COSTCO WHSL CORP NEW 01/30/2026 $1000 Call",
+                    "instrumentId": 244333148,
+                    "type": "VANILLA",
+                    "putCall": "CALL",
+                    "underlyingSymbol": "COST",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "COST",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "BUY_TO_OPEN",
+                "positionEffect": "OPENING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005211462627,
+        "cancelable": false,
+        "editable": false,
+        "status": "FILLED",
+        "enteredTime": "2026-01-23T14:31:42+0000",
+        "closeTime": "2026-01-23T14:31:42+0000",
+        "tag": "API_TOS:TRADE_ALL",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110789041485,
+                "executionType": "FILL",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 2.75,
+                        "time": "2026-01-23T14:31:42+0000",
+                        "instrumentId": 244333148
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 0.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "CDRG",
+        "price": 2.5,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0COST.AU61000000",
+                    "symbol": "COST  260130C01000000",
+                    "description": "COSTCO WHSL CORP NEW 01/30/2026 $1000 Call",
+                    "instrumentId": 244333148,
+                    "type": "VANILLA",
+                    "putCall": "CALL",
+                    "underlyingSymbol": "COST",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "COST",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "BUY_TO_OPEN",
+                "positionEffect": "OPENING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005211462601,
+        "cancelable": false,
+        "editable": false,
+        "status": "REPLACED",
+        "enteredTime": "2026-01-23T14:31:32+0000",
+        "closeTime": "2026-01-23T14:31:42+0000",
+        "tag": "API_TOS:TRADE_ALL",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110789041477,
+                "executionType": "CANCELED",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 0.0,
+                        "time": "2026-01-23T14:31:42+0000",
+                        "instrumentId": 244333148
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 0.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "DFIN",
+        "price": 1.7,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0COST.AU61005000",
+                    "symbol": "COST  260130C01005000",
+                    "description": "COSTCO WHSL CORP NEW 01/30/2026 $1005 Call",
+                    "instrumentId": 244299162,
+                    "type": "VANILLA",
+                    "putCall": "CALL",
+                    "underlyingSymbol": "COST",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "COST",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "BUY_TO_OPEN",
+                "positionEffect": "OPENING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005211462579,
+        "cancelable": false,
+        "editable": false,
+        "status": "CANCELED",
+        "enteredTime": "2026-01-23T14:31:22+0000",
+        "closeTime": "2026-01-23T14:31:35+0000",
+        "tag": "API_TOS:TRADE_ALL",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110789041378,
+                "executionType": "CANCELED",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 0.0,
+                        "time": "2026-01-23T14:31:35+0000",
+                        "instrumentId": 244299162
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 1.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "SIGQ",
+        "price": 0.75,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0NVDA.MU60175000",
+                    "symbol": "NVDA  260130P00175000",
+                    "description": "NVIDIA CORP 01/30/2026 $175 Put",
+                    "instrumentId": 244065251,
+                    "type": "VANILLA",
+                    "putCall": "PUT",
+                    "underlyingSymbol": "NVDA",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "NVDA",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "SELL_TO_CLOSE",
+                "positionEffect": "CLOSING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005211462481,
+        "cancelable": false,
+        "editable": false,
+        "status": "FILLED",
+        "enteredTime": "2026-01-23T14:30:44+0000",
+        "closeTime": "2026-01-23T14:30:44+0000",
+        "tag": "API_TOS:TRADE_ALL",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110789040384,
+                "executionType": "FILL",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 0.77,
+                        "time": "2026-01-23T14:30:44+0000",
+                        "instrumentId": 244065251
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 1.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "JNST",
+        "price": 3.75,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0HON..DH60240000",
+                    "symbol": "HON   260417C00240000",
+                    "description": "HONEYWELL INTL INC 04/17/2026 $240 Call",
+                    "instrumentId": 244822248,
+                    "type": "VANILLA",
+                    "putCall": "CALL",
+                    "underlyingSymbol": "HON",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "HON",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "SELL_TO_CLOSE",
+                "positionEffect": "CLOSING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005209009178,
+        "cancelable": false,
+        "editable": false,
+        "status": "FILLED",
+        "enteredTime": "2026-01-22T20:40:30+0000",
+        "closeTime": "2026-01-22T20:40:31+0000",
+        "tag": "API_TOS:TRADE_ALL",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110765452342,
+                "executionType": "FILL",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 3.75,
+                        "time": "2026-01-22T20:40:31+0000",
+                        "instrumentId": 244822248
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 0.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "CDRG",
+        "price": 3.8,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0HON..DH60240000",
+                    "symbol": "HON   260417C00240000",
+                    "description": "HONEYWELL INTL INC 04/17/2026 $240 Call",
+                    "instrumentId": 244822248,
+                    "type": "VANILLA",
+                    "putCall": "CALL",
+                    "underlyingSymbol": "HON",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "HON",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "SELL_TO_CLOSE",
+                "positionEffect": "CLOSING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005209009169,
+        "cancelable": false,
+        "editable": false,
+        "status": "REPLACED",
+        "enteredTime": "2026-01-22T20:40:19+0000",
+        "closeTime": "2026-01-22T20:40:30+0000",
+        "tag": "API_TOS:TRADE_ALL",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110765452332,
+                "executionType": "CANCELED",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 0.0,
+                        "time": "2026-01-22T20:40:30+0000",
+                        "instrumentId": 244822248
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 0.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "DFIN",
+        "price": 3.85,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0HON..DH60240000",
+                    "symbol": "HON   260417C00240000",
+                    "description": "HONEYWELL INTL INC 04/17/2026 $240 Call",
+                    "instrumentId": 244822248,
+                    "type": "VANILLA",
+                    "putCall": "CALL",
+                    "underlyingSymbol": "HON",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "HON",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "SELL_TO_CLOSE",
+                "positionEffect": "CLOSING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005209009163,
+        "cancelable": false,
+        "editable": false,
+        "status": "REPLACED",
+        "enteredTime": "2026-01-22T20:40:13+0000",
+        "closeTime": "2026-01-22T20:40:19+0000",
+        "tag": "API_TOS:TRADE_ALL",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110765452252,
+                "executionType": "CANCELED",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 0.0,
+                        "time": "2026-01-22T20:40:19+0000",
+                        "instrumentId": 244822248
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 0.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "WEXM",
+        "price": 3.9,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0HON..DH60240000",
+                    "symbol": "HON   260417C00240000",
+                    "description": "HONEYWELL INTL INC 04/17/2026 $240 Call",
+                    "instrumentId": 244822248,
+                    "type": "VANILLA",
+                    "putCall": "CALL",
+                    "underlyingSymbol": "HON",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "HON",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "SELL_TO_CLOSE",
+                "positionEffect": "CLOSING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005209009161,
+        "cancelable": false,
+        "editable": false,
+        "status": "REPLACED",
+        "enteredTime": "2026-01-22T20:40:08+0000",
+        "closeTime": "2026-01-22T20:40:14+0000",
+        "tag": "API_TOS:TRADE_ALL",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110765452179,
+                "executionType": "CANCELED",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 0.0,
+                        "time": "2026-01-22T20:40:14+0000",
+                        "instrumentId": 244822248
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 1.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "DFIN",
+        "price": 1.42,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0NVDA.MU60175000",
+                    "symbol": "NVDA  260130P00175000",
+                    "description": "NVIDIA CORP 01/30/2026 $175 Put",
+                    "instrumentId": 244065251,
+                    "type": "VANILLA",
+                    "putCall": "PUT",
+                    "underlyingSymbol": "NVDA",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "NVDA",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "BUY_TO_OPEN",
+                "positionEffect": "OPENING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005209009052,
+        "cancelable": false,
+        "editable": false,
+        "status": "FILLED",
+        "enteredTime": "2026-01-22T20:37:54+0000",
+        "closeTime": "2026-01-22T20:37:54+0000",
+        "tag": "API_TOS:TRADE_ALL",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110763371412,
+                "executionType": "FILL",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 1.41,
+                        "time": "2026-01-22T20:37:54+0000",
+                        "instrumentId": 244065251
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 1.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "WEXM",
+        "price": 2.05,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0QQQ..MU60603000",
+                    "symbol": "QQQ   260130P00603000",
+                    "description": "INVESCO QQQ TR 01/30/2026 $603 Put",
+                    "instrumentId": 241883503,
+                    "type": "VANILLA",
+                    "putCall": "PUT",
+                    "underlyingSymbol": "QQQ",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "QQQ",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "BUY_TO_OPEN",
+                "positionEffect": "OPENING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005209008481,
+        "cancelable": false,
+        "editable": false,
+        "status": "FILLED",
+        "enteredTime": "2026-01-22T20:28:21+0000",
+        "closeTime": "2026-01-22T20:28:23+0000",
+        "tag": "API_TOS:TRADE_ALL",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110763367271,
+                "executionType": "FILL",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 2.05,
+                        "time": "2026-01-22T20:28:23+0000",
+                        "instrumentId": 241883503
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 1.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "SIGQ",
+        "price": 0.7,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0ANGX.DH60005000",
+                    "symbol": "ANGX  260417C00005000",
+                    "description": "ANGEL STUDIOS INC 04/17/2026 $5 Call",
+                    "instrumentId": 240618444,
+                    "type": "VANILLA",
+                    "putCall": "CALL",
+                    "underlyingSymbol": "ANGX",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "ANGX",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "SELL_TO_CLOSE",
+                "positionEffect": "CLOSING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005207091460,
+        "cancelable": false,
+        "editable": false,
+        "status": "FILLED",
+        "enteredTime": "2026-01-22T19:21:25+0000",
+        "closeTime": "2026-01-22T19:21:25+0000",
+        "tag": "API_TOS:POS_STMT",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110752808572,
+                "executionType": "FILL",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 0.7,
+                        "time": "2026-01-22T19:21:25+0000",
+                        "instrumentId": 240618444
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 1.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "DFIN",
+        "price": 0.99,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0IBIT.ND60048500",
+                    "symbol": "IBIT  260213P00048500",
+                    "description": "ISHR BITCOIN TR ETF 02/13/2026 $48.5 Put",
+                    "instrumentId": 245068787,
+                    "type": "VANILLA",
+                    "putCall": "PUT",
+                    "underlyingSymbol": "IBIT",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "IBIT",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "SELL_TO_CLOSE",
+                "positionEffect": "CLOSING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005207091386,
+        "cancelable": false,
+        "editable": false,
+        "status": "FILLED",
+        "enteredTime": "2026-01-22T19:20:40+0000",
+        "closeTime": "2026-01-22T19:20:41+0000",
+        "tag": "API_TOS:POS_STMT",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110752808211,
+                "executionType": "FILL",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 0.99,
+                        "time": "2026-01-22T19:20:41+0000",
+                        "instrumentId": 245068787
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 1.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "DFIN",
+        "price": 0.94,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0TSLA.MN60437500",
+                    "symbol": "TSLA  260123P00437500",
+                    "description": "TESLA INC 01/23/2026 $437.5 Put",
+                    "instrumentId": 245430004,
+                    "type": "VANILLA",
+                    "putCall": "PUT",
+                    "underlyingSymbol": "TSLA",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "TSLA",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "SELL_TO_CLOSE",
+                "positionEffect": "CLOSING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005207091339,
+        "cancelable": false,
+        "editable": false,
+        "status": "FILLED",
+        "enteredTime": "2026-01-22T19:19:38+0000",
+        "closeTime": "2026-01-22T19:19:39+0000",
+        "tag": "API_TOS:POS_STMT",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110752807892,
+                "executionType": "FILL",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 0.94,
+                        "time": "2026-01-22T19:19:39+0000",
+                        "instrumentId": 245430004
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 1.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "DFIN",
+        "price": 1.72,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0MP...AU60075000",
+                    "symbol": "MP    260130C00075000",
+                    "description": "MP MATLS CORP 01/30/2026 $75 Call",
+                    "instrumentId": 244268168,
+                    "type": "VANILLA",
+                    "putCall": "CALL",
+                    "underlyingSymbol": "MP",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "MP",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "SELL_TO_CLOSE",
+                "positionEffect": "CLOSING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005205946912,
+        "cancelable": false,
+        "editable": false,
+        "status": "FILLED",
+        "enteredTime": "2026-01-22T18:29:17+0000",
+        "closeTime": "2026-01-22T18:29:17+0000",
+        "tag": "API_TOS:POS_STMT",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110742671894,
+                "executionType": "FILL",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 1.72,
+                        "time": "2026-01-22T18:29:17+0000",
+                        "instrumentId": 244268168
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 1.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "DFIN",
+        "price": 2.96,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0ENPH.BK60042000",
+                    "symbol": "ENPH  260220C00042000",
+                    "description": "ENPHASE ENERGY INC 02/20/2026 $42 Call",
+                    "instrumentId": 245712356,
+                    "type": "VANILLA",
+                    "putCall": "CALL",
+                    "underlyingSymbol": "ENPH",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "ENPH",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "SELL_TO_CLOSE",
+                "positionEffect": "CLOSING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005205946903,
+        "cancelable": false,
+        "editable": false,
+        "status": "FILLED",
+        "enteredTime": "2026-01-22T18:28:47+0000",
+        "closeTime": "2026-01-22T18:28:47+0000",
+        "tag": "API_TOS:POS_STMT",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110742671822,
+                "executionType": "FILL",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 2.97,
+                        "time": "2026-01-22T18:28:47+0000",
+                        "instrumentId": 245712356
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 1.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "WEXM",
+        "price": 1.58,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0TSLA.MN60437500",
+                    "symbol": "TSLA  260123P00437500",
+                    "description": "TESLA INC 01/23/2026 $437.5 Put",
+                    "instrumentId": 245430004,
+                    "type": "VANILLA",
+                    "putCall": "PUT",
+                    "underlyingSymbol": "TSLA",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "TSLA",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "BUY_TO_OPEN",
+                "positionEffect": "OPENING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005205946811,
+        "cancelable": false,
+        "editable": false,
+        "status": "FILLED",
+        "enteredTime": "2026-01-22T18:26:15+0000",
+        "closeTime": "2026-01-22T18:26:15+0000",
+        "tag": "API_TOS:TRADE_ALL",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110742671299,
+                "executionType": "FILL",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 1.58,
+                        "time": "2026-01-22T18:26:15+0000",
+                        "instrumentId": 245430004
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 1.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "JNST",
+        "price": 4.45,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0TSLA.ND60395000",
+                    "symbol": "TSLA  260213P00395000",
+                    "description": "TESLA INC 02/13/2026 $395 Put",
+                    "instrumentId": 245065796,
+                    "type": "VANILLA",
+                    "putCall": "PUT",
+                    "underlyingSymbol": "TSLA",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "TSLA",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "SELL_TO_CLOSE",
+                "positionEffect": "CLOSING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005205023836,
+        "cancelable": false,
+        "editable": false,
+        "status": "FILLED",
+        "enteredTime": "2026-01-22T18:04:30+0000",
+        "closeTime": "2026-01-22T18:04:30+0000",
+        "tag": "API_TOS:POS_STMT",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110740319629,
+                "executionType": "FILL",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 4.45,
+                        "time": "2026-01-22T18:04:30+0000",
+                        "instrumentId": 245065796
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 1.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "JNST",
+        "price": 5.35,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0TSLA.ND60395000",
+                    "symbol": "TSLA  260213P00395000",
+                    "description": "TESLA INC 02/13/2026 $395 Put",
+                    "instrumentId": 245065796,
+                    "type": "VANILLA",
+                    "putCall": "PUT",
+                    "underlyingSymbol": "TSLA",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "TSLA",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "BUY_TO_OPEN",
+                "positionEffect": "OPENING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005203764658,
+        "cancelable": false,
+        "editable": false,
+        "status": "FILLED",
+        "enteredTime": "2026-01-22T17:00:50+0000",
+        "closeTime": "2026-01-22T17:00:50+0000",
+        "tag": "API_TOS:TRADE_ALL",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110729064392,
+                "executionType": "FILL",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 5.35,
+                        "time": "2026-01-22T17:00:50+0000",
+                        "instrumentId": 245065796
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 1.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "DFIN",
+        "price": 0.55,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0VKTX.AU60037000",
+                    "symbol": "VKTX  260130C00037000",
+                    "description": "VIKING THERAPEUTICS INC 01/30/2026 $37 Call",
+                    "instrumentId": 243990879,
+                    "type": "VANILLA",
+                    "putCall": "CALL",
+                    "underlyingSymbol": "VKTX",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "VKTX",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "SELL_TO_CLOSE",
+                "positionEffect": "CLOSING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005203764549,
+        "cancelable": false,
+        "editable": false,
+        "status": "FILLED",
+        "enteredTime": "2026-01-22T16:58:37+0000",
+        "closeTime": "2026-01-22T16:58:37+0000",
+        "tag": "API_TOS:POS_STMT",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110729063664,
+                "executionType": "FILL",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 0.55,
+                        "time": "2026-01-22T16:58:37+0000",
+                        "instrumentId": 243990879
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 0.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "WEXM",
+        "price": 0.59,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0VKTX.AU60037000",
+                    "symbol": "VKTX  260130C00037000",
+                    "description": "VIKING THERAPEUTICS INC 01/30/2026 $37 Call",
+                    "instrumentId": 243990879,
+                    "type": "VANILLA",
+                    "putCall": "CALL",
+                    "underlyingSymbol": "VKTX",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "VKTX",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "SELL_TO_CLOSE",
+                "positionEffect": "CLOSING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005203764510,
+        "cancelable": false,
+        "editable": false,
+        "status": "REPLACED",
+        "enteredTime": "2026-01-22T16:58:14+0000",
+        "closeTime": "2026-01-22T16:58:37+0000",
+        "tag": "API_TOS:POS_STMT",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110729063657,
+                "executionType": "CANCELED",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 0.0,
+                        "time": "2026-01-22T16:58:37+0000",
+                        "instrumentId": 243990879
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 1.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "CDRG",
+        "price": 0.75,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0VKTX.AU60037000",
+                    "symbol": "VKTX  260130C00037000",
+                    "description": "VIKING THERAPEUTICS INC 01/30/2026 $37 Call",
+                    "instrumentId": 243990879,
+                    "type": "VANILLA",
+                    "putCall": "CALL",
+                    "underlyingSymbol": "VKTX",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "VKTX",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "SELL_TO_CLOSE",
+                "positionEffect": "CLOSING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005201893595,
+        "cancelable": false,
+        "editable": false,
+        "status": "FILLED",
+        "enteredTime": "2026-01-22T16:11:38+0000",
+        "closeTime": "2026-01-22T16:11:38+0000",
+        "tag": "API_TOS:POS_STMT",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110719854743,
+                "executionType": "FILL",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 0.75,
+                        "time": "2026-01-22T16:11:38+0000",
+                        "instrumentId": 243990879
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 0.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "WEXM",
+        "price": 0.8,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0VKTX.AU60037000",
+                    "symbol": "VKTX  260130C00037000",
+                    "description": "VIKING THERAPEUTICS INC 01/30/2026 $37 Call",
+                    "instrumentId": 243990879,
+                    "type": "VANILLA",
+                    "putCall": "CALL",
+                    "underlyingSymbol": "VKTX",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "VKTX",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "SELL_TO_CLOSE",
+                "positionEffect": "CLOSING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005201893584,
+        "cancelable": false,
+        "editable": false,
+        "status": "REPLACED",
+        "enteredTime": "2026-01-22T16:11:31+0000",
+        "closeTime": "2026-01-22T16:11:38+0000",
+        "tag": "API_TOS:POS_STMT",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110719854736,
+                "executionType": "CANCELED",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 0.0,
+                        "time": "2026-01-22T16:11:38+0000",
+                        "instrumentId": 243990879
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 1.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "JNST",
+        "price": 0.76,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0VKTX.AU60037000",
+                    "symbol": "VKTX  260130C00037000",
+                    "description": "VIKING THERAPEUTICS INC 01/30/2026 $37 Call",
+                    "instrumentId": 243990879,
+                    "type": "VANILLA",
+                    "putCall": "CALL",
+                    "underlyingSymbol": "VKTX",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "VKTX",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "SELL_TO_CLOSE",
+                "positionEffect": "CLOSING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005201892920,
+        "cancelable": false,
+        "editable": false,
+        "status": "FILLED",
+        "enteredTime": "2026-01-22T16:02:38+0000",
+        "closeTime": "2026-01-22T16:02:38+0000",
+        "tag": "API_TOS:POS_STMT",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110717230139,
+                "executionType": "FILL",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 0.76,
+                        "time": "2026-01-22T16:02:38+0000",
+                        "instrumentId": 243990879
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 3.0,
+        "filledQuantity": 3.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "JNST",
+        "price": 0.65,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0VKTX.AU60037000",
+                    "symbol": "VKTX  260130C00037000",
+                    "description": "VIKING THERAPEUTICS INC 01/30/2026 $37 Call",
+                    "instrumentId": 243990879,
+                    "type": "VANILLA",
+                    "putCall": "CALL",
+                    "underlyingSymbol": "VKTX",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "VKTX",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "BUY_TO_OPEN",
+                "positionEffect": "OPENING",
+                "quantity": 3.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005201892743,
+        "cancelable": false,
+        "editable": false,
+        "status": "FILLED",
+        "enteredTime": "2026-01-22T15:59:13+0000",
+        "closeTime": "2026-01-22T15:59:13+0000",
+        "tag": "API_TOS:TRADE_ALL",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110717228923,
+                "executionType": "FILL",
+                "quantity": 3.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 3.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 0.65,
+                        "time": "2026-01-22T15:59:13+0000",
+                        "instrumentId": 243990879
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 2.0,
+        "filledQuantity": 2.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "DFIN",
+        "price": 1.66,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0TSLA.ND60360000",
+                    "symbol": "TSLA  260213P00360000",
+                    "description": "TESLA INC 02/13/2026 $360 Put",
+                    "instrumentId": 244884961,
+                    "type": "VANILLA",
+                    "putCall": "PUT",
+                    "underlyingSymbol": "TSLA",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "TSLA",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "SELL_TO_CLOSE",
+                "positionEffect": "CLOSING",
+                "quantity": 2.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005201892064,
+        "cancelable": false,
+        "editable": false,
+        "status": "FILLED",
+        "enteredTime": "2026-01-22T15:49:40+0000",
+        "closeTime": "2026-01-22T15:49:40+0000",
+        "tag": "API_TOS:POS_STMT",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110715179653,
+                "executionType": "FILL",
+                "quantity": 2.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 2.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 1.66,
+                        "time": "2026-01-22T15:49:40+0000",
+                        "instrumentId": 244884961
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 1.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "DFIN",
+        "price": 0.59,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0QQQ..MN60612000",
+                    "symbol": "QQQ   260123P00612000",
+                    "description": "INVESCO QQQ TR 01/23/2026 $612 Put",
+                    "instrumentId": 243697281,
+                    "type": "VANILLA",
+                    "putCall": "PUT",
+                    "underlyingSymbol": "QQQ",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "QQQ",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "SELL_TO_CLOSE",
+                "positionEffect": "CLOSING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005201127028,
+        "cancelable": false,
+        "editable": false,
+        "status": "FILLED",
+        "enteredTime": "2026-01-22T15:39:34+0000",
+        "closeTime": "2026-01-22T15:39:34+0000",
+        "tag": "API_TOS:POS_STMT",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110713253020,
+                "executionType": "FILL",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 0.59,
+                        "time": "2026-01-22T15:39:34+0000",
+                        "instrumentId": 243697281
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 1.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "CDRG",
+        "price": 1.37,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0MP...AU60075000",
+                    "symbol": "MP    260130C00075000",
+                    "description": "MP MATLS CORP 01/30/2026 $75 Call",
+                    "instrumentId": 244268168,
+                    "type": "VANILLA",
+                    "putCall": "CALL",
+                    "underlyingSymbol": "MP",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "MP",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "BUY_TO_OPEN",
+                "positionEffect": "OPENING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005201126233,
+        "cancelable": false,
+        "editable": false,
+        "status": "FILLED",
+        "enteredTime": "2026-01-22T15:31:44+0000",
+        "closeTime": "2026-01-22T15:31:44+0000",
+        "tag": "API_TOS:TRADE_ALL",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110711402820,
+                "executionType": "FILL",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 1.37,
+                        "time": "2026-01-22T15:31:44+0000",
+                        "instrumentId": 244268168
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 0.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "WEXM",
+        "price": 1.3,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0MP...AU60075000",
+                    "symbol": "MP    260130C00075000",
+                    "description": "MP MATLS CORP 01/30/2026 $75 Call",
+                    "instrumentId": 244268168,
+                    "type": "VANILLA",
+                    "putCall": "CALL",
+                    "underlyingSymbol": "MP",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "MP",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "BUY_TO_OPEN",
+                "positionEffect": "OPENING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005201126209,
+        "cancelable": false,
+        "editable": false,
+        "status": "REPLACED",
+        "enteredTime": "2026-01-22T15:31:36+0000",
+        "closeTime": "2026-01-22T15:31:44+0000",
+        "tag": "API_TOS:TRADE_ALL",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110711402813,
+                "executionType": "CANCELED",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 0.0,
+                        "time": "2026-01-22T15:31:44+0000",
+                        "instrumentId": 244268168
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 0.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "WEXM",
+        "price": 1.25,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0MP...AU60075000",
+                    "symbol": "MP    260130C00075000",
+                    "description": "MP MATLS CORP 01/30/2026 $75 Call",
+                    "instrumentId": 244268168,
+                    "type": "VANILLA",
+                    "putCall": "CALL",
+                    "underlyingSymbol": "MP",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "MP",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "BUY_TO_OPEN",
+                "positionEffect": "OPENING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005201126191,
+        "cancelable": false,
+        "editable": false,
+        "status": "REPLACED",
+        "enteredTime": "2026-01-22T15:31:29+0000",
+        "closeTime": "2026-01-22T15:31:36+0000",
+        "tag": "API_TOS:TRADE_ALL",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110711402673,
+                "executionType": "CANCELED",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 0.0,
+                        "time": "2026-01-22T15:31:36+0000",
+                        "instrumentId": 244268168
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 1.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "JNST",
+        "price": 2.34,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0ENPH.BK60042000",
+                    "symbol": "ENPH  260220C00042000",
+                    "description": "ENPHASE ENERGY INC 02/20/2026 $42 Call",
+                    "instrumentId": 245712356,
+                    "type": "VANILLA",
+                    "putCall": "CALL",
+                    "underlyingSymbol": "ENPH",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "ENPH",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "BUY_TO_OPEN",
+                "positionEffect": "OPENING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005200267150,
+        "cancelable": false,
+        "editable": false,
+        "status": "FILLED",
+        "enteredTime": "2026-01-22T15:20:48+0000",
+        "closeTime": "2026-01-22T15:20:48+0000",
+        "tag": "API_TOS:TRADE_ALL",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110707200755,
+                "executionType": "FILL",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 2.34,
+                        "time": "2026-01-22T15:20:48+0000",
+                        "instrumentId": 245712356
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 0.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "DFIN",
+        "price": 2.25,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0ENPH.BK60042000",
+                    "symbol": "ENPH  260220C00042000",
+                    "description": "ENPHASE ENERGY INC 02/20/2026 $42 Call",
+                    "instrumentId": 245712356,
+                    "type": "VANILLA",
+                    "putCall": "CALL",
+                    "underlyingSymbol": "ENPH",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "ENPH",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "BUY_TO_OPEN",
+                "positionEffect": "OPENING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005200267122,
+        "cancelable": false,
+        "editable": false,
+        "status": "REPLACED",
+        "enteredTime": "2026-01-22T15:20:32+0000",
+        "closeTime": "2026-01-22T15:20:48+0000",
+        "tag": "API_TOS:TRADE_ALL",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110707200748,
+                "executionType": "CANCELED",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 0.0,
+                        "time": "2026-01-22T15:20:48+0000",
+                        "instrumentId": 245712356
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 1.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "CDRG",
+        "price": 1.06,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0QQQ..MN60612000",
+                    "symbol": "QQQ   260123P00612000",
+                    "description": "INVESCO QQQ TR 01/23/2026 $612 Put",
+                    "instrumentId": 243697281,
+                    "type": "VANILLA",
+                    "putCall": "PUT",
+                    "underlyingSymbol": "QQQ",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "QQQ",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "BUY_TO_OPEN",
+                "positionEffect": "OPENING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005200266826,
+        "cancelable": false,
+        "editable": false,
+        "status": "FILLED",
+        "enteredTime": "2026-01-22T15:17:57+0000",
+        "closeTime": "2026-01-22T15:17:57+0000",
+        "tag": "API_TOS:TRADE_ALL",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110707198812,
+                "executionType": "FILL",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 1.05,
+                        "time": "2026-01-22T15:17:57+0000",
+                        "instrumentId": 243697281
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 2.0,
+        "filledQuantity": 2.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "DFIN",
+        "price": 0.38,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0QS...AU60012500",
+                    "symbol": "QS    260130C00012500",
+                    "description": "QUANTUMSCAPE CORP 01/30/2026 $12.5 Call",
+                    "instrumentId": 244337000,
+                    "type": "VANILLA",
+                    "putCall": "CALL",
+                    "underlyingSymbol": "QS",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "QS",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "SELL_TO_CLOSE",
+                "positionEffect": "CLOSING",
+                "quantity": 2.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005199535072,
+        "cancelable": false,
+        "editable": false,
+        "status": "FILLED",
+        "enteredTime": "2026-01-22T15:01:45+0000",
+        "closeTime": "2026-01-22T15:01:46+0000",
+        "tag": "API_TOS:POS_STMT",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110703012709,
+                "executionType": "FILL",
+                "quantity": 2.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 2.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 0.38,
+                        "time": "2026-01-22T15:01:46+0000",
+                        "instrumentId": 244337000
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 2.0,
+        "filledQuantity": 2.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "DFIN",
+        "price": 0.44,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0QS...AU60012500",
+                    "symbol": "QS    260130C00012500",
+                    "description": "QUANTUMSCAPE CORP 01/30/2026 $12.5 Call",
+                    "instrumentId": 244337000,
+                    "type": "VANILLA",
+                    "putCall": "CALL",
+                    "underlyingSymbol": "QS",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "QS",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "BUY_TO_OPEN",
+                "positionEffect": "OPENING",
+                "quantity": 2.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005197990906,
+        "cancelable": false,
+        "editable": false,
+        "status": "FILLED",
+        "enteredTime": "2026-01-22T14:33:31+0000",
+        "closeTime": "2026-01-22T14:33:32+0000",
+        "tag": "API_TOS:TRADE_ALL",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110691866331,
+                "executionType": "FILL",
+                "quantity": 2.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 2.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 0.44,
+                        "time": "2026-01-22T14:33:32+0000",
+                        "instrumentId": 244337000
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 2.0,
+        "filledQuantity": 2.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "CDRG",
+        "price": 0.58,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0NFLX.AU60087000",
+                    "symbol": "NFLX  260130C00087000",
+                    "description": "NETFLIX INC 01/30/2026 $87 Call",
+                    "instrumentId": 244283038,
+                    "type": "VANILLA",
+                    "putCall": "CALL",
+                    "underlyingSymbol": "NFLX",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "NFLX",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "SELL_TO_CLOSE",
+                "positionEffect": "CLOSING",
+                "quantity": 2.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005197990422,
+        "cancelable": false,
+        "editable": false,
+        "status": "FILLED",
+        "enteredTime": "2026-01-22T14:30:44+0000",
+        "closeTime": "2026-01-22T14:30:44+0000",
+        "tag": "API_TOS:POS_STMT",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110691863175,
+                "executionType": "FILL",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 1.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 0.62,
+                        "time": "2026-01-22T14:30:44+0000",
+                        "instrumentId": 244283038
+                    }
+                ]
+            },
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110691863177,
+                "executionType": "FILL",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 0.62,
+                        "time": "2026-01-22T14:30:44+0000",
+                        "instrumentId": 244283038
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 1.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "WEXM",
+        "price": 2.0,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0TSLA.ND60360000",
+                    "symbol": "TSLA  260213P00360000",
+                    "description": "TESLA INC 02/13/2026 $360 Put",
+                    "instrumentId": 244884961,
+                    "type": "VANILLA",
+                    "putCall": "PUT",
+                    "underlyingSymbol": "TSLA",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "TSLA",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "SELL_TO_CLOSE",
+                "positionEffect": "CLOSING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005195688252,
+        "cancelable": false,
+        "editable": false,
+        "status": "FILLED",
+        "enteredTime": "2026-01-21T20:29:32+0000",
+        "closeTime": "2026-01-21T20:29:32+0000",
+        "tag": "API_TOS:POS_STMT",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110666907127,
+                "executionType": "FILL",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 2.0,
+                        "time": "2026-01-21T20:29:32+0000",
+                        "instrumentId": 244884961
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 1.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "JNST",
+        "price": 2.95,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0HON..BK60230000",
+                    "symbol": "HON   260220C00230000",
+                    "description": "HONEYWELL INTL INC 02/20/2026 $230 Call",
+                    "instrumentId": 242414412,
+                    "type": "VANILLA",
+                    "putCall": "CALL",
+                    "underlyingSymbol": "HON",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "HON",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "SELL_TO_CLOSE",
+                "positionEffect": "CLOSING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005194775736,
+        "cancelable": false,
+        "editable": false,
+        "status": "FILLED",
+        "enteredTime": "2026-01-21T20:19:46+0000",
+        "closeTime": "2026-01-21T20:19:46+0000",
+        "tag": "API_TOS:POS_STMT",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110664248971,
+                "executionType": "FILL",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 2.95,
+                        "time": "2026-01-21T20:19:46+0000",
+                        "instrumentId": 242414412
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 1.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "WEXM",
+        "price": 1.87,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0TSLA.ND60360000",
+                    "symbol": "TSLA  260213P00360000",
+                    "description": "TESLA INC 02/13/2026 $360 Put",
+                    "instrumentId": 244884961,
+                    "type": "VANILLA",
+                    "putCall": "PUT",
+                    "underlyingSymbol": "TSLA",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "TSLA",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "BUY_TO_OPEN",
+                "positionEffect": "OPENING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005194774699,
+        "cancelable": false,
+        "editable": false,
+        "status": "FILLED",
+        "enteredTime": "2026-01-21T20:02:34+0000",
+        "closeTime": "2026-01-21T20:02:34+0000",
+        "tag": "API_TOS:TRADE_ALL",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110662122546,
+                "executionType": "FILL",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 1.87,
+                        "time": "2026-01-21T20:02:34+0000",
+                        "instrumentId": 244884961
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 0.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "SIGQ",
+        "price": 1.85,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0TSLA.ND60360000",
+                    "symbol": "TSLA  260213P00360000",
+                    "description": "TESLA INC 02/13/2026 $360 Put",
+                    "instrumentId": 244884961,
+                    "type": "VANILLA",
+                    "putCall": "PUT",
+                    "underlyingSymbol": "TSLA",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "TSLA",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "BUY_TO_OPEN",
+                "positionEffect": "OPENING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005194774686,
+        "cancelable": false,
+        "editable": false,
+        "status": "REPLACED",
+        "enteredTime": "2026-01-21T20:02:26+0000",
+        "closeTime": "2026-01-21T20:02:34+0000",
+        "tag": "API_TOS:TRADE_ALL",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110662122536,
+                "executionType": "CANCELED",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 0.0,
+                        "time": "2026-01-21T20:02:34+0000",
+                        "instrumentId": 244884961
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 2.0,
+        "filledQuantity": 2.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "JNST",
+        "price": 1.01,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0NFLX.AU60087000",
+                    "symbol": "NFLX  260130C00087000",
+                    "description": "NETFLIX INC 01/30/2026 $87 Call",
+                    "instrumentId": 244283038,
+                    "type": "VANILLA",
+                    "putCall": "CALL",
+                    "underlyingSymbol": "NFLX",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "NFLX",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "BUY_TO_OPEN",
+                "positionEffect": "OPENING",
+                "quantity": 2.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005194774403,
+        "cancelable": false,
+        "editable": false,
+        "status": "FILLED",
+        "enteredTime": "2026-01-21T19:58:32+0000",
+        "closeTime": "2026-01-21T19:58:32+0000",
+        "tag": "API_TOS:TRADE_ALL",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110659895568,
+                "executionType": "FILL",
+                "quantity": 2.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 2.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 1.01,
+                        "time": "2026-01-21T19:58:32+0000",
+                        "instrumentId": 244283038
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 1.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "WEXM",
+        "price": 1.15,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0CRM..MU60210000",
+                    "symbol": "CRM   260130P00210000",
+                    "description": "SALESFORCE INC 01/30/2026 $210 Put",
+                    "instrumentId": 243920920,
+                    "type": "VANILLA",
+                    "putCall": "PUT",
+                    "underlyingSymbol": "CRM",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "CRM",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "SELL_TO_CLOSE",
+                "positionEffect": "CLOSING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005193994806,
+        "cancelable": false,
+        "editable": false,
+        "status": "FILLED",
+        "enteredTime": "2026-01-21T19:40:45+0000",
+        "closeTime": "2026-01-21T19:40:46+0000",
+        "tag": "API_TOS:POS_STMT",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110656335495,
+                "executionType": "FILL",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 1.15,
+                        "time": "2026-01-21T19:40:46+0000",
+                        "instrumentId": 243920920
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 1.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "CDRG",
+        "price": 1.18,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0XOM..CK60145000",
+                    "symbol": "XOM   260320C00145000",
+                    "description": "EXXON MOBIL CORP 03/20/2026 $145 Call",
+                    "instrumentId": 230299369,
+                    "type": "VANILLA",
+                    "putCall": "CALL",
+                    "underlyingSymbol": "XOM",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "XOM",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "SELL_TO_CLOSE",
+                "positionEffect": "CLOSING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005193994497,
+        "cancelable": false,
+        "editable": false,
+        "status": "FILLED",
+        "enteredTime": "2026-01-21T19:37:06+0000",
+        "closeTime": "2026-01-21T19:37:06+0000",
+        "tag": "API_TOS:POS_STMT",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110656333310,
+                "executionType": "FILL",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 1.2,
+                        "time": "2026-01-21T19:37:06+0000",
+                        "instrumentId": 230299369
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 1.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "WEXM",
+        "price": 2.5,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0MDB..MU60350000",
+                    "symbol": "MDB   260130P00350000",
+                    "description": "MONGODB INC 01/30/2026 $350 Put",
+                    "instrumentId": 244375006,
+                    "type": "VANILLA",
+                    "putCall": "PUT",
+                    "underlyingSymbol": "MDB",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "MDB",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "SELL_TO_CLOSE",
+                "positionEffect": "CLOSING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005193994042,
+        "cancelable": false,
+        "editable": false,
+        "status": "FILLED",
+        "enteredTime": "2026-01-21T19:31:17+0000",
+        "closeTime": "2026-01-21T19:31:17+0000",
+        "tag": "API_TOS:POS_STMT",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110654165067,
+                "executionType": "FILL",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 2.5,
+                        "time": "2026-01-21T19:31:17+0000",
+                        "instrumentId": 244375006
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 1.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "WEXM",
+        "price": 3.15,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0HON..DH60240000",
+                    "symbol": "HON   260417C00240000",
+                    "description": "HONEYWELL INTL INC 04/17/2026 $240 Call",
+                    "instrumentId": 244822248,
+                    "type": "VANILLA",
+                    "putCall": "CALL",
+                    "underlyingSymbol": "HON",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "HON",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "BUY_TO_OPEN",
+                "positionEffect": "OPENING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005192885984,
+        "cancelable": false,
+        "editable": false,
+        "status": "FILLED",
+        "enteredTime": "2026-01-21T19:30:29+0000",
+        "closeTime": "2026-01-21T19:30:29+0000",
+        "tag": "API_TOS:TRADE_ALL",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110654164591,
+                "executionType": "FILL",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 3.14,
+                        "time": "2026-01-21T19:30:29+0000",
+                        "instrumentId": 244822248
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 3.0,
+        "filledQuantity": 3.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "CDRG",
+        "price": 1.55,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0IBIT.ND60048500",
+                    "symbol": "IBIT  260213P00048500",
+                    "description": "ISHR BITCOIN TR ETF 02/13/2026 $48.5 Put",
+                    "instrumentId": 245068787,
+                    "type": "VANILLA",
+                    "putCall": "PUT",
+                    "underlyingSymbol": "IBIT",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "IBIT",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "BUY_TO_OPEN",
+                "positionEffect": "OPENING",
+                "quantity": 3.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005190978727,
+        "cancelable": false,
+        "editable": false,
+        "status": "FILLED",
+        "enteredTime": "2026-01-21T17:38:27+0000",
+        "closeTime": "2026-01-21T17:38:27+0000",
+        "tag": "API_TOS:TRADE_ALL",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110635990848,
+                "executionType": "FILL",
+                "quantity": 3.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 3.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 1.54,
+                        "time": "2026-01-21T17:38:27+0000",
+                        "instrumentId": 245068787
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 1.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "JNST",
+        "price": 1.54,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0CRM..MU60210000",
+                    "symbol": "CRM   260130P00210000",
+                    "description": "SALESFORCE INC 01/30/2026 $210 Put",
+                    "instrumentId": 243920920,
+                    "type": "VANILLA",
+                    "putCall": "PUT",
+                    "underlyingSymbol": "CRM",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "CRM",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "BUY_TO_OPEN",
+                "positionEffect": "OPENING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005189363666,
+        "cancelable": false,
+        "editable": false,
+        "status": "FILLED",
+        "enteredTime": "2026-01-21T16:58:10+0000",
+        "closeTime": "2026-01-21T16:58:10+0000",
+        "tag": "API_TOS:TRADE_ALL",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110627621730,
+                "executionType": "FILL",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 1.54,
+                        "time": "2026-01-21T16:58:10+0000",
+                        "instrumentId": 243920920
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 1.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "CDRG",
+        "price": 2.5,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0MDB..MU60350000",
+                    "symbol": "MDB   260130P00350000",
+                    "description": "MONGODB INC 01/30/2026 $350 Put",
+                    "instrumentId": 244375006,
+                    "type": "VANILLA",
+                    "putCall": "PUT",
+                    "underlyingSymbol": "MDB",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "MDB",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "BUY_TO_OPEN",
+                "positionEffect": "OPENING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005189363111,
+        "cancelable": false,
+        "editable": false,
+        "status": "FILLED",
+        "enteredTime": "2026-01-21T16:51:17+0000",
+        "closeTime": "2026-01-21T16:51:17+0000",
+        "tag": "API_TOS:TRADE_ALL",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110627618117,
+                "executionType": "FILL",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 2.5,
+                        "time": "2026-01-21T16:51:17+0000",
+                        "instrumentId": 244375006
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 0.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "JNST",
+        "price": 4.2,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0MDB..NK60330000",
+                    "symbol": "MDB   260220P00330000",
+                    "description": "MONGODB INC 02/20/2026 $330 Put",
+                    "instrumentId": 238065148,
+                    "type": "VANILLA",
+                    "putCall": "PUT",
+                    "underlyingSymbol": "MDB",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "MDB",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "BUY_TO_OPEN",
+                "positionEffect": "OPENING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005189362508,
+        "cancelable": false,
+        "editable": false,
+        "status": "CANCELED",
+        "enteredTime": "2026-01-21T16:43:54+0000",
+        "closeTime": "2026-01-21T16:44:28+0000",
+        "tag": "API_TOS:TRADE_ALL",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110625634518,
+                "executionType": "CANCELED",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 0.0,
+                        "time": "2026-01-21T16:44:28+0000",
+                        "instrumentId": 238065148
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 2.0,
+        "filledQuantity": 2.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "WEXM",
+        "price": 2.7,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0TSLA.ND60360000",
+                    "symbol": "TSLA  260213P00360000",
+                    "description": "TESLA INC 02/13/2026 $360 Put",
+                    "instrumentId": 244884961,
+                    "type": "VANILLA",
+                    "putCall": "PUT",
+                    "underlyingSymbol": "TSLA",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "TSLA",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "BUY_TO_OPEN",
+                "positionEffect": "OPENING",
+                "quantity": 2.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005189362274,
+        "cancelable": false,
+        "editable": false,
+        "status": "FILLED",
+        "enteredTime": "2026-01-21T16:41:47+0000",
+        "closeTime": "2026-01-21T16:41:49+0000",
+        "tag": "API_TOS:TRADE_ALL",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110625632765,
+                "executionType": "FILL",
+                "quantity": 2.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 2.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 2.7,
+                        "time": "2026-01-21T16:41:49+0000",
+                        "instrumentId": 244884961
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 2.0,
+        "filledQuantity": 0.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "CDRG",
+        "price": 2.68,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0TSLA.ND60360000",
+                    "symbol": "TSLA  260213P00360000",
+                    "description": "TESLA INC 02/13/2026 $360 Put",
+                    "instrumentId": 244884961,
+                    "type": "VANILLA",
+                    "putCall": "PUT",
+                    "underlyingSymbol": "TSLA",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "TSLA",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "BUY_TO_OPEN",
+                "positionEffect": "OPENING",
+                "quantity": 2.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005189362261,
+        "cancelable": false,
+        "editable": false,
+        "status": "REPLACED",
+        "enteredTime": "2026-01-21T16:41:40+0000",
+        "closeTime": "2026-01-21T16:41:47+0000",
+        "tag": "API_TOS:TRADE_ALL",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110625632758,
+                "executionType": "CANCELED",
+                "quantity": 2.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 2.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 0.0,
+                        "time": "2026-01-21T16:41:47+0000",
+                        "instrumentId": 244884961
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 2.0,
+        "filledQuantity": 0.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "JNST",
+        "price": 2.65,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0TSLA.ND60360000",
+                    "symbol": "TSLA  260213P00360000",
+                    "description": "TESLA INC 02/13/2026 $360 Put",
+                    "instrumentId": 244884961,
+                    "type": "VANILLA",
+                    "putCall": "PUT",
+                    "underlyingSymbol": "TSLA",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "TSLA",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "BUY_TO_OPEN",
+                "positionEffect": "OPENING",
+                "quantity": 2.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005189362246,
+        "cancelable": false,
+        "editable": false,
+        "status": "REPLACED",
+        "enteredTime": "2026-01-21T16:41:30+0000",
+        "closeTime": "2026-01-21T16:41:40+0000",
+        "tag": "API_TOS:TRADE_ALL",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110625632664,
+                "executionType": "CANCELED",
+                "quantity": 2.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 2.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 0.0,
+                        "time": "2026-01-21T16:41:40+0000",
+                        "instrumentId": 244884961
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 1.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "DFIN",
+        "price": 1.83,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0XOM..AU60134000",
+                    "symbol": "XOM   260130C00134000",
+                    "description": "EXXON MOBIL CORP 01/30/2026 $134 Call",
+                    "instrumentId": 245024180,
+                    "type": "VANILLA",
+                    "putCall": "CALL",
+                    "underlyingSymbol": "XOM",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "XOM",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "SELL_TO_CLOSE",
+                "positionEffect": "CLOSING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005187786422,
+        "cancelable": false,
+        "editable": false,
+        "status": "FILLED",
+        "enteredTime": "2026-01-21T15:57:05+0000",
+        "closeTime": "2026-01-21T15:57:06+0000",
+        "tag": "API_TOS:POS_STMT",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110615538255,
+                "executionType": "FILL",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 1.83,
+                        "time": "2026-01-21T15:57:06+0000",
+                        "instrumentId": 245024180
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 0.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "DFIN",
+        "price": 1.88,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0XOM..AU60134000",
+                    "symbol": "XOM   260130C00134000",
+                    "description": "EXXON MOBIL CORP 01/30/2026 $134 Call",
+                    "instrumentId": 245024180,
+                    "type": "VANILLA",
+                    "putCall": "CALL",
+                    "underlyingSymbol": "XOM",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "XOM",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "SELL_TO_CLOSE",
+                "positionEffect": "CLOSING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005187786408,
+        "cancelable": false,
+        "editable": false,
+        "status": "REPLACED",
+        "enteredTime": "2026-01-21T15:56:55+0000",
+        "closeTime": "2026-01-21T15:57:05+0000",
+        "tag": "API_TOS:POS_STMT",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110615538248,
+                "executionType": "CANCELED",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 0.0,
+                        "time": "2026-01-21T15:57:05+0000",
+                        "instrumentId": 245024180
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 0.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "WEXM",
+        "price": 1.93,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0XOM..AU60134000",
+                    "symbol": "XOM   260130C00134000",
+                    "description": "EXXON MOBIL CORP 01/30/2026 $134 Call",
+                    "instrumentId": 245024180,
+                    "type": "VANILLA",
+                    "putCall": "CALL",
+                    "underlyingSymbol": "XOM",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "XOM",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "SELL_TO_CLOSE",
+                "positionEffect": "CLOSING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005187786392,
+        "cancelable": false,
+        "editable": false,
+        "status": "REPLACED",
+        "enteredTime": "2026-01-21T15:56:43+0000",
+        "closeTime": "2026-01-21T15:56:55+0000",
+        "tag": "API_TOS:POS_STMT",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110615538162,
+                "executionType": "CANCELED",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 0.0,
+                        "time": "2026-01-21T15:56:55+0000",
+                        "instrumentId": 245024180
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 1.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "CDRG",
+        "price": 0.53,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0TSLA.MU60360000",
+                    "symbol": "TSLA  260130P00360000",
+                    "description": "TESLA INC 01/30/2026 $360 Put",
+                    "instrumentId": 244370131,
+                    "type": "VANILLA",
+                    "putCall": "PUT",
+                    "underlyingSymbol": "TSLA",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "TSLA",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "SELL_TO_CLOSE",
+                "positionEffect": "CLOSING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005187786254,
+        "cancelable": false,
+        "editable": false,
+        "status": "FILLED",
+        "enteredTime": "2026-01-21T15:55:22+0000",
+        "closeTime": "2026-01-21T15:55:22+0000",
+        "tag": "API_TOS:POS_STMT",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110615537191,
+                "executionType": "FILL",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 0.55,
+                        "time": "2026-01-21T15:55:22+0000",
+                        "instrumentId": 244370131
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "session": "NORMAL",
+        "duration": "DAY",
+        "orderType": "LIMIT",
+        "complexOrderStrategyType": "NONE",
+        "quantity": 1.0,
+        "filledQuantity": 1.0,
+        "remainingQuantity": 0.0,
+        "requestedDestination": "AUTO",
+        "destinationLinkName": "SIGQ",
+        "price": 0.02,
+        "orderLegCollection": [
+            {
+                "orderLegType": "OPTION",
+                "legId": 1,
+                "instrument": {
+                    "assetType": "OPTION",
+                    "cusip": "0NFLX.AN60100000",
+                    "symbol": "NFLX  260123C00100000",
+                    "description": "NETFLIX INC 01/23/2026 $100 Call",
+                    "instrumentId": 243979192,
+                    "type": "VANILLA",
+                    "putCall": "CALL",
+                    "underlyingSymbol": "NFLX",
+                    "optionDeliverables": [
+                        {
+                            "symbol": "NFLX",
+                            "deliverableUnits": 100.0
+                        }
+                    ]
+                },
+                "instruction": "SELL_TO_CLOSE",
+                "positionEffect": "CLOSING",
+                "quantity": 1.0
+            }
+        ],
+        "orderStrategyType": "SINGLE",
+        "orderId": 1005187786239,
+        "cancelable": false,
+        "editable": false,
+        "status": "FILLED",
+        "enteredTime": "2026-01-21T15:55:15+0000",
+        "closeTime": "2026-01-21T15:55:15+0000",
+        "tag": "API_TOS:POS_STMT",
+        "accountNumber": 54661285,
+        "orderActivityCollection": [
+            {
+                "activityType": "EXECUTION",
+                "activityId": 110615537098,
+                "executionType": "FILL",
+                "quantity": 1.0,
+                "orderRemainingQuantity": 0.0,
+                "executionLegs": [
+                    {
+                        "legId": 1,
+                        "quantity": 1.0,
+                        "mismarkedQuantity": 0.0,
+                        "price": 0.02,
+                        "time": "2026-01-21T15:55:15+0000",
+                        "instrumentId": 243979192
+                    }
+                ]
+            }
+        ]
+    }
+]

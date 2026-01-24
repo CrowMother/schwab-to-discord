@@ -1,4 +1,3 @@
-# src/app/db/trades_db.py
 from __future__ import annotations
 
 import os
@@ -17,15 +16,6 @@ def _apply_pragmas(conn: sqlite3.Connection) -> None:
     conn.execute("PRAGMA journal_mode = WAL;")
     conn.execute("PRAGMA synchronous = NORMAL;")
 
-    
-
-
-def _add_column_if_missing(conn: sqlite3.Connection, table_name: str, column_name: str, column_type: str) -> None:
-    cursor = conn.execute(f"PRAGMA table_info({table_name})")
-    columns = [col[1] for col in cursor.fetchall()]
-    if column_name not in columns:
-        conn.execute(f"ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type}")
-
 
 def init_trades_db(db_path: str, conn: Optional[sqlite3.Connection] = None) -> None:
     _ensure_parent_dir(db_path)
@@ -42,44 +32,62 @@ def init_trades_db(db_path: str, conn: Optional[sqlite3.Connection] = None) -> N
             CREATE TABLE IF NOT EXISTS trades (
               trade_id TEXT PRIMARY KEY,
 
-              -- trade dataclass fields (raw, columnized)
+              -- matching key foundation
+              account_number TEXT NOT NULL,
+              instrument_id INTEGER NOT NULL,
+
+              -- order/fill identity
               order_id INTEGER NOT NULL,
+              leg_id INTEGER,
+              execution_time TEXT NOT NULL,   -- from executionLegs[].time
+
+              -- what it is
               symbol TEXT NOT NULL,
               asset_type TEXT NOT NULL,
               instruction TEXT NOT NULL,
+              position_effect TEXT,           -- OPENING/CLOSING
 
-               description TEXT,            -- NEW
+              -- fill data
+              fill_quantity REAL NOT NULL,
+              fill_price REAL,
 
-              quantity REAL NOT NULL,
-              filled_quantity REAL NOT NULL,
-              remaining_quantity REAL NOT NULL,
-
-              price REAL,
-              status TEXT NOT NULL,
-
-              entered_time TEXT NOT NULL,
+              -- context
+              status TEXT,
+              description TEXT,
+              entered_time TEXT,
               close_time TEXT,
+
+              -- bot state (so we don’t need a per-trade state table)
+              posted INTEGER NOT NULL DEFAULT 0,
+              posted_at TEXT,
+              discord_message_id TEXT,
 
               ingested_at TEXT NOT NULL
             );
             """
         )
 
-        # Dedupe: one order_id row for now (simple foundation)
+        # Prevent duplicates if you re-run ingestion
         conn.execute(
             """
-            CREATE UNIQUE INDEX IF NOT EXISTS ux_trades_order_id
-              ON trades(order_id);
+            CREATE UNIQUE INDEX IF NOT EXISTS ux_trades_fill_dedupe
+              ON trades(account_number, instrument_id, order_id, leg_id, execution_time, fill_quantity, fill_price);
             """
         )
 
         conn.execute(
             """
-            CREATE INDEX IF NOT EXISTS idx_trades_symbol_entered
-              ON trades(symbol, entered_time);
+            CREATE INDEX IF NOT EXISTS idx_trades_match_key_time
+              ON trades(account_number, instrument_id, execution_time);
             """
         )
-        _add_column_if_missing(conn, "trades", "description", "TEXT")
+
+        conn.execute(
+            """
+            CREATE INDEX IF NOT EXISTS idx_trades_posted_time
+              ON trades(posted, execution_time);
+            """
+        )
 
         conn.commit()
     finally:
