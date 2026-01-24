@@ -11,6 +11,7 @@
 #     post_to_discord(processed)
 import os
 import sqlite3
+import time
 from app.db.trades_db import init_trades_db
 from app.db.trade_state_db import init_trade_state_db
 from app.db.queries import get_unposted_trade_ids
@@ -57,14 +58,14 @@ def send_unposted_trades(conn, config, unposted_trade_ids):
             mark_posted(conn, trade_id, discord_message_id=None)         
     # Figure out if I want to create a list for all these trades or process them directly after loading
     conn.commit()
-    conn.close()
+    
 
 
 logger = logging.getLogger(__name__)
 
 def main() -> None:
-    setup_logging()
     config = load_config()
+    setup_logging()
 
     #create conn
     os.makedirs(os.path.dirname(config.db_path) or ".", exist_ok=True)
@@ -78,13 +79,20 @@ def main() -> None:
 
     print(f"client created: {client}")
 
-    raw_orders = client.get_orders(config)
-    #load into database
-    load_trade_orders(raw_orders, conn)
-    
-    #pull unposted trades and send to discord
-    unposted_trade_ids = get_unposted_trade_ids(conn)
-    send_unposted_trades(conn, config, unposted_trade_ids)
+    #loop from here:
+    while True:
+
+        raw_orders = client.get_orders(config)
+        #load into database
+        load_trade_orders(raw_orders, conn)
+        
+        #pull unposted trades and send to discord
+        unposted_trade_ids = get_unposted_trade_ids(conn)
+        send_unposted_trades(conn, config, unposted_trade_ids)
+
+        #change sleep time to config value in the future
+        time.sleep(5)
+    conn.close()
 
 if __name__ == "__main__":
     main()
