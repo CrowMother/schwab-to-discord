@@ -1,0 +1,12 @@
+services:
+  schwab-to-discord:
+    image: crowmommy/schwab-to-discord:latest
+    container_name: schwab-to-discord-josh
+    restart: unless-stopped
+
+    # Persist SQLite files that your env points to
+    volumes:
+      - /home/ubuntu/V3/schwab-to-discord-josh/data:/app/src/data
+
+    #Optional: if you want to see logs quickly
+    tty: true

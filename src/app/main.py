@@ -48,6 +48,9 @@ def send_unposted_trades(conn, config, unposted_trade_ids):
             continue
         
         template = load_single_value("TEMPLATE", None)
+        if template:
+            template = template.replace("\\n", "\n")
+
         #build message
         msg = build_discord_message_template(template, trade)
         #post to discord
@@ -81,17 +84,22 @@ def main() -> None:
 
     #loop from here:
     while True:
+        try:
+            
+            raw_orders = client.get_orders(config)
+            #load into database
+            load_trade_orders(raw_orders, conn)
+            
+            #pull unposted trades and send to discord
+            unposted_trade_ids = get_unposted_trade_ids(conn)
+            send_unposted_trades(conn, config, unposted_trade_ids)
 
-        raw_orders = client.get_orders(config)
-        #load into database
-        load_trade_orders(raw_orders, conn)
-        
-        #pull unposted trades and send to discord
-        unposted_trade_ids = get_unposted_trade_ids(conn)
-        send_unposted_trades(conn, config, unposted_trade_ids)
-
-        #change sleep time to config value in the future
-        time.sleep(5)
+            #change sleep time to config value in the future
+            time.sleep(5)
+        except Exception as e:
+            logger.error(f"Error in main loop (rebooting after 10 seconds): {e}", exc_info=True)
+            time.sleep(10)
+            break
     conn.close()
 
 if __name__ == "__main__":
