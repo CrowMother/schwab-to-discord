@@ -3,7 +3,7 @@ from __future__ import annotations
 import sqlite3
 from datetime import datetime, timezone
 from typing import Optional
-from app.models.data import Trade
+from app.models.trade import Trade
 
 
 def _now_iso() -> str:
@@ -89,17 +89,18 @@ def ensure_trade_state(conn: sqlite3.Connection, trade_id: str) -> None:
     )
 
 
-def mark_posted(conn: sqlite3.Connection, trade_id: str, discord_message_id: Optional[str] = None) -> None:
+def mark_posted(conn: sqlite3.Connection, trade_id: str, quantity: int, discord_message_id: Optional[str] = None) -> None:
     cur = conn.execute(
         """
         UPDATE trade_state
         SET posted = 1,
             posted_at = COALESCE(posted_at, ?),
             discord_message_id = COALESCE(?, discord_message_id),
-            updated_at = ?
+            updated_at = ?,
+            open_qty = ?
         WHERE trade_id = ?;
         """,
-        (_now_iso(), discord_message_id, _now_iso(), trade_id),
+        (_now_iso(), discord_message_id, _now_iso(), quantity, trade_id),
     )
     if cur.rowcount != 1:
         raise RuntimeError(f"mark_posted updated {cur.rowcount} rows for trade_id={trade_id}")

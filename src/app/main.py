@@ -21,7 +21,7 @@ import logging
 from app.db.trades_repo import ensure_trade_state, load_trade_from_db, mark_posted, store_trade
 from app.discord.discord_message import build_discord_message, build_discord_message_template
 from app.discord.discord_webhook import post_webhook
-from app.models.data import load_trade
+from app.models.trade import load_trade
 
 from .models.config import load_single_value, load_config
 from .utils.logging import setup_logging
@@ -42,23 +42,39 @@ def load_trade_orders(raw_orders=None, conn=None):
 
 def send_unposted_trades(conn, config, unposted_trade_ids):
     for trade_id in unposted_trade_ids:
+
+        
         # load trade
         trade = load_trade_from_db(conn, trade_id)
         if not trade:
             continue
+
+        # function this way to determine open quantity + or -
+        if trade.instruction and "OPEN" in trade.instruction.upper():
+            open_qty_amount = trade.filled_quantity
+            closing_template = ""
+        elif trade.instruction and "CLOSE" in trade.instruction.upper():
+            open_qty_amount = trade.filled_quantity * -1
+            closing_template = f" \n${trade.price} (CLOSING POSITION)"
+        else:
+            open_qty_amount = 0
+
         
         template = load_single_value("TEMPLATE", None)
         if template:
             template = template.replace("\\n", "\n")
 
-        #build message
+        #build message if closing
+        template = template + closing_template if template else closing_template
+
+        #build message off template
         msg = build_discord_message_template(template, trade)
         #post to discord
         resp = post_webhook(config.discord_webhook, msg, timeout=config.schwab_timeout)
         logger.debug(f"Posted trade ID {trade_id} to Discord, response: {resp}")
         #mark posted
         with conn:
-            mark_posted(conn, trade_id, discord_message_id=None)         
+            mark_posted(conn, trade_id, open_qty_amount, discord_message_id=None)   
     # Figure out if I want to create a list for all these trades or process them directly after loading
     conn.commit()
     
