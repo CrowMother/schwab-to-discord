@@ -1,14 +1,3 @@
-
-# setup_logging()
-# logger.info("Application started")
-
-# def main():
-#     config = load_config()
-#     db = init_database(config)
-#     schwab_data = fetch_market_data(config)
-#     processed = process_data(schwab_data)
-#     store_results(db, processed)
-#     post_to_discord(processed)
 import os
 import sqlite3
 import time
@@ -27,50 +16,92 @@ from .models.config import load_single_value, load_config
 from .utils.logging import setup_logging
 from .api.schwab import SchwabApi
 
+logger = logging.getLogger(__name__)
+
+def get_schwab_positions(client):
+    """Fetch current positions from Schwab account."""
+    try:
+        resp = client.client.account_details_all(fields="positions")
+        resp.raise_for_status()
+        accounts = resp.json()
+
+        positions_by_symbol = {}
+        for account in accounts:
+            account_positions = account.get("securitiesAccount", {}).get("positions", [])
+            for pos in account_positions:
+                instrument = pos.get("instrument", {})
+                asset_type = instrument.get("assetType", "N/A")
+                if asset_type != "OPTION":
+                    continue
+
+                symbol = instrument.get("symbol", "N/A")
+                qty = pos.get("longQuantity", 0) - pos.get("shortQuantity", 0)
+
+                underlying = symbol.split()[0] if " " in symbol else symbol
+                if underlying not in positions_by_symbol:
+                    positions_by_symbol[underlying] = 0
+                positions_by_symbol[underlying] += qty
+
+        return positions_by_symbol
+    except Exception as e:
+        logger.error(f"Error fetching positions: {e}")
+        return {}
+
+def get_total_sold(conn, symbol):
+    """Get total quantity sold for a symbol from trade history."""
+    try:
+        underlying = symbol.split()[0] if " " in symbol else symbol
+        cursor = conn.execute("""
+            SELECT SUM(filled_quantity) FROM trades
+            WHERE symbol LIKE ? AND instruction LIKE '%SELL%'
+        """, (f"{underlying}%",))
+        result = cursor.fetchone()[0]
+        return int(result) if result else 0
+    except Exception as e:
+        logger.error(f"Error getting total sold: {e}")
+        return 0
+
 def load_trade_orders(raw_orders=None, conn=None):
-        for order in raw_orders:
-            logger.debug(f"loading trade: {order}")
-            trade = load_trade(order)
-            logger.debug(f"Loaded trade: {trade}")
+    for order in raw_orders:
+        logger.debug(f"loading trade: {order}")
+        trade = load_trade(order)
+        logger.debug(f"Loaded trade: {trade}")
 
-            # store trade
-            trade_id = store_trade(conn, trade)
-            logger.debug(f"Stored trade with ID: {trade_id}")
-            ensure_trade_state(conn, trade_id)
-        
-        conn.commit()
+        trade_id = store_trade(conn, trade)
+        logger.debug(f"Stored trade with ID: {trade_id}")
+        ensure_trade_state(conn, trade_id)
 
-def send_unposted_trades(conn, config, unposted_trade_ids):
+    conn.commit()
+
+def send_unposted_trades(conn, config, unposted_trade_ids, positions_by_symbol):
     for trade_id in unposted_trade_ids:
-        # load trade
         trade = load_trade_from_db(conn, trade_id)
         if not trade:
             continue
-        
+
         template = load_single_value("TEMPLATE", None)
         if template:
-            template = template.replace("\\n", "\n")
+            template = template.replace("\n", "\n")
 
-        #build message
-        msg = build_discord_message_template(template, trade)
-        #post to discord
+        # Get position data
+        underlying = trade.symbol.split()[0] if " " in trade.symbol else trade.symbol
+        position_left = positions_by_symbol.get(underlying, 0)
+        total_sold = get_total_sold(conn, trade.symbol)
+
+        # build message with position data
+        msg = build_discord_message_template(template, trade, position_left=position_left, total_sold=total_sold)
         resp = post_webhook(config.discord_webhook, msg, timeout=config.schwab_timeout)
         logger.debug(f"Posted trade ID {trade_id} to Discord, response: {resp}")
-        #mark posted
+
         with conn:
-            mark_posted(conn, trade_id, discord_message_id=None)         
-    # Figure out if I want to create a list for all these trades or process them directly after loading
+            mark_posted(conn, trade_id, discord_message_id=None)
     conn.commit()
-    
 
-
-logger = logging.getLogger(__name__)
 
 def main() -> None:
     config = load_config()
     setup_logging()
 
-    #create conn
     os.makedirs(os.path.dirname(config.db_path) or ".", exist_ok=True)
     conn = sqlite3.connect(config.db_path)
     init_trades_db(config.db_path, conn)
@@ -82,19 +113,17 @@ def main() -> None:
 
     print(f"client created: {client}")
 
-    #loop from here:
     while True:
         try:
-            
             raw_orders = client.get_orders(config)
-            #load into database
             load_trade_orders(raw_orders, conn)
-            
-            #pull unposted trades and send to discord
-            unposted_trade_ids = get_unposted_trade_ids(conn)
-            send_unposted_trades(conn, config, unposted_trade_ids)
 
-            #change sleep time to config value in the future
+            # Get current positions from Schwab
+            positions_by_symbol = get_schwab_positions(client)
+
+            unposted_trade_ids = get_unposted_trade_ids(conn)
+            send_unposted_trades(conn, config, unposted_trade_ids, positions_by_symbol)
+
             time.sleep(5)
         except Exception as e:
             logger.error(f"Error in main loop (rebooting after 10 seconds): {e}", exc_info=True)
@@ -104,4 +133,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
