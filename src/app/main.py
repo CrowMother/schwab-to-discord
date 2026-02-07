@@ -90,8 +90,16 @@ def send_unposted_trades(conn, config, unposted_trade_ids, positions_by_symbol):
 
         # build message with position data
         msg = build_discord_message_template(template, trade, position_left=position_left, total_sold=total_sold)
+
+        # Post to primary webhook
         resp = post_webhook(config.discord_webhook, msg, timeout=config.schwab_timeout)
-        logger.debug(f"Posted trade ID {trade_id} to Discord, response: {resp}")
+        logger.debug(f"Posted trade ID {trade_id} to Discord (primary), response: {resp}")
+
+        # Post to secondary webhook if configured
+        webhook_2 = load_single_value("DISCORD_WEBHOOK_2", None)
+        if webhook_2:
+            resp2 = post_webhook(webhook_2, msg, timeout=config.schwab_timeout)
+            logger.debug(f"Posted trade ID {trade_id} to Discord (secondary), response: {resp2}")
 
         with conn:
             mark_posted(conn, trade_id, discord_message_id=None)
