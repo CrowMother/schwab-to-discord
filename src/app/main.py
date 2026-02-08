@@ -19,6 +19,7 @@ from app.api.positions import get_schwab_positions
 from .models.config import load_single_value, load_config
 from .utils.logging import setup_logging
 from .api.schwab import SchwabApi
+from .scheduler import start_gsheet_scheduler, stop_gsheet_scheduler
 
 logger = logging.getLogger(__name__)
 
@@ -128,6 +129,13 @@ def main() -> None:
 
     logger.info("Starting %s", config.app_name)
 
+    # Start weekly Google Sheets export scheduler (default: Sundays at 8:00 PM)
+    try:
+        start_gsheet_scheduler()
+        logger.info("Weekly Google Sheets export scheduler started")
+    except Exception as e:
+        logger.warning(f"Could not start Google Sheets scheduler: {e}")
+
     client = SchwabApi(config)
 
     logger.info(f"Client created: {client}")
@@ -148,6 +156,9 @@ def main() -> None:
             logger.error(f"Error in main loop (rebooting after 10 seconds): {e}", exc_info=True)
             time.sleep(10)
             break
+
+    # Cleanup
+    stop_gsheet_scheduler()
     conn.close()
 
 if __name__ == "__main__":

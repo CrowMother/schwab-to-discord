@@ -11,6 +11,9 @@ dependencies = [
   "schwabdev",
   "requests",
   "python-dotenv",
+  "gspread",
+  "google-auth",
+  "apscheduler",
 ]
 
 [tool.setuptools]

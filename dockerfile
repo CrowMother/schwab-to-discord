@@ -23,8 +23,9 @@ RUN pip install --no-cache-dir .
 # Install openpyxl for Excel export
 RUN pip install --no-cache-dir openpyxl
 
-# Copy export script
+# Copy export scripts
 COPY export_trades.py ./
+COPY export_to_gsheet.py ./
 
 # Make a persistent data dir for sqlite
 RUN mkdir -p /data

@@ -25,6 +25,11 @@ def post_webhook(
     Post a simple message to a Discord webhook.
     Returns response info (status, body). Raises on non-2xx.
     """
+    # Skip if webhook is disabled
+    if not webhook_url:
+        logger.debug("Discord webhook disabled, skipping post")
+        return {"status_code": 200, "body": {"skipped": True}}
+
     payload: dict[str, Any] = {"content": content}
 
     # Optional cosmetics (safe to omit)
