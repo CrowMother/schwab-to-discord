@@ -12,7 +12,9 @@ from app.db.trades_repo import ensure_trade_state, load_trade_from_db, mark_post
 from app.discord.discord_message import build_option_bot_message
 from app.discord.discord_webhook import post_webhook
 from app.models.data import load_trade
-from app.cost_basis import process_buy_order, process_sell_order, get_gain_for_order
+from app.cost_basis import process_buy_order, process_sell_order, get_gain_for_order, extract_underlying
+from app.db.cost_basis_db import get_matches_for_sell
+from app.api.positions import get_schwab_positions
 
 from .models.config import load_single_value, load_config
 from .utils.logging import setup_logging
@@ -20,39 +22,10 @@ from .api.schwab import SchwabApi
 
 logger = logging.getLogger(__name__)
 
-def get_schwab_positions(client):
-    """Fetch current positions from Schwab account."""
-    try:
-        resp = client.client.account_details_all(fields="positions")
-        resp.raise_for_status()
-        accounts = resp.json()
-
-        positions_by_symbol = {}
-        for account in accounts:
-            account_positions = account.get("securitiesAccount", {}).get("positions", [])
-            for pos in account_positions:
-                instrument = pos.get("instrument", {})
-                asset_type = instrument.get("assetType", "N/A")
-                if asset_type != "OPTION":
-                    continue
-
-                symbol = instrument.get("symbol", "N/A")
-                qty = pos.get("longQuantity", 0) - pos.get("shortQuantity", 0)
-
-                underlying = symbol.split()[0] if " " in symbol else symbol
-                if underlying not in positions_by_symbol:
-                    positions_by_symbol[underlying] = 0
-                positions_by_symbol[underlying] += qty
-
-        return positions_by_symbol
-    except Exception as e:
-        logger.error(f"Error fetching positions: {e}")
-        return {}
-
 def get_total_sold(conn, symbol):
     """Get total quantity sold for a symbol from trade history."""
     try:
-        underlying = symbol.split()[0] if " " in symbol else symbol
+        underlying = extract_underlying(symbol)
         cursor = conn.execute("""
             SELECT SUM(filled_quantity) FROM trades
             WHERE symbol LIKE ? AND instruction LIKE '%SELL%'
@@ -102,7 +75,7 @@ def send_unposted_trades(conn, config, unposted_trade_ids, positions_by_symbol):
             continue
 
         # Get position data
-        underlying = trade.symbol.split()[0] if " " in trade.symbol else trade.symbol
+        underlying = extract_underlying(trade.symbol)
         position_left = positions_by_symbol.get(underlying, 0)
         total_sold = get_total_sold(conn, trade.symbol)
 
@@ -112,7 +85,6 @@ def send_unposted_trades(conn, config, unposted_trade_ids, positions_by_symbol):
         if trade.instruction and "SELL" in trade.instruction.upper() and trade.order_id:
             gain_pct = get_gain_for_order(conn, trade.order_id)
             # Get entry price from lot matches if available
-            from app.db.cost_basis_db import get_matches_for_sell
             matches = get_matches_for_sell(conn, trade.order_id)
             if matches:
                 # Weighted average entry price
@@ -166,7 +138,7 @@ def main() -> None:
             load_trade_orders(raw_orders, conn)
 
             # Get current positions from Schwab
-            positions_by_symbol = get_schwab_positions(client)
+            _, positions_by_symbol = get_schwab_positions(client)
 
             unposted_trade_ids = get_unposted_trade_ids(conn)
             send_unposted_trades(conn, config, unposted_trade_ids, positions_by_symbol)

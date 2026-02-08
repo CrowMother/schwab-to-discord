@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 import sqlite3
+from datetime import datetime, timezone
 from typing import Optional
 
 
@@ -71,7 +72,6 @@ def create_cost_basis_lot(conn: sqlite3.Connection, order_id: int, symbol: str,
                           underlying: str, quantity: float, avg_cost: float,
                           entered_time: str) -> int:
     """Create a new cost basis lot from a BUY order."""
-    from datetime import datetime, timezone
     now = datetime.now(timezone.utc).isoformat()
 
     cursor = conn.execute("""
@@ -108,7 +108,6 @@ def record_lot_match(conn: sqlite3.Connection, sell_order_id: int, lot_id: int,
                      quantity: float, cost_basis: float, sell_price: float,
                      gain_pct: float, gain_amount: float) -> int:
     """Record a FIFO match between a sell order and a cost basis lot."""
-    from datetime import datetime, timezone
     now = datetime.now(timezone.utc).isoformat()
 
     cursor = conn.execute("""

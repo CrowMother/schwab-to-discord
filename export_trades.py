@@ -7,9 +7,12 @@ Each month gets its own file. New trades are APPENDED to existing files (newest 
 
 import sqlite3
 import os
+import logging
 from datetime import datetime
 from dotenv import load_dotenv
 load_dotenv()
+
+logger = logging.getLogger(__name__)
 
 try:
     import openpyxl
@@ -23,7 +26,9 @@ except ImportError:
     from openpyxl.styles import Font, Alignment, PatternFill, Border, Side
     from openpyxl.utils import get_column_letter
 
-import schwabdev
+from app.api.positions import get_schwab_positions
+from app.db.cost_basis_db import get_avg_gain_for_sell
+from app.cost_basis import extract_underlying
 
 DB_PATH = os.environ.get("DB_PATH", "/data/trades.db")
 OUTPUT_DIR = os.environ.get("OUTPUT_DIR", "/data")
@@ -66,7 +71,8 @@ def get_cost_basis_lots(conn, year: int = None, month: int = None):
                 ORDER BY entered_time DESC
             """)
         return cursor.fetchall()
-    except sqlite3.OperationalError:
+    except sqlite3.OperationalError as e:
+        logger.warning(f"Could not fetch cost basis lots (table may not exist): {e}")
         return []
 
 
@@ -94,70 +100,9 @@ def get_lot_matches(conn, year: int = None, month: int = None):
                 ORDER BY m.matched_at DESC
             """)
         return cursor.fetchall()
-    except sqlite3.OperationalError:
+    except sqlite3.OperationalError as e:
+        logger.warning(f"Could not fetch lot matches (table may not exist): {e}")
         return []
-
-
-def get_gain_for_trade(conn, order_id, instruction):
-    """Get gain percentage for a sell trade."""
-    if not instruction or "SELL" not in instruction.upper():
-        return None
-    try:
-        cursor = conn.execute("""
-            SELECT SUM(quantity * gain_pct) / SUM(quantity) as avg_gain
-            FROM lot_matches
-            WHERE sell_order_id = ?
-        """, (order_id,))
-        result = cursor.fetchone()
-        return result[0] if result and result[0] is not None else None
-    except sqlite3.OperationalError:
-        return None
-
-
-def get_schwab_positions():
-    """Fetch current positions directly from Schwab account."""
-    client = schwabdev.Client(
-        app_key=os.getenv("SCHWAB_APP_KEY"),
-        app_secret=os.getenv("SCHWAB_APP_SECRET"),
-        callback_url=os.getenv("CALLBACK_URL"),
-        tokens_db=os.getenv("TOKENS_DB", "/data/tokens.db"),
-        timeout=int(os.getenv("SCHWAB_TIMEOUT", 10))
-    )
-
-    resp = client.account_details_all(fields="positions")
-    resp.raise_for_status()
-    accounts = resp.json()
-
-    positions = []
-    positions_by_symbol = {}
-
-    for account in accounts:
-        account_positions = account.get("securitiesAccount", {}).get("positions", [])
-        for pos in account_positions:
-            instrument = pos.get("instrument", {})
-            asset_type = instrument.get("assetType", "N/A")
-            # Only include options, skip equity
-            if asset_type != "OPTION":
-                continue
-
-            symbol = instrument.get("symbol", "N/A")
-            qty = pos.get("longQuantity", 0) - pos.get("shortQuantity", 0)
-
-            positions.append({
-                "symbol": symbol,
-                "asset_type": asset_type,
-                "quantity": qty,
-                "avg_price": pos.get("averagePrice", 0),
-                "market_value": pos.get("marketValue", 0),
-            })
-
-            # Build lookup by underlying symbol (first part before space)
-            underlying = symbol.split()[0] if " " in symbol else symbol
-            if underlying not in positions_by_symbol:
-                positions_by_symbol[underlying] = 0
-            positions_by_symbol[underlying] += qty
-
-    return positions, positions_by_symbol
 
 
 def generate_filename(year: int, month: int) -> str:
@@ -241,11 +186,13 @@ def export_trades(year: int = None, month: int = None):
             pl = 0
 
         # Get actual position remaining from Schwab (by underlying symbol)
-        underlying = symbol.split()[0] if " " in symbol else symbol
+        underlying = extract_underlying(symbol)
         position_remaining = positions_by_symbol.get(underlying, 0)
 
         # Get gain percentage for sell orders
-        gain_pct = get_gain_for_trade(conn, order_id, instruction)
+        gain_pct = None
+        if instruction and "SELL" in instruction.upper():
+            gain_pct = get_avg_gain_for_sell(conn, order_id)
 
         all_trades.append((symbol, asset_type, instruction, quantity, filled_qty,
                            position_remaining, price, status, entered, closed, desc, pl, gain_pct))
