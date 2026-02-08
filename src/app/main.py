@@ -9,7 +9,7 @@ from app.db.queries import get_unposted_trade_ids
 import logging
 
 from app.db.trades_repo import ensure_trade_state, load_trade_from_db, mark_posted, store_trade
-from app.discord.discord_message import build_discord_message, build_discord_message_template
+from app.discord.discord_message import build_discord_message, build_discord_message_template, build_option_bot_message
 from app.discord.discord_webhook import post_webhook
 from app.models.data import load_trade
 from app.cost_basis import process_buy_order, process_sell_order, get_gain_for_order
@@ -101,16 +101,12 @@ def send_unposted_trades(conn, config, unposted_trade_ids, positions_by_symbol):
         if not trade:
             continue
 
-        template = load_single_value("TEMPLATE", None)
-        if template:
-            template = template.replace("\n", "\n")
-
         # Get position data
         underlying = trade.symbol.split()[0] if " " in trade.symbol else trade.symbol
         position_left = positions_by_symbol.get(underlying, 0)
         total_sold = get_total_sold(conn, trade.symbol)
 
-        # Get gain percentage for sell orders
+        # Get gain percentage for sell orders only
         gain_pct = None
         entry_price = None
         if trade.instruction and "SELL" in trade.instruction.upper() and trade.order_id:
@@ -124,9 +120,9 @@ def send_unposted_trades(conn, config, unposted_trade_ids, positions_by_symbol):
                 if total_qty > 0:
                     entry_price = sum(m[2] * m[3] for m in matches) / total_qty
 
-        # build message with position data and gain
-        msg = build_discord_message_template(
-            template, trade,
+        # Build message using Option Bot format (different for BUY vs SELL)
+        msg = build_option_bot_message(
+            trade,
             position_left=position_left,
             total_sold=total_sold,
             gain_pct=gain_pct,
