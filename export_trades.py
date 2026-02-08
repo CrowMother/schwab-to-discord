@@ -25,6 +25,52 @@ import schwabdev
 DB_PATH = os.environ.get("DB_PATH", "/data/trades.db")
 OUTPUT_DIR = os.environ.get("OUTPUT_DIR", "/data")
 
+
+def get_cost_basis_lots(conn):
+    """Get all cost basis lots from database."""
+    try:
+        cursor = conn.execute("""
+            SELECT lot_id, order_id, symbol, underlying, quantity, remaining_qty,
+                   avg_cost, entered_time, created_at
+            FROM cost_basis_lots
+            ORDER BY entered_time DESC
+        """)
+        return cursor.fetchall()
+    except sqlite3.OperationalError:
+        return []
+
+
+def get_lot_matches(conn):
+    """Get all lot matches (sell order to lot mappings) from database."""
+    try:
+        cursor = conn.execute("""
+            SELECT m.match_id, m.sell_order_id, m.lot_id, m.quantity,
+                   m.cost_basis, m.sell_price, m.gain_pct, m.gain_amount, m.matched_at,
+                   l.symbol, l.underlying
+            FROM lot_matches m
+            JOIN cost_basis_lots l ON m.lot_id = l.lot_id
+            ORDER BY m.matched_at DESC
+        """)
+        return cursor.fetchall()
+    except sqlite3.OperationalError:
+        return []
+
+
+def get_gain_for_trade(conn, order_id, instruction):
+    """Get gain percentage for a sell trade."""
+    if not instruction or "SELL" not in instruction.upper():
+        return None
+    try:
+        cursor = conn.execute("""
+            SELECT SUM(quantity * gain_pct) / SUM(quantity) as avg_gain
+            FROM lot_matches
+            WHERE sell_order_id = ?
+        """, (order_id,))
+        result = cursor.fetchone()
+        return result[0] if result and result[0] is not None else None
+    except sqlite3.OperationalError:
+        return None
+
 def get_schwab_positions():
     """Fetch current positions directly from Schwab account."""
     client = schwabdev.Client(
@@ -73,9 +119,10 @@ def get_schwab_positions():
 def export_trades():
     conn = sqlite3.connect(DB_PATH)
 
-    # Get all trades
+    # Get all trades (including order_id for gain lookup)
     cursor = conn.execute("""
         SELECT
+            order_id,
             symbol,
             asset_type,
             instruction,
@@ -91,19 +138,23 @@ def export_trades():
         ORDER BY entered_time DESC
     """)
     rows = cursor.fetchall()
-    conn.close()
 
     if not rows:
         print("No trades found in database.")
+        conn.close()
         return
 
     # Get actual positions from Schwab
     schwab_positions, positions_by_symbol = get_schwab_positions()
 
+    # Get cost basis data
+    cost_basis_lots = get_cost_basis_lots(conn)
+    lot_matches = get_lot_matches(conn)
+
     # Calculate P/L per trade and add position remaining
     trades_with_pl = []
     for row in rows:
-        symbol, asset_type, instruction, quantity, filled_qty, remaining_qty, price, status, entered, closed, desc = row
+        order_id, symbol, asset_type, instruction, quantity, filled_qty, remaining_qty, price, status, entered, closed, desc = row
 
         multiplier = 100 if asset_type in ("OPTION", "OPTIONS") else 1
         filled = filled_qty if filled_qty else quantity
@@ -120,8 +171,13 @@ def export_trades():
         underlying = symbol.split()[0] if " " in symbol else symbol
         position_remaining = positions_by_symbol.get(underlying, 0)
 
+        # Get gain percentage for sell orders
+        gain_pct = get_gain_for_trade(conn, order_id, instruction)
+
         trades_with_pl.append((symbol, asset_type, instruction, quantity, filled_qty,
-                               position_remaining, price, status, entered, closed, desc, pl))
+                               position_remaining, price, status, entered, closed, desc, pl, gain_pct))
+
+    conn.close()
 
     # Create workbook
     wb = openpyxl.Workbook()
@@ -147,7 +203,7 @@ def export_trades():
 
     headers = [
         "Symbol", "Asset Type", "Action", "Quantity", "Filled", "Position Left",
-        "Price", "Status", "Entry Date", "Close Date", "Notes", "P/L ($)"
+        "Price", "Status", "Entry Date", "Close Date", "Notes", "P/L ($)", "Gain %"
     ]
 
     for col, header in enumerate(headers, 1):
@@ -165,26 +221,36 @@ def export_trades():
             cell.alignment = Alignment(horizontal="center")
 
             # Position Left column - highlight if > 0
-            if col_idx == 6 and value > 0:
+            if col_idx == 6 and value and value > 0:
                 cell.font = Font(bold=True, color="1F4E79")
 
+            # P/L column
             if col_idx == 12:
                 cell.number_format = "$#,##0.00"
-                if value > 0:
+                if value and value > 0:
                     cell.font = profit_font
-                elif value < 0:
+                elif value and value < 0:
                     cell.font = loss_font
 
-        total_pl += row[-1]
+            # Gain % column
+            if col_idx == 13 and value is not None:
+                cell.number_format = "0.00%"
+                cell.value = value / 100 if value else 0  # Convert to decimal for %
+                if value and value > 0:
+                    cell.font = profit_font
+                elif value and value < 0:
+                    cell.font = loss_font
+
+        total_pl += row[11] if row[11] else 0
 
         action = row[2] if row[2] else ""
         if "BUY" in action.upper():
             for col in range(1, len(headers) + 1):
-                if col not in (6, 12):
+                if col not in (6, 12, 13):
                     ws.cell(row=row_idx, column=col).fill = buy_fill
         elif "SELL" in action.upper():
             for col in range(1, len(headers) + 1):
-                if col not in (6, 12):
+                if col not in (6, 12, 13):
                     ws.cell(row=row_idx, column=col).fill = sell_fill
 
     total_row = len(trades_with_pl) + 2
@@ -271,6 +337,98 @@ def export_trades():
 
     ws2.freeze_panes = "A2"
 
+    # ===== SHEET 3: Cost Basis Lots =====
+    ws3 = wb.create_sheet("Cost Basis Lots")
+
+    lot_headers = ["Lot ID", "Order ID", "Symbol", "Underlying", "Quantity", "Remaining",
+                   "Avg Cost", "Entry Time", "Created At"]
+
+    for col, header in enumerate(lot_headers, 1):
+        cell = ws3.cell(row=1, column=col, value=header)
+        cell.font = header_font
+        cell.fill = header_fill
+        cell.alignment = header_align
+        cell.border = thin_border
+
+    for row_idx, lot in enumerate(cost_basis_lots, 2):
+        for col_idx, value in enumerate(lot, 1):
+            cell = ws3.cell(row=row_idx, column=col_idx, value=value)
+            cell.border = thin_border
+            cell.alignment = Alignment(horizontal="center")
+
+            # Avg Cost column
+            if col_idx == 7:
+                cell.number_format = "$#,##0.00"
+
+            # Remaining qty - highlight if > 0
+            if col_idx == 6 and value and value > 0:
+                cell.font = Font(bold=True, color="1F4E79")
+                cell.fill = PatternFill(start_color="FFEB9C", end_color="FFEB9C", fill_type="solid")
+
+    for col in range(1, len(lot_headers) + 1):
+        ws3.column_dimensions[get_column_letter(col)].width = 15
+
+    ws3.freeze_panes = "A2"
+
+    # ===== SHEET 4: Lot Matches (FIFO Sales) =====
+    ws4 = wb.create_sheet("FIFO Matches")
+
+    match_headers = ["Match ID", "Sell Order", "Lot ID", "Quantity", "Cost Basis",
+                     "Sell Price", "Gain %", "Gain $", "Matched At", "Symbol", "Underlying"]
+
+    for col, header in enumerate(match_headers, 1):
+        cell = ws4.cell(row=1, column=col, value=header)
+        cell.font = header_font
+        cell.fill = header_fill
+        cell.alignment = header_align
+        cell.border = thin_border
+
+    total_gain = 0
+    for row_idx, match in enumerate(lot_matches, 2):
+        for col_idx, value in enumerate(match, 1):
+            cell = ws4.cell(row=row_idx, column=col_idx, value=value)
+            cell.border = thin_border
+            cell.alignment = Alignment(horizontal="center")
+
+            # Cost Basis and Sell Price columns
+            if col_idx in (5, 6):
+                cell.number_format = "$#,##0.00"
+
+            # Gain % column
+            if col_idx == 7:
+                cell.number_format = "0.00%"
+                cell.value = value / 100 if value else 0
+                if value and value > 0:
+                    cell.font = profit_font
+                elif value and value < 0:
+                    cell.font = loss_font
+
+            # Gain $ column
+            if col_idx == 8:
+                cell.number_format = "$#,##0.00"
+                if value and value > 0:
+                    cell.font = profit_font
+                elif value and value < 0:
+                    cell.font = loss_font
+
+        if match[7]:  # gain_amount
+            total_gain += match[7]
+
+    # Total row for matches
+    if lot_matches:
+        total_row = len(lot_matches) + 2
+        ws4.cell(row=total_row, column=7, value="TOTAL GAIN:").font = Font(bold=True)
+        ws4.cell(row=total_row, column=7).alignment = Alignment(horizontal="right")
+        gain_cell = ws4.cell(row=total_row, column=8, value=total_gain)
+        gain_cell.number_format = "$#,##0.00"
+        gain_cell.font = Font(bold=True, color="006400" if total_gain >= 0 else "8B0000")
+        gain_cell.border = thin_border
+
+    for col in range(1, len(match_headers) + 1):
+        ws4.column_dimensions[get_column_letter(col)].width = 15
+
+    ws4.freeze_panes = "A2"
+
     # Save file (persistent name, overwrites each time)
     filename = "trades.xlsx"
     filepath = os.path.join(OUTPUT_DIR, filename)
@@ -280,6 +438,10 @@ def export_trades():
     print(f"Total P/L: ${total_pl:,.2f}")
     print(f"Open positions: {len(schwab_positions)} ({total_qty:.0f} contracts)")
     print(f"Total market value: ${total_value:,.2f}")
+    print(f"Cost basis lots: {len(cost_basis_lots)}")
+    print(f"FIFO matches: {len(lot_matches)}")
+    if lot_matches:
+        print(f"Total realized gain: ${total_gain:,.2f}")
     return filepath
 
 if __name__ == "__main__":

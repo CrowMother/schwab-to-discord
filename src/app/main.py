@@ -3,6 +3,7 @@ import sqlite3
 import time
 from app.db.trades_db import init_trades_db
 from app.db.trade_state_db import init_trade_state_db
+from app.db.cost_basis_db import init_cost_basis_db
 from app.db.queries import get_unposted_trade_ids
 
 import logging
@@ -11,6 +12,7 @@ from app.db.trades_repo import ensure_trade_state, load_trade_from_db, mark_post
 from app.discord.discord_message import build_discord_message, build_discord_message_template
 from app.discord.discord_webhook import post_webhook
 from app.models.data import load_trade
+from app.cost_basis import process_buy_order, process_sell_order, get_gain_for_order
 
 from .models.config import load_single_value, load_config
 from .utils.logging import setup_logging
@@ -71,6 +73,26 @@ def load_trade_orders(raw_orders=None, conn=None):
         logger.debug(f"Stored trade with ID: {trade_id}")
         ensure_trade_state(conn, trade_id)
 
+        # Process cost basis for FIFO tracking
+        if trade.instruction and trade.order_id:
+            if "BUY" in trade.instruction.upper():
+                process_buy_order(
+                    conn=conn,
+                    order_id=trade.order_id,
+                    symbol=trade.symbol,
+                    filled_quantity=trade.filled_quantity,
+                    price=trade.price,
+                    entered_time=trade.entered_time or ""
+                )
+            elif "SELL" in trade.instruction.upper():
+                process_sell_order(
+                    conn=conn,
+                    order_id=trade.order_id,
+                    symbol=trade.symbol,
+                    filled_quantity=trade.filled_quantity,
+                    sell_price=trade.price
+                )
+
     conn.commit()
 
 def send_unposted_trades(conn, config, unposted_trade_ids, positions_by_symbol):
@@ -88,8 +110,28 @@ def send_unposted_trades(conn, config, unposted_trade_ids, positions_by_symbol):
         position_left = positions_by_symbol.get(underlying, 0)
         total_sold = get_total_sold(conn, trade.symbol)
 
-        # build message with position data
-        msg = build_discord_message_template(template, trade, position_left=position_left, total_sold=total_sold)
+        # Get gain percentage for sell orders
+        gain_pct = None
+        entry_price = None
+        if trade.instruction and "SELL" in trade.instruction.upper() and trade.order_id:
+            gain_pct = get_gain_for_order(conn, trade.order_id)
+            # Get entry price from lot matches if available
+            from app.db.cost_basis_db import get_matches_for_sell
+            matches = get_matches_for_sell(conn, trade.order_id)
+            if matches:
+                # Weighted average entry price
+                total_qty = sum(m[2] for m in matches)
+                if total_qty > 0:
+                    entry_price = sum(m[2] * m[3] for m in matches) / total_qty
+
+        # build message with position data and gain
+        msg = build_discord_message_template(
+            template, trade,
+            position_left=position_left,
+            total_sold=total_sold,
+            gain_pct=gain_pct,
+            entry_price=entry_price
+        )
 
         # Post to primary webhook
         resp = post_webhook(config.discord_webhook, msg, timeout=config.schwab_timeout)
@@ -114,6 +156,7 @@ def main() -> None:
     conn = sqlite3.connect(config.db_path)
     init_trades_db(config.db_path, conn)
     init_trade_state_db(config.db_path, conn)
+    init_cost_basis_db(config.db_path, conn)
 
     logger.info("Starting %s", config.app_name)
 

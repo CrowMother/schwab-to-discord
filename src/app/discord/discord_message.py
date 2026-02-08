@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from typing import Optional
 
+from app.cost_basis import parse_strike_display, parse_expiration
+
 
 def build_discord_message(trade, state: Optional[object] = None) -> str:
     """
@@ -32,11 +34,37 @@ def build_discord_message(trade, state: Optional[object] = None) -> str:
 
     return "\n".join(lines)
 
-def build_discord_message_template(template: str, trade, state: Optional[object] = None, position_left: int = 0, total_sold: int = 0) -> str:
+
+def build_discord_message_template(template: str, trade, state: Optional[object] = None,
+                                   position_left: int = 0, total_sold: int = 0,
+                                   gain_pct: Optional[float] = None,
+                                   entry_price: Optional[float] = None) -> str:
     """
     Compile a Discord message from a template string and a Trade dataclass.
     The template can use placeholders like {symbol}, {instruction}, etc.
+
+    New placeholders:
+    - {strike}: Strike price with C/P suffix (e.g., "9c", "550p")
+    - {expiration}: Expiration date (e.g., "02/13/2026")
+    - {gain_pct}: Percentage gain/loss for sells
+    - {entry_price}: Original entry price for sells
     """
+    description = getattr(trade, "description", "") or ""
+    strike = parse_strike_display(description)
+    expiration = parse_expiration(description)
+
+    # Format gain percentage
+    if gain_pct is not None:
+        if gain_pct >= 0:
+            gain_str = f"+{gain_pct:.2f}%"
+        else:
+            gain_str = f"{gain_pct:.2f}%"
+    else:
+        gain_str = "N/A"
+
+    # Format entry price
+    entry_price_str = f"${entry_price:.2f}" if entry_price is not None else "N/A"
+
     message = template.format(
         symbol=trade.symbol,
         instruction=trade.instruction,
@@ -48,7 +76,11 @@ def build_discord_message_template(template: str, trade, state: Optional[object]
         position_left=position_left,
         total_sold=total_sold,
         price=getattr(trade, "price", "N/A"),
-        description=getattr(trade, "description", "N/A"),
+        description=description,
+        strike=strike,
+        expiration=expiration,
+        gain_pct=gain_str,
+        entry_price=entry_price_str,
         entered_time=getattr(trade, "entered_time", "N/A"),
         close_time=getattr(trade, "close_time", "N/A"),
     )
