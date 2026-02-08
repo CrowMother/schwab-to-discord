@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""Export trades from SQLite to Excel file in data folder."""
+"""Export trades from SQLite to Excel file in data folder.
+
+Creates monthly spreadsheets named trades_YYYY-MM.xlsx to keep files manageable.
+Each month gets its own file with trades from that month plus current positions.
+"""
 
 import sqlite3
 import os
@@ -26,31 +30,70 @@ DB_PATH = os.environ.get("DB_PATH", "/data/trades.db")
 OUTPUT_DIR = os.environ.get("OUTPUT_DIR", "/data")
 
 
-def get_cost_basis_lots(conn):
-    """Get all cost basis lots from database."""
+def get_current_month_filter():
+    """Get the current year and month for filtering."""
+    now = datetime.now()
+    return now.year, now.month
+
+
+def get_month_date_range(year: int, month: int):
+    """Get start and end date strings for a given month."""
+    start = f"{year}-{month:02d}-01"
+    # Handle month rollover for end date
+    if month == 12:
+        end = f"{year + 1}-01-01"
+    else:
+        end = f"{year}-{month + 1:02d}-01"
+    return start, end
+
+
+def get_cost_basis_lots(conn, year: int = None, month: int = None):
+    """Get cost basis lots from database, optionally filtered by month."""
     try:
-        cursor = conn.execute("""
-            SELECT lot_id, order_id, symbol, underlying, quantity, remaining_qty,
-                   avg_cost, entered_time, created_at
-            FROM cost_basis_lots
-            ORDER BY entered_time DESC
-        """)
+        if year and month:
+            start, end = get_month_date_range(year, month)
+            cursor = conn.execute("""
+                SELECT lot_id, order_id, symbol, underlying, quantity, remaining_qty,
+                       avg_cost, entered_time, created_at
+                FROM cost_basis_lots
+                WHERE entered_time >= ? AND entered_time < ?
+                ORDER BY entered_time DESC
+            """, (start, end))
+        else:
+            cursor = conn.execute("""
+                SELECT lot_id, order_id, symbol, underlying, quantity, remaining_qty,
+                       avg_cost, entered_time, created_at
+                FROM cost_basis_lots
+                ORDER BY entered_time DESC
+            """)
         return cursor.fetchall()
     except sqlite3.OperationalError:
         return []
 
 
-def get_lot_matches(conn):
-    """Get all lot matches (sell order to lot mappings) from database."""
+def get_lot_matches(conn, year: int = None, month: int = None):
+    """Get lot matches from database, optionally filtered by month."""
     try:
-        cursor = conn.execute("""
-            SELECT m.match_id, m.sell_order_id, m.lot_id, m.quantity,
-                   m.cost_basis, m.sell_price, m.gain_pct, m.gain_amount, m.matched_at,
-                   l.symbol, l.underlying
-            FROM lot_matches m
-            JOIN cost_basis_lots l ON m.lot_id = l.lot_id
-            ORDER BY m.matched_at DESC
-        """)
+        if year and month:
+            start, end = get_month_date_range(year, month)
+            cursor = conn.execute("""
+                SELECT m.match_id, m.sell_order_id, m.lot_id, m.quantity,
+                       m.cost_basis, m.sell_price, m.gain_pct, m.gain_amount, m.matched_at,
+                       l.symbol, l.underlying
+                FROM lot_matches m
+                JOIN cost_basis_lots l ON m.lot_id = l.lot_id
+                WHERE m.matched_at >= ? AND m.matched_at < ?
+                ORDER BY m.matched_at DESC
+            """, (start, end))
+        else:
+            cursor = conn.execute("""
+                SELECT m.match_id, m.sell_order_id, m.lot_id, m.quantity,
+                       m.cost_basis, m.sell_price, m.gain_pct, m.gain_amount, m.matched_at,
+                       l.symbol, l.underlying
+                FROM lot_matches m
+                JOIN cost_basis_lots l ON m.lot_id = l.lot_id
+                ORDER BY m.matched_at DESC
+            """)
         return cursor.fetchall()
     except sqlite3.OperationalError:
         return []
@@ -70,6 +113,7 @@ def get_gain_for_trade(conn, order_id, instruction):
         return result[0] if result and result[0] is not None else None
     except sqlite3.OperationalError:
         return None
+
 
 def get_schwab_positions():
     """Fetch current positions directly from Schwab account."""
@@ -116,10 +160,24 @@ def get_schwab_positions():
 
     return positions, positions_by_symbol
 
-def export_trades():
+
+def generate_filename(year: int, month: int) -> str:
+    """Generate filename with month and year: trades_YYYY-MM.xlsx"""
+    return f"trades_{year}-{month:02d}.xlsx"
+
+
+def export_trades(year: int = None, month: int = None):
+    """Export trades to Excel. If year/month not specified, uses current month."""
+    # Default to current month
+    if year is None or month is None:
+        year, month = get_current_month_filter()
+
+    start_date, end_date = get_month_date_range(year, month)
+    month_name = datetime(year, month, 1).strftime("%B %Y")
+
     conn = sqlite3.connect(DB_PATH)
 
-    # Get all trades (including order_id for gain lookup)
+    # Get trades for the specified month
     cursor = conn.execute("""
         SELECT
             order_id,
@@ -135,28 +193,24 @@ def export_trades():
             close_time,
             description
         FROM trades
+        WHERE entered_time >= ? AND entered_time < ?
         ORDER BY entered_time DESC
-    """)
+    """, (start_date, end_date))
     rows = cursor.fetchall()
 
-    if not rows:
-        print("No trades found in database.")
-        conn.close()
-        return
-
-    # Get actual positions from Schwab
+    # Get actual positions from Schwab (always current)
     schwab_positions, positions_by_symbol = get_schwab_positions()
 
-    # Get cost basis data
-    cost_basis_lots = get_cost_basis_lots(conn)
-    lot_matches = get_lot_matches(conn)
+    # Get cost basis data for this month
+    cost_basis_lots = get_cost_basis_lots(conn, year, month)
+    lot_matches = get_lot_matches(conn, year, month)
 
     # Calculate P/L per trade and add position remaining
     trades_with_pl = []
     for row in rows:
         order_id, symbol, asset_type, instruction, quantity, filled_qty, remaining_qty, price, status, entered, closed, desc = row
 
-        multiplier = 100 if asset_type in ("OPTION", "OPTIONS") else 1
+        multiplier = 100 if asset_type == "OPTION" else 1
         filled = filled_qty if filled_qty else quantity
         trade_value = (price or 0) * filled * multiplier
 
@@ -197,9 +251,9 @@ def export_trades():
     profit_font = Font(color="006400", bold=True)
     loss_font = Font(color="8B0000", bold=True)
 
-    # ===== SHEET 1: All Trades =====
+    # ===== SHEET 1: Monthly Trades =====
     ws = wb.active
-    ws.title = "All Trades"
+    ws.title = f"Trades {month_name}"
 
     headers = [
         "Symbol", "Asset Type", "Action", "Quantity", "Filled", "Position Left",
@@ -253,17 +307,19 @@ def export_trades():
                 if col not in (6, 12, 13):
                     ws.cell(row=row_idx, column=col).fill = sell_fill
 
-    total_row = len(trades_with_pl) + 2
-    ws.cell(row=total_row, column=11, value="TOTAL P/L:").font = Font(bold=True)
-    ws.cell(row=total_row, column=11).alignment = Alignment(horizontal="right")
-    total_cell = ws.cell(row=total_row, column=12, value=total_pl)
-    total_cell.number_format = "$#,##0.00"
-    total_cell.font = Font(bold=True, color="006400" if total_pl >= 0 else "8B0000")
-    total_cell.border = thin_border
+    # Add totals row
+    if trades_with_pl:
+        total_row = len(trades_with_pl) + 2
+        ws.cell(row=total_row, column=11, value="TOTAL P/L:").font = Font(bold=True)
+        ws.cell(row=total_row, column=11).alignment = Alignment(horizontal="right")
+        total_cell = ws.cell(row=total_row, column=12, value=total_pl)
+        total_cell.number_format = "$#,##0.00"
+        total_cell.font = Font(bold=True, color="006400" if total_pl >= 0 else "8B0000")
+        total_cell.border = thin_border
 
     for col in range(1, len(headers) + 1):
         max_length = len(headers[col-1])
-        for row in range(2, len(rows) + 2):
+        for row in range(2, len(trades_with_pl) + 2):
             cell_value = ws.cell(row=row, column=col).value
             if cell_value:
                 max_length = max(max_length, len(str(cell_value)))
@@ -271,7 +327,7 @@ def export_trades():
 
     ws.freeze_panes = "A2"
 
-    # ===== SHEET 2: Open Positions (from Schwab API) =====
+    # ===== SHEET 2: Open Positions (from Schwab API - always current) =====
     ws2 = wb.create_sheet("Open Positions")
 
     pos_headers = ["Symbol", "Asset Type", "Quantity", "Avg Price", "Market Value", "Status"]
@@ -316,16 +372,17 @@ def export_trades():
         row_idx += 1
 
     # Total row
-    ws2.cell(row=row_idx + 1, column=2, value="TOTAL:").font = Font(bold=True)
-    ws2.cell(row=row_idx + 1, column=2).alignment = Alignment(horizontal="right")
+    if schwab_positions:
+        ws2.cell(row=row_idx + 1, column=2, value="TOTAL:").font = Font(bold=True)
+        ws2.cell(row=row_idx + 1, column=2).alignment = Alignment(horizontal="right")
 
-    ws2.cell(row=row_idx + 1, column=3, value=total_qty).font = Font(bold=True, color="1F4E79")
-    ws2.cell(row=row_idx + 1, column=3).border = thin_border
+        ws2.cell(row=row_idx + 1, column=3, value=total_qty).font = Font(bold=True, color="1F4E79")
+        ws2.cell(row=row_idx + 1, column=3).border = thin_border
 
-    total_val_cell = ws2.cell(row=row_idx + 1, column=5, value=total_value)
-    total_val_cell.font = Font(bold=True, color="1F4E79")
-    total_val_cell.border = thin_border
-    total_val_cell.number_format = "$#,##0.00"
+        total_val_cell = ws2.cell(row=row_idx + 1, column=5, value=total_value)
+        total_val_cell.font = Font(bold=True, color="1F4E79")
+        total_val_cell.border = thin_border
+        total_val_cell.number_format = "$#,##0.00"
 
     for col in range(1, len(pos_headers) + 1):
         max_length = len(pos_headers[col-1])
@@ -337,7 +394,7 @@ def export_trades():
 
     ws2.freeze_panes = "A2"
 
-    # ===== SHEET 3: Cost Basis Lots =====
+    # ===== SHEET 3: Cost Basis Lots (this month) =====
     ws3 = wb.create_sheet("Cost Basis Lots")
 
     lot_headers = ["Lot ID", "Order ID", "Symbol", "Underlying", "Quantity", "Remaining",
@@ -370,7 +427,7 @@ def export_trades():
 
     ws3.freeze_panes = "A2"
 
-    # ===== SHEET 4: Lot Matches (FIFO Sales) =====
+    # ===== SHEET 4: Lot Matches (FIFO Sales - this month) =====
     ws4 = wb.create_sheet("FIFO Matches")
 
     match_headers = ["Match ID", "Sell Order", "Lot ID", "Quantity", "Cost Basis",
@@ -429,20 +486,36 @@ def export_trades():
 
     ws4.freeze_panes = "A2"
 
-    # Save file (persistent name, overwrites each time)
-    filename = "trades.xlsx"
+    # Save file with monthly filename
+    filename = generate_filename(year, month)
     filepath = os.path.join(OUTPUT_DIR, filename)
     wb.save(filepath)
 
-    print(f"Exported {len(rows)} trades to: {filepath}")
-    print(f"Total P/L: ${total_pl:,.2f}")
+    print(f"=" * 60)
+    print(f"EXPORT: {month_name}")
+    print(f"=" * 60)
+    print(f"File: {filepath}")
+    print(f"Trades this month: {len(trades_with_pl)}")
+    print(f"Monthly P/L: ${total_pl:,.2f}")
     print(f"Open positions: {len(schwab_positions)} ({total_qty:.0f} contracts)")
     print(f"Total market value: ${total_value:,.2f}")
-    print(f"Cost basis lots: {len(cost_basis_lots)}")
-    print(f"FIFO matches: {len(lot_matches)}")
+    print(f"Cost basis lots (this month): {len(cost_basis_lots)}")
+    print(f"FIFO matches (this month): {len(lot_matches)}")
     if lot_matches:
-        print(f"Total realized gain: ${total_gain:,.2f}")
+        print(f"Monthly realized gain: ${total_gain:,.2f}")
+    print(f"=" * 60)
+
     return filepath
 
+
 if __name__ == "__main__":
-    export_trades()
+    import sys
+
+    # Allow passing year and month as arguments: python export_trades.py 2026 2
+    if len(sys.argv) >= 3:
+        year = int(sys.argv[1])
+        month = int(sys.argv[2])
+        export_trades(year, month)
+    else:
+        # Default to current month
+        export_trades()
