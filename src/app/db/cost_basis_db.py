@@ -62,6 +62,17 @@ def init_cost_basis_db(db_path: str, conn: Optional[sqlite3.Connection] = None) 
             ON lot_matches(sell_order_id)
         """)
 
+        # Table to track sell orders with no matching lots (to avoid repeated warnings)
+        conn.execute("""
+            CREATE TABLE IF NOT EXISTS unmatched_sells (
+                sell_order_id INTEGER PRIMARY KEY,
+                symbol TEXT NOT NULL,
+                quantity REAL NOT NULL,
+                sell_price REAL NOT NULL,
+                recorded_at TEXT NOT NULL
+            )
+        """)
+
         conn.commit()
     finally:
         if should_close:
@@ -154,3 +165,23 @@ def check_buy_already_recorded(conn: sqlite3.Connection, order_id: int) -> bool:
         SELECT COUNT(*) FROM cost_basis_lots WHERE order_id = ?
     """, (order_id,))
     return cursor.fetchone()[0] > 0
+
+
+def check_sell_unmatched(conn: sqlite3.Connection, sell_order_id: int) -> bool:
+    """Check if a sell order was already recorded as having no matching lots."""
+    cursor = conn.execute("""
+        SELECT COUNT(*) FROM unmatched_sells WHERE sell_order_id = ?
+    """, (sell_order_id,))
+    return cursor.fetchone()[0] > 0
+
+
+def record_unmatched_sell(conn: sqlite3.Connection, sell_order_id: int, symbol: str,
+                          quantity: float, sell_price: float) -> None:
+    """Record a sell order that has no matching lots."""
+    now = datetime.now(timezone.utc).isoformat()
+    conn.execute("""
+        INSERT OR IGNORE INTO unmatched_sells
+        (sell_order_id, symbol, quantity, sell_price, recorded_at)
+        VALUES (?, ?, ?, ?, ?)
+    """, (sell_order_id, symbol, quantity, sell_price, now))
+    conn.commit()

@@ -16,6 +16,8 @@ from app.db.cost_basis_db import (
     get_avg_gain_for_sell,
     check_sell_already_matched,
     check_buy_already_recorded,
+    check_sell_unmatched,
+    record_unmatched_sell,
 )
 
 logger = logging.getLogger(__name__)
@@ -71,11 +73,16 @@ def process_sell_order(conn: sqlite3.Connection, order_id: int, symbol: str,
             return GainResult(avg_gain_pct=avg_gain, total_gain_amount=0, lots_matched=0)
         return None
 
+    # Check if we already recorded this as unmatched (no lots available)
+    if check_sell_unmatched(conn, order_id):
+        return None
+
     underlying = extract_underlying(symbol)
     open_lots = get_open_lots_fifo(conn, underlying)
 
     if not open_lots:
         logger.warning(f"No open lots found for {underlying} to match sell order {order_id}")
+        record_unmatched_sell(conn, order_id, symbol, filled_quantity, sell_price)
         return None
 
     remaining_to_sell = filled_quantity
