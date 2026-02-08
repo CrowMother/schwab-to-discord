@@ -3,3 +3,5 @@
 tokens.json
 *.db
 *.pyc
+data/
+*.xlsx

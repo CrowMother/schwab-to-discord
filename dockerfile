@@ -20,11 +20,18 @@ COPY pyproject.toml ./
 COPY src ./src
 RUN pip install --no-cache-dir .
 
+# Install openpyxl for Excel export
+RUN pip install --no-cache-dir openpyxl
+
+# Copy export script
+COPY export_trades.py ./
+
 # Make a persistent data dir for sqlite
 RUN mkdir -p /data
 
-# Default DB path (override via env if you want)
-ENV DB_PATH=/data/app.db
+# Default paths
+ENV DB_PATH=/data/trades.db
+ENV EXPORT_PATH=/data/trades.xlsx
 
-# Run the app (adjust if your entrypoint differs)
+# Run the app
 CMD ["python", "-m", "app.main"]
