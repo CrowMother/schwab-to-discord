@@ -60,9 +60,9 @@ def get_win_loss(gain_pct: float) -> str:
     """Determine WIN/LOSS/BREAK EVEN from gain percentage."""
     if gain_pct is None:
         return ""
-    if gain_pct > 0.5:  # Small threshold for break even
+    if gain_pct > 10:
         return "WIN"
-    elif gain_pct < -0.5:
+    elif gain_pct < -10:
         return "LOSS"
     else:
         return "BREAK EVEN"
