@@ -2,13 +2,12 @@
 """Export trades from SQLite to Excel file in data folder.
 
 Creates monthly spreadsheets named trades_YYYY-MM.xlsx to keep files manageable.
-Each month gets its own file with trades from that month plus current positions.
+Each month gets its own file. New trades are APPENDED to existing files (newest at bottom).
 """
 
 import sqlite3
 import os
 from datetime import datetime
-from collections import defaultdict
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -166,18 +165,38 @@ def generate_filename(year: int, month: int) -> str:
     return f"trades_{year}-{month:02d}.xlsx"
 
 
+def get_existing_entry_dates(ws):
+    """Get set of entry dates already in the trades sheet (column 9 = Entry Date)."""
+    existing = set()
+    for row in range(2, ws.max_row + 1):
+        entry_date = ws.cell(row=row, column=9).value
+        if entry_date:
+            existing.add(str(entry_date))
+    return existing
+
+
+def find_total_row(ws):
+    """Find the row with 'TOTAL P/L:' label, or return None if not found."""
+    for row in range(2, ws.max_row + 1):
+        if ws.cell(row=row, column=11).value == "TOTAL P/L:":
+            return row
+    return None
+
+
 def export_trades(year: int = None, month: int = None):
-    """Export trades to Excel. If year/month not specified, uses current month."""
+    """Export trades to Excel. Appends new trades to existing file (newest at bottom)."""
     # Default to current month
     if year is None or month is None:
         year, month = get_current_month_filter()
 
     start_date, end_date = get_month_date_range(year, month)
     month_name = datetime(year, month, 1).strftime("%B %Y")
+    filename = generate_filename(year, month)
+    filepath = os.path.join(OUTPUT_DIR, filename)
 
     conn = sqlite3.connect(DB_PATH)
 
-    # Get trades for the specified month
+    # Get trades for the specified month - ORDER BY ASC so newest is last
     cursor = conn.execute("""
         SELECT
             order_id,
@@ -194,7 +213,7 @@ def export_trades(year: int = None, month: int = None):
             description
         FROM trades
         WHERE entered_time >= ? AND entered_time < ?
-        ORDER BY entered_time DESC
+        ORDER BY entered_time ASC
     """, (start_date, end_date))
     rows = cursor.fetchall()
 
@@ -206,7 +225,7 @@ def export_trades(year: int = None, month: int = None):
     lot_matches = get_lot_matches(conn, year, month)
 
     # Calculate P/L per trade and add position remaining
-    trades_with_pl = []
+    all_trades = []
     for row in rows:
         order_id, symbol, asset_type, instruction, quantity, filled_qty, remaining_qty, price, status, entered, closed, desc = row
 
@@ -228,13 +247,36 @@ def export_trades(year: int = None, month: int = None):
         # Get gain percentage for sell orders
         gain_pct = get_gain_for_trade(conn, order_id, instruction)
 
-        trades_with_pl.append((symbol, asset_type, instruction, quantity, filled_qty,
-                               position_remaining, price, status, entered, closed, desc, pl, gain_pct))
+        all_trades.append((symbol, asset_type, instruction, quantity, filled_qty,
+                           position_remaining, price, status, entered, closed, desc, pl, gain_pct))
 
     conn.close()
 
-    # Create workbook
-    wb = openpyxl.Workbook()
+    # Check if file exists - if so, load and append
+    file_exists = os.path.exists(filepath)
+    new_trades_count = 0
+
+    if file_exists:
+        wb = openpyxl.load_workbook(filepath)
+        ws = wb.active
+
+        # Always remove the totals row if it exists (we'll re-add it at the end)
+        total_row = find_total_row(ws)
+        if total_row:
+            ws.delete_rows(total_row)
+
+        # Get existing entry dates to avoid duplicates
+        existing_dates = get_existing_entry_dates(ws)
+
+        # Filter to only new trades
+        new_trades = [t for t in all_trades if str(t[8]) not in existing_dates]
+        new_trades_count = len(new_trades)
+        trades_with_pl = new_trades
+    else:
+        # Create new workbook
+        wb = openpyxl.Workbook()
+        trades_with_pl = all_trades
+        new_trades_count = len(all_trades)
 
     # Style settings
     header_font = Font(bold=True, color="FFFFFF")
@@ -251,24 +293,31 @@ def export_trades(year: int = None, month: int = None):
     profit_font = Font(color="006400", bold=True)
     loss_font = Font(color="8B0000", bold=True)
 
-    # ===== SHEET 1: Monthly Trades =====
-    ws = wb.active
-    ws.title = f"Trades {month_name}"
-
     headers = [
         "Symbol", "Asset Type", "Action", "Quantity", "Filled", "Position Left",
         "Price", "Status", "Entry Date", "Close Date", "Notes", "P/L ($)", "Gain %"
     ]
 
-    for col, header in enumerate(headers, 1):
-        cell = ws.cell(row=1, column=col, value=header)
-        cell.font = header_font
-        cell.fill = header_fill
-        cell.alignment = header_align
-        cell.border = thin_border
+    # ===== SHEET 1: Monthly Trades =====
+    ws = wb.active
 
-    total_pl = 0
-    for row_idx, row in enumerate(trades_with_pl, 2):
+    if not file_exists:
+        # New file - set up headers
+        ws.title = f"Trades {month_name}"
+        for col, header in enumerate(headers, 1):
+            cell = ws.cell(row=1, column=col, value=header)
+            cell.font = header_font
+            cell.fill = header_fill
+            cell.alignment = header_align
+            cell.border = thin_border
+        start_row = 2
+    else:
+        # Existing file - find where to append
+        start_row = ws.max_row + 1 if trades_with_pl else ws.max_row
+
+    # Add new trades
+    for idx, row in enumerate(trades_with_pl):
+        row_idx = start_row + idx
         for col_idx, value in enumerate(row, 1):
             cell = ws.cell(row=row_idx, column=col_idx, value=value)
             cell.border = thin_border
@@ -295,8 +344,6 @@ def export_trades(year: int = None, month: int = None):
                 elif value and value < 0:
                     cell.font = loss_font
 
-        total_pl += row[11] if row[11] else 0
-
         action = row[2] if row[2] else ""
         if "BUY" in action.upper():
             for col in range(1, len(headers) + 1):
@@ -307,19 +354,27 @@ def export_trades(year: int = None, month: int = None):
                 if col not in (6, 12, 13):
                     ws.cell(row=row_idx, column=col).fill = sell_fill
 
-    # Add totals row
-    if trades_with_pl:
-        total_row = len(trades_with_pl) + 2
-        ws.cell(row=total_row, column=11, value="TOTAL P/L:").font = Font(bold=True)
-        ws.cell(row=total_row, column=11).alignment = Alignment(horizontal="right")
-        total_cell = ws.cell(row=total_row, column=12, value=total_pl)
+    # Calculate total P/L from ALL rows in sheet (not just new ones)
+    total_pl = 0
+    for row in range(2, ws.max_row + 1):
+        pl_val = ws.cell(row=row, column=12).value
+        if pl_val and isinstance(pl_val, (int, float)):
+            total_pl += pl_val
+
+    # Add totals row at the end
+    if ws.max_row > 1:
+        total_row_num = ws.max_row + 1
+        ws.cell(row=total_row_num, column=11, value="TOTAL P/L:").font = Font(bold=True)
+        ws.cell(row=total_row_num, column=11).alignment = Alignment(horizontal="right")
+        total_cell = ws.cell(row=total_row_num, column=12, value=total_pl)
         total_cell.number_format = "$#,##0.00"
         total_cell.font = Font(bold=True, color="006400" if total_pl >= 0 else "8B0000")
         total_cell.border = thin_border
 
+    # Auto-size columns
     for col in range(1, len(headers) + 1):
         max_length = len(headers[col-1])
-        for row in range(2, len(trades_with_pl) + 2):
+        for row in range(2, ws.max_row + 1):
             cell_value = ws.cell(row=row, column=col).value
             if cell_value:
                 max_length = max(max_length, len(str(cell_value)))
@@ -328,6 +383,9 @@ def export_trades(year: int = None, month: int = None):
     ws.freeze_panes = "A2"
 
     # ===== SHEET 2: Open Positions (from Schwab API - always current) =====
+    # This sheet is always replaced with current data
+    if "Open Positions" in wb.sheetnames:
+        del wb["Open Positions"]
     ws2 = wb.create_sheet("Open Positions")
 
     pos_headers = ["Symbol", "Asset Type", "Quantity", "Avg Price", "Market Value", "Status"]
@@ -395,6 +453,9 @@ def export_trades(year: int = None, month: int = None):
     ws2.freeze_panes = "A2"
 
     # ===== SHEET 3: Cost Basis Lots (this month) =====
+    # This sheet is always replaced with current data
+    if "Cost Basis Lots" in wb.sheetnames:
+        del wb["Cost Basis Lots"]
     ws3 = wb.create_sheet("Cost Basis Lots")
 
     lot_headers = ["Lot ID", "Order ID", "Symbol", "Underlying", "Quantity", "Remaining",
@@ -428,6 +489,9 @@ def export_trades(year: int = None, month: int = None):
     ws3.freeze_panes = "A2"
 
     # ===== SHEET 4: Lot Matches (FIFO Sales - this month) =====
+    # This sheet is always replaced with current data
+    if "FIFO Matches" in wb.sheetnames:
+        del wb["FIFO Matches"]
     ws4 = wb.create_sheet("FIFO Matches")
 
     match_headers = ["Match ID", "Sell Order", "Lot ID", "Quantity", "Cost Basis",
@@ -486,16 +550,21 @@ def export_trades(year: int = None, month: int = None):
 
     ws4.freeze_panes = "A2"
 
-    # Save file with monthly filename
-    filename = generate_filename(year, month)
-    filepath = os.path.join(OUTPUT_DIR, filename)
+    # Save file
     wb.save(filepath)
+
+    # Count total trades in sheet (excluding header and total rows)
+    total_trades_in_file = ws.max_row - 2 if ws.max_row > 2 else ws.max_row - 1
 
     print(f"=" * 60)
     print(f"EXPORT: {month_name}")
     print(f"=" * 60)
     print(f"File: {filepath}")
-    print(f"Trades this month: {len(trades_with_pl)}")
+    if file_exists:
+        print(f"Mode: APPEND ({new_trades_count} new trades added)")
+    else:
+        print(f"Mode: NEW FILE CREATED")
+    print(f"Total trades in file: {total_trades_in_file}")
     print(f"Monthly P/L: ${total_pl:,.2f}")
     print(f"Open positions: {len(schwab_positions)} ({total_qty:.0f} contracts)")
     print(f"Total market value: ${total_value:,.2f}")
