@@ -140,10 +140,3 @@ def load_trade_from_db(conn: sqlite3.Connection, trade_id: str) -> Optional[Trad
         close_time=row[11],
     )
 
-def insert_trade(conn, trade):
-    cursor = conn.cursor()
-    cursor.execute(
-        "INSERT INTO trades (symbol, price) VALUES (?, ?)",
-        (trade.symbol, trade.price),
-    )
-    conn.commit()

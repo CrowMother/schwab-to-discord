@@ -9,7 +9,7 @@ from app.db.queries import get_unposted_trade_ids
 import logging
 
 from app.db.trades_repo import ensure_trade_state, load_trade_from_db, mark_posted, store_trade
-from app.discord.discord_message import build_discord_message, build_discord_message_template, build_option_bot_message
+from app.discord.discord_message import build_option_bot_message
 from app.discord.discord_webhook import post_webhook
 from app.models.data import load_trade
 from app.cost_basis import process_buy_order, process_sell_order, get_gain_for_order
@@ -158,7 +158,7 @@ def main() -> None:
 
     client = SchwabApi(config)
 
-    print(f"client created: {client}")
+    logger.info(f"Client created: {client}")
 
     while True:
         try:

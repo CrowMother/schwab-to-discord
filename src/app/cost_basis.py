@@ -2,9 +2,10 @@
 """FIFO cost basis tracking and gain calculation."""
 
 from __future__ import annotations
+import re
 import sqlite3
 import logging
-from typing import Optional, Tuple
+from typing import Optional
 from dataclasses import dataclass
 
 from app.db.cost_basis_db import (
@@ -185,7 +186,6 @@ def parse_expiration(description: str) -> str:
         return "N/A"
 
     # Look for date pattern MM/DD/YYYY in the description
-    import re
     date_match = re.search(r'(\d{2}/\d{2}/\d{4})', description)
     if date_match:
         return date_match.group(1)
