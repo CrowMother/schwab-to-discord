@@ -20,6 +20,7 @@ from .models.config import load_single_value, load_config
 from .utils.logging import setup_logging
 from .api.schwab import SchwabApi
 from .scheduler import start_gsheet_scheduler, stop_gsheet_scheduler
+from export_trades import export_trades
 
 logger = logging.getLogger(__name__)
 
@@ -150,6 +151,14 @@ def main() -> None:
 
             unposted_trade_ids = get_unposted_trade_ids(conn)
             send_unposted_trades(conn, config, unposted_trade_ids, positions_by_symbol)
+
+            # Auto-export to Excel when new trades are processed
+            if unposted_trade_ids:
+                try:
+                    export_trades()
+                    logger.info(f"Excel export completed for {len(unposted_trade_ids)} new trades")
+                except Exception as e:
+                    logger.warning(f"Excel export failed: {e}")
 
             time.sleep(5)
         except Exception as e:
