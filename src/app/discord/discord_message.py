@@ -47,4 +47,8 @@ def build_option_bot_message(trade, position_left: int = 0, total_sold: int = 0,
                 gain_str = f"{gain_pct:.2f}%"
             lines.append(f"Gain: {gain_str}")
 
+    # Add role mention at the end
+    lines.append("")
+    lines.append("<@&1403776397843103884>")
+
     return "\n".join(lines)
