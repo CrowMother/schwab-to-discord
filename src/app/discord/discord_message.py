@@ -25,7 +25,7 @@ def build_option_bot_message(trade, position_left: int = 0, total_sold: int = 0,
 
     lines = [
         "**Option Bot**",
-        f"Ticker: {trade.symbol}",
+        f"Ticker: {trade.underlying}",
         f"Strike: {strike}",
         f"Expiration: {expiration}",
     ]

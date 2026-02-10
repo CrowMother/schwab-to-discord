@@ -80,6 +80,7 @@ def init_trades_db(db_path: str, conn: Optional[sqlite3.Connection] = None) -> N
             """
         )
         _add_column_if_missing(conn, "trades", "description", "TEXT")
+        _add_column_if_missing(conn, "trades", "underlying", "TEXT")
 
         conn.commit()
     finally:

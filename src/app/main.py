@@ -25,13 +25,12 @@ from export_trades import export_trades
 logger = logging.getLogger(__name__)
 
 def get_total_sold(conn, symbol):
-    """Get total quantity sold for a symbol from trade history."""
+    """Get total quantity sold for an exact symbol from trade history."""
     try:
-        underlying = extract_underlying(symbol)
         cursor = conn.execute("""
             SELECT SUM(filled_quantity) FROM trades
-            WHERE symbol LIKE ? AND instruction LIKE '%SELL%'
-        """, (f"{underlying}%",))
+            WHERE symbol = ? AND instruction LIKE '%SELL%'
+        """, (symbol,))
         result = cursor.fetchone()[0]
         return int(result) if result else 0
     except Exception as e:
@@ -76,9 +75,8 @@ def send_unposted_trades(conn, config, unposted_trade_ids, positions_by_symbol):
         if not trade:
             continue
 
-        # Get position data
-        underlying = extract_underlying(trade.symbol)
-        position_left = positions_by_symbol.get(underlying, 0)
+        # Get position data - use underlying for position lookup
+        position_left = positions_by_symbol.get(trade.underlying, 0)
         total_sold = get_total_sold(conn, trade.symbol)
 
         # Get gain percentage for sell orders only
