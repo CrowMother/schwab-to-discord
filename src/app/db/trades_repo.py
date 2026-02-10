@@ -27,19 +27,20 @@ def store_trade(conn: sqlite3.Connection, trade) -> str:
         """
         INSERT INTO trades (
         trade_id,
-        order_id, symbol, asset_type, instruction, description,
+        order_id, symbol, underlying, asset_type, instruction, description,
         quantity, filled_quantity, remaining_quantity,
         price, status,
         entered_time, close_time,
         ingested_at
         )
-        VALUES (?, ?, ?, ?, ?, ?,
+        VALUES (?, ?, ?, ?, ?, ?, ?,
                 ?, ?, ?,
                 ?, ?,
                 ?, ?,
                 ?)
         ON CONFLICT(order_id) DO UPDATE SET
         symbol = excluded.symbol,
+        underlying = excluded.underlying,
         asset_type = excluded.asset_type,
         instruction = excluded.instruction,
         description = excluded.description,
@@ -56,6 +57,7 @@ def store_trade(conn: sqlite3.Connection, trade) -> str:
             trade_id,
             trade.order_id,
             trade.symbol,
+            trade.underlying,
             trade.asset_type,
             trade.instruction,
             trade.description,          # now matches a column
@@ -112,7 +114,7 @@ def load_trade_from_db(conn: sqlite3.Connection, trade_id: str) -> Optional[Trad
     row = conn.execute(
         """
         SELECT
-          order_id, symbol, asset_type, instruction, description,
+          order_id, symbol, underlying, asset_type, instruction, description,
           quantity, filled_quantity, remaining_quantity,
           price, status,
           entered_time, close_time
@@ -128,15 +130,16 @@ def load_trade_from_db(conn: sqlite3.Connection, trade_id: str) -> Optional[Trad
     return Trade(
         order_id=row[0],
         symbol=row[1],
-        asset_type=row[2],
-        instruction=row[3],
-        description=row[4],
-        quantity=row[5],
-        filled_quantity=row[6],
-        remaining_quantity=row[7],
-        price=row[8],
-        status=row[9],
-        entered_time=row[10],
-        close_time=row[11],
+        underlying=row[2] or row[1],  # fallback to symbol if underlying is NULL
+        asset_type=row[3],
+        instruction=row[4],
+        description=row[5],
+        quantity=row[6],
+        filled_quantity=row[7],
+        remaining_quantity=row[8],
+        price=row[9],
+        status=row[10],
+        entered_time=row[11],
+        close_time=row[12],
     )
 

@@ -3,7 +3,8 @@ from dataclasses import dataclass# kept for consistent file style (not used here
 @dataclass(frozen=True)
 class Trade:
     order_id: int | None
-    symbol: str
+    symbol: str  # Full symbol (includes option details for options)
+    underlying: str  # Just the ticker (e.g., "AAPL") for display
     instruction: str | None
     description: str | None
     asset_type: str | None
@@ -19,8 +20,15 @@ def load_trade(data: dict) -> Trade:
     leg = (data.get("orderLegCollection") or [{}])[0]
     inst = leg.get("instrument") or {}
 
-    # Prefer underlyingSymbol for options, otherwise instrument symbol.
+    # Use full symbol for tracking (includes strike/exp for options)
     symbol = (
+        inst.get("symbol")
+        or data.get("symbol")
+        or ""
+    )
+
+    # Use underlying for display (just the ticker)
+    underlying = (
         inst.get("underlyingSymbol")
         or inst.get("symbol")
         or data.get("symbol")
@@ -30,6 +38,7 @@ def load_trade(data: dict) -> Trade:
     return Trade(
         order_id=_safe_int(data.get("orderId")),
         symbol=str(symbol),
+        underlying=str(underlying),
         instruction=leg.get("instruction"),
         description=inst.get("description"),
         asset_type=inst.get("assetType") or leg.get("orderLegType"),
