@@ -66,6 +66,19 @@ def get_trades(db_path: str, count: int = 3):
     return trades
 
 
+def get_gain_for_order(db_path: str, order_id: int):
+    """Get weighted average gain percentage for a sell order."""
+    conn = sqlite3.connect(db_path)
+    cursor = conn.execute("""
+        SELECT SUM(quantity * gain_pct) / SUM(quantity) as avg_gain
+        FROM lot_matches
+        WHERE sell_order_id = ?
+    """, (order_id,))
+    result = cursor.fetchone()
+    conn.close()
+    return result[0] if result and result[0] is not None else None
+
+
 def get_position_remaining(db_path: str, symbol: str) -> int:
     """Get remaining position for a symbol from cost_basis_lots."""
     conn = sqlite3.connect(db_path)
@@ -103,7 +116,7 @@ def parse_expiration(description):
     return match.group(1) if match else "N/A"
 
 
-def build_embed(trade, test_num: int = None, total: int = None, position_left: int = 0):
+def build_embed(trade, test_num: int = None, total: int = None, position_left: int = 0, gain_pct: float = None):
     """Build Discord embed for a trade matching Option Bot format."""
     trade_id, order_id, symbol, underlying, instruction, qty, price, entered_time, description = trade
 
@@ -112,13 +125,17 @@ def build_embed(trade, test_num: int = None, total: int = None, position_left: i
     is_open = "OPEN" in instruction.upper()
     is_close = "CLOSE" in instruction.upper()
 
-    # Determine color
+    # Determine color based on trade type and gain/loss
     if is_buy and is_open:
         color = 0x008080  # Teal for BUY TO OPEN
     elif is_buy:
         color = 0x00CED1  # Cyan for other buys
+    elif gain_pct is not None and gain_pct >= 0:
+        color = 0x4169E1  # Blue for winning sells
+    elif gain_pct is not None and gain_pct < 0:
+        color = 0x800080  # Purple for losing sells
     else:
-        color = 0x708090  # Steel for sells
+        color = 0x708090  # Steel for sells without gain info
 
     # Build title like "BUY TO OPEN: TSLA" or "SELL TO CLOSE: APA"
     action = "BUY" if is_buy else "SELL"
@@ -156,6 +173,10 @@ def build_embed(trade, test_num: int = None, total: int = None, position_left: i
             {"name": "Filled", "value": str(filled), "inline": True},
             {"name": "Remaining", "value": str(position_left), "inline": True},
         ])
+        # Add gain for sell orders
+        if gain_pct is not None:
+            gain_str = f"+{gain_pct:.2f}%" if gain_pct >= 0 else f"{gain_pct:.2f}%"
+            fields.append({"name": "Gain", "value": gain_str, "inline": True})
 
     # Build footer
     footer_text = "Option Bot"
@@ -270,8 +291,17 @@ Examples:
     for i, trade in enumerate(trades, 1):
         # Get actual position remaining for this symbol
         symbol = trade[2]  # symbol is index 2
+        order_id = trade[1]  # order_id is index 1
+        instruction = trade[4]  # instruction is index 4
+
         position_left = get_position_remaining(config["db_path"], symbol)
-        embed = build_embed(trade, i, len(trades), position_left)
+
+        # Get gain for SELL orders
+        gain_pct = None
+        if instruction and "SELL" in instruction.upper():
+            gain_pct = get_gain_for_order(config["db_path"], order_id)
+
+        embed = build_embed(trade, i, len(trades), position_left, gain_pct)
 
         for webhook_name, webhook_url in webhooks:
             success, status = post_to_discord(webhook_url, embed)
