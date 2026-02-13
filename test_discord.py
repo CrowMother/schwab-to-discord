@@ -18,7 +18,7 @@ import sqlite3
 import requests
 import os
 import sys
-from datetime import datetime
+from datetime import datetime, timezone
 from dotenv import load_dotenv
 
 
@@ -66,46 +66,95 @@ def get_trades(db_path: str, count: int = 3):
     return trades
 
 
-def build_embed(trade, test_num: int = None, total: int = None):
-    """Build Discord embed for a trade."""
+def parse_strike(description):
+    """Parse strike display from description."""
+    if not description:
+        return "N/A"
+    parts = description.split()
+    if len(parts) >= 2:
+        strike_raw = parts[-2].lstrip('$')
+        opt_type = parts[-1].lower()
+        if opt_type == "call":
+            return f"{strike_raw}c"
+        elif opt_type == "put":
+            return f"{strike_raw}p"
+    return "N/A"
+
+
+def parse_expiration(description):
+    """Parse expiration date from description."""
+    if not description:
+        return "N/A"
+    import re
+    match = re.search(r'(\d{2}/\d{2}/\d{4})', description)
+    return match.group(1) if match else "N/A"
+
+
+def build_embed(trade, test_num: int = None, total: int = None, position_left: int = 0):
+    """Build Discord embed for a trade matching Option Bot format."""
     trade_id, order_id, symbol, underlying, instruction, qty, price, entered_time, description = trade
 
-    # Determine color and action
-    if instruction and "BUY" in instruction.upper():
-        color = 0x00FF00  # Green
-        action = "BUY"
-    else:
-        color = 0xFF0000  # Red
-        action = "SELL"
+    instruction = instruction or ""
+    is_buy = "BUY" in instruction.upper()
+    is_open = "OPEN" in instruction.upper()
+    is_close = "CLOSE" in instruction.upper()
 
-    # Parse strike from description
-    strike = "N/A"
-    if description:
-        parts = description.split()
-        if len(parts) >= 2:
-            strike_raw = parts[-2].lstrip('$')
-            opt_type = parts[-1].lower()
-            if opt_type == "call":
-                strike = f"{strike_raw}c"
-            elif opt_type == "put":
-                strike = f"{strike_raw}p"
+    # Determine color
+    if is_buy and is_open:
+        color = 0x008080  # Teal for BUY TO OPEN
+    elif is_buy:
+        color = 0x00CED1  # Cyan for other buys
+    else:
+        color = 0x708090  # Steel for sells
+
+    # Build title like "BUY TO OPEN: TSLA" or "SELL TO CLOSE: APA"
+    action = "BUY" if is_buy else "SELL"
+    if is_open:
+        title = f"{action} TO OPEN: {underlying}"
+    elif is_close:
+        title = f"{action} TO CLOSE: {underlying}"
+    else:
+        title = f"{action}: {underlying}"
+
+    strike = parse_strike(description)
+    expiration = parse_expiration(description)
+    price_str = f"${price:.2f}" if price else "N/A"
+    filled = int(qty) if qty else 0
+
+    # Build fields based on trade type
+    fields = [
+        {"name": "Strike", "value": strike, "inline": True},
+        {"name": "Expiration", "value": expiration, "inline": True},
+    ]
+
+    if is_buy and not is_close:
+        # BUY TO OPEN format
+        fields.extend([
+            {"name": "Entry", "value": price_str, "inline": True},
+            {"name": "Ordered", "value": str(filled), "inline": True},
+            {"name": "Filled", "value": str(filled), "inline": True},
+            {"name": "Owned", "value": str(position_left), "inline": True},
+        ])
+    else:
+        # SELL TO CLOSE format
+        fields.extend([
+            {"name": "Exit", "value": price_str, "inline": True},
+            {"name": "Sold", "value": str(filled), "inline": True},
+            {"name": "Filled", "value": str(filled), "inline": True},
+            {"name": "Remaining", "value": str(position_left), "inline": True},
+        ])
 
     # Build footer
-    footer_text = f"TEST - Order #{order_id}"
+    footer_text = "Option Bot"
     if test_num and total:
-        footer_text = f"TEST [{test_num}/{total}] - Order #{order_id}"
+        footer_text = f"TEST [{test_num}/{total}] • Option Bot"
 
     embed = {
-        "title": f"{action} {underlying}",
-        "description": f"**{strike}** @ **${price:.2f}**",
+        "title": title,
         "color": color,
-        "fields": [
-            {"name": "Qty", "value": str(int(qty)), "inline": True},
-            {"name": "Symbol", "value": symbol[:30] if symbol else "N/A", "inline": True},
-            {"name": "Time", "value": entered_time[:19] if entered_time else "N/A", "inline": True},
-        ],
+        "fields": fields,
         "footer": {"text": footer_text},
-        "timestamp": datetime.utcnow().isoformat()
+        "timestamp": datetime.now(timezone.utc).isoformat()
     }
     return embed
 
@@ -210,7 +259,7 @@ Examples:
 
         for webhook_name, webhook_url in webhooks:
             success, status = post_to_discord(webhook_url, embed)
-            status_icon = "✓" if success else "✗"
+            status_icon = "OK" if success else "FAIL"
             print(f"  [{i}/{len(trades)}] {status_icon} {webhook_name}: HTTP {status}")
             if success:
                 success_count += 1

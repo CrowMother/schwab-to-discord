@@ -116,22 +116,15 @@ def build_option_embed(trade, position_left: int = 0, total_sold: int = 0,
     embed.add_field("Expiration", expiration, inline=True)
 
     if is_buy and not is_close:
-        # BUY order format
+        # BUY TO OPEN format
         embed.add_field("Entry", price_str, inline=True)
         embed.add_field("Ordered", str(int(trade.quantity)), inline=True)
         embed.add_field("Filled", str(filled), inline=True)
         embed.add_field("Owned", str(position_left), inline=True)
     else:
-        # SELL order format (or BUY TO CLOSE)
-        # Show entry price if available (for context on the trade)
-        if entry_price is not None:
-            embed.add_field("Entry", f"${entry_price:.2f}", inline=True)
-
-        if is_buy:
-            embed.add_field("Close Price", price_str, inline=True)
-        else:
-            embed.add_field("Exit", price_str, inline=True)
-        embed.add_field("Sold", str(total_sold), inline=True)
+        # SELL TO CLOSE format (or BUY TO CLOSE)
+        embed.add_field("Exit", price_str, inline=True)
+        embed.add_field("Sold", str(filled), inline=True)
         embed.add_field("Filled", str(filled), inline=True)
         embed.add_field("Remaining", str(position_left), inline=True)
 
