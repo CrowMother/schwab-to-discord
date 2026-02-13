@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "schwab-to-discord"
+version = "0.1.0"
+description = "Schwab order tracker that posts to Discord"
+requires-python = ">=3.12"
+dependencies = [
+  "schwabdev",
+  "requests",
+  "python-dotenv",
+  "gspread",
+  "google-auth",
+  "apscheduler",
+  "openpyxl",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest",
+  "pytest-cov",
+]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]

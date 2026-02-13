@@ -1,0 +1,75 @@
+# =========================
+# SENSITIVE - NEVER COMMIT
+# =========================
+
+# Secrets files
+.env
+.env.secrets
+config/.env.secrets
+*.secrets
+
+# Schwab tokens
+tokens/
+tokens.json
+tokens.db
+
+# Google credentials
+credentials.json
+*credentials*.json
+
+# =========================
+# RUNTIME DATA
+# =========================
+
+# Database files
+data/
+*.db
+
+# Log files
+logs/
+*.log
+
+# Generated exports
+*.xlsx
+
+# =========================
+# ALLOW TEMPLATES/EXAMPLES
+# =========================
+!config/.env.secrets.example
+!*.example
+!data/.gitkeep
+
+# =========================
+# PYTHON
+# =========================
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+*.egg-info/
+dist/
+build/
+
+# =========================
+# IDE / EDITOR
+# =========================
+.idea/
+.vscode/
+*.swp
+*.swo
+*.sublime-*
+
+# =========================
+# OS FILES
+# =========================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# =========================
+# TESTING
+# =========================
+.coverage
+htmlcov/
+.pytest_cache/

@@ -1,0 +1,17 @@
+services:
+  schwab-to-discord:
+    build: .
+    container_name: schwab-to-discord
+    restart: unless-stopped
+
+    # Configuration files (secrets + base config)
+    env_file:
+      - config/schwab-to-discord.env
+      - config/.env.secrets
+
+    # Persist SQLite databases (app data + Schwab tokens)
+    volumes:
+      - ./data:/data
+
+    # Optional: if you want to see logs quickly
+    tty: true
