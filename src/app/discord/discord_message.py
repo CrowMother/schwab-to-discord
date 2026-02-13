@@ -124,7 +124,7 @@ def build_option_embed(trade, position_left: int = 0, total_sold: int = 0,
     else:
         # SELL TO CLOSE format (or BUY TO CLOSE)
         embed.add_field("Exit", price_str, inline=True)
-        embed.add_field("Sold", str(filled), inline=True)
+        embed.add_field("Sold", str(int(trade.quantity)), inline=True)
         embed.add_field("Filled", str(filled), inline=True)
         embed.add_field("Remaining", str(position_left), inline=True)
 

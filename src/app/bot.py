@@ -170,16 +170,13 @@ class SchwabBot:
         if new_count > 0:
             logger.info(f"Loaded {new_count} orders from Schwab")
 
-        # 2. Get current positions
-        positions_by_symbol = self._get_positions()
-
-        # 3. Post unposted trades to Discord
+        # 2. Post unposted trades to Discord
         unposted_ids = get_unposted_trade_ids(self.conn)
         if unposted_ids:
-            posted = self._send_unposted_trades(unposted_ids, positions_by_symbol)
+            posted = self._send_unposted_trades(unposted_ids)
             logger.info(f"Posted {posted} of {len(unposted_ids)} trades to Discord")
 
-            # 4. Export if we posted new trades
+            # 3. Export if we posted new trades
             if posted > 0:
                 self._run_export()
 
@@ -220,22 +217,6 @@ class SchwabBot:
         self.conn.commit()
         return processed
 
-    def _get_positions(self) -> dict:
-        """Get current positions by symbol."""
-        try:
-            from app.api.positions import get_schwab_positions
-            # Use the legacy positions function for now
-            # TODO: Move to SchwabService
-            from app.api.schwab import SchwabApi
-            from app.models.config import load_config
-            config = load_config(validate=False)
-            client = SchwabApi(config)
-            _, positions_by_symbol = get_schwab_positions(client)
-            return positions_by_symbol
-        except Exception as e:
-            logger.warning(f"Could not fetch positions: {e}")
-            return {}
-
     def _get_total_sold(self, symbol: str) -> int:
         """Get total quantity sold for a symbol."""
         try:
@@ -249,7 +230,21 @@ class SchwabBot:
             logger.error(f"Database error getting total sold for {symbol}: {e}")
             return 0
 
-    def _send_unposted_trades(self, trade_ids: list, positions: dict) -> int:
+    def _get_position_remaining(self, symbol: str) -> int:
+        """Get remaining position for a specific option contract from cost_basis_lots."""
+        try:
+            cursor = self.conn.execute("""
+                SELECT COALESCE(SUM(remaining_qty), 0)
+                FROM cost_basis_lots
+                WHERE symbol = ?
+            """, (symbol,))
+            result = cursor.fetchone()[0]
+            return int(result) if result else 0
+        except sqlite3.Error as e:
+            logger.error(f"Database error getting position for {symbol}: {e}")
+            return 0
+
+    def _send_unposted_trades(self, trade_ids: list) -> int:
         """Send unposted trades to Discord."""
         posted = 0
 
@@ -259,7 +254,8 @@ class SchwabBot:
                 if not trade:
                     continue
 
-                position_left = positions.get(trade.underlying, 0)
+                # Use cost_basis_lots for accurate per-contract position tracking
+                position_left = self._get_position_remaining(trade.symbol)
                 total_sold = self._get_total_sold(trade.symbol)
 
                 # Get gain info for sell orders
