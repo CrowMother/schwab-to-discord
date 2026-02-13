@@ -48,7 +48,7 @@ def load_config():
 
 
 def get_trades(db_path: str, count: int = 3):
-    """Get the last N trades from database."""
+    """Get the last N trades from database with position data."""
     if not os.path.exists(db_path):
         print(f"Error: Database not found at {db_path}")
         sys.exit(1)
@@ -64,6 +64,19 @@ def get_trades(db_path: str, count: int = 3):
     trades = cursor.fetchall()
     conn.close()
     return trades
+
+
+def get_position_remaining(db_path: str, symbol: str) -> int:
+    """Get remaining position for a symbol from cost_basis_lots."""
+    conn = sqlite3.connect(db_path)
+    cursor = conn.execute("""
+        SELECT COALESCE(SUM(remaining_qty), 0)
+        FROM cost_basis_lots
+        WHERE symbol = ?
+    """, (symbol,))
+    result = cursor.fetchone()[0]
+    conn.close()
+    return int(result) if result else 0
 
 
 def parse_strike(description):
@@ -255,7 +268,10 @@ Examples:
 
     success_count = 0
     for i, trade in enumerate(trades, 1):
-        embed = build_embed(trade, i, len(trades))
+        # Get actual position remaining for this symbol
+        symbol = trade[2]  # symbol is index 2
+        position_left = get_position_remaining(config["db_path"], symbol)
+        embed = build_embed(trade, i, len(trades), position_left)
 
         for webhook_name, webhook_url in webhooks:
             success, status = post_to_discord(webhook_url, embed)
