@@ -1,13 +1,21 @@
 # src/app/core/config.py
-"""Configuration settings dataclass and helpers."""
+"""
+Unified configuration settings for schwab-to-discord.
+
+This is the single source of truth for all configuration.
+Use `from app.core import Settings, get_settings` to access.
+"""
 
 from __future__ import annotations
 
 import os
+import logging
 from dataclasses import dataclass
 from typing import Optional
 
 from app.core.errors import ConfigError
+
+logger = logging.getLogger(__name__)
 
 
 def _get_str(key: str, default: str = None, required: bool = False) -> Optional[str]:
@@ -39,13 +47,23 @@ def _get_bool(key: str, default: bool = False) -> bool:
 
 @dataclass(frozen=True)
 class Settings:
-    """Application settings loaded from environment variables."""
+    """
+    Application settings loaded from environment variables.
 
-    # Application
+    All configuration is loaded from environment variables, which can be set via:
+    - .env file (for local development)
+    - config/.env.secrets (for sensitive values like API keys)
+    - config/schwab-to-discord.env (for base config)
+    - Docker environment variables (for production)
+
+    See .env.example for all available options.
+    """
+
+    # ==================== Application ====================
     app_name: str
     log_level: str
 
-    # Schwab API
+    # ==================== Schwab API ====================
     schwab_app_key: str
     schwab_app_secret: str
     schwab_callback_url: str
@@ -54,19 +72,20 @@ class Settings:
     order_status: str
     poll_interval: int
     tokens_db: str
+    call_on_auth: Optional[str]  # Optional callback URL for auth
 
-    # Discord
+    # ==================== Discord ====================
     discord_webhook: str
-    discord_webhook_2: str
+    discord_webhook_2: str  # Secondary webhook (optional)
     discord_role_id: str
     discord_channel_id: Optional[str]
     template: Optional[str]
 
-    # Database
+    # ==================== Database ====================
     db_path: str
     export_path: str
 
-    # Google Sheets (optional)
+    # ==================== Google Sheets (optional) ====================
     gsheet_credentials_path: Optional[str]
     gsheet_spreadsheet_id: Optional[str]
     gsheet_worksheet_name: str
@@ -74,10 +93,29 @@ class Settings:
     gsheet_export_hour: int
     gsheet_export_minute: int
 
+    # ==================== Computed Properties ====================
+
     @property
     def gsheet_enabled(self) -> bool:
         """Check if Google Sheets export is configured."""
         return bool(self.gsheet_credentials_path and self.gsheet_spreadsheet_id)
+
+    @property
+    def callback_url(self) -> str:
+        """Alias for schwab_callback_url (backward compatibility)."""
+        return self.schwab_callback_url
+
+    @property
+    def discord_webhook_secondary(self) -> str:
+        """Alias for discord_webhook_2 (backward compatibility)."""
+        return self.discord_webhook_2
+
+    @property
+    def status(self) -> str:
+        """Alias for order_status (backward compatibility with SchwabApi)."""
+        return self.order_status
+
+    # ==================== Factory Method ====================
 
     @classmethod
     def from_environ(cls) -> "Settings":
@@ -97,10 +135,11 @@ class Settings:
             schwab_app_secret=_get_str("SCHWAB_APP_SECRET", required=True),
             schwab_callback_url=_get_str("CALLBACK_URL", "https://127.0.0.1"),
             schwab_timeout=_get_int("SCHWAB_TIMEOUT", 30),
-            time_delta_days=_get_int("TIME_DELTA_DAYS", 3),
+            time_delta_days=_get_int("TIME_DELTA_DAYS", 7),
             order_status=_get_str("ORDER_STATUS", "FILLED"),
             poll_interval=_get_int("POLL_INTERVAL_SECONDS", 5),
             tokens_db=_get_str("TOKENS_DB", "/data/tokens.db"),
+            call_on_auth=_get_str("CALL_ON_AUTH"),
 
             # Discord
             discord_webhook=_get_str("DISCORD_WEBHOOK", required=True),
@@ -121,6 +160,8 @@ class Settings:
             gsheet_export_hour=_get_int("GSHEET_EXPORT_HOUR", 8),
             gsheet_export_minute=_get_int("GSHEET_EXPORT_MINUTE", 0),
         )
+
+    # ==================== Validation ====================
 
     def validate(self) -> list[str]:
         """
@@ -148,3 +189,26 @@ class Settings:
             errors.append("POLL_INTERVAL_SECONDS must be at least 1 second")
 
         return errors
+
+
+# ==================== Backward Compatibility ====================
+# These aliases allow code using the old models/config.py to work unchanged
+
+Config = Settings  # Alias for backward compatibility
+ConfigurationError = ConfigError  # Alias for backward compatibility
+
+
+def load_config(validate: bool = True) -> Settings:
+    """
+    Load configuration from environment (backward compatibility wrapper).
+
+    New code should use `from app.core import get_settings` instead.
+
+    Args:
+        validate: If True, validates required fields.
+
+    Returns:
+        Settings object with all configuration loaded.
+    """
+    from app.core.runtime import get_settings
+    return get_settings()

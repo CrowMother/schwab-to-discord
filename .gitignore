@@ -1,75 +1,87 @@
-# =========================
-# SENSITIVE - NEVER COMMIT
-# =========================
+# =============================================================================
+# SCHWAB-TO-DISCORD GITIGNORE
+# =============================================================================
+# This file specifies which files Git should ignore.
+# Only sensitive files and runtime data are ignored.
+# =============================================================================
 
-# Secrets files
-.env
-.env.secrets
+# =============================================================================
+# SENSITIVE FILES - NEVER COMMIT THESE
+# =============================================================================
+
+# Secrets file (contains API keys, webhooks, credentials)
 config/.env.secrets
-*.secrets
+.env.secrets
+.env
 
-# Schwab tokens
-tokens/
-tokens.json
+# Schwab authentication tokens
+data/tokens.db
 tokens.db
+tokens.json
 
-# Google credentials
+# Google Cloud service account credentials
+data/*.json
 credentials.json
-*credentials*.json
+*-credentials.json
 
-# =========================
-# RUNTIME DATA
-# =========================
+# =============================================================================
+# RUNTIME DATA - Generated during operation
+# =============================================================================
 
-# Database files
-data/
-*.db
+# SQLite databases (trades history)
+data/trades.db
+data/trades.db-*
 
-# Log files
-logs/
-*.log
+# Exported files
+data/*.xlsx
 
-# Generated exports
-*.xlsx
+# =============================================================================
+# ALLOW THESE FILES (even if they match patterns above)
+# =============================================================================
 
-# =========================
-# ALLOW TEMPLATES/EXAMPLES
-# =========================
-!config/.env.secrets.example
-!*.example
+# Keep the data folder structure
 !data/.gitkeep
 
-# =========================
-# PYTHON
-# =========================
+# Keep example/template files
+!config/.env.secrets.example
+!*.example
+
+# =============================================================================
+# PYTHON - Standard ignores
+# =============================================================================
 __pycache__/
-*.pyc
-*.pyo
+*.py[cod]
+*$py.class
+*.so
+.Python
 .venv/
 venv/
+ENV/
 *.egg-info/
 dist/
 build/
+.eggs/
 
-# =========================
+# =============================================================================
 # IDE / EDITOR
-# =========================
+# =============================================================================
 .idea/
 .vscode/
 *.swp
 *.swo
 *.sublime-*
 
-# =========================
+# =============================================================================
 # OS FILES
-# =========================
+# =============================================================================
 .DS_Store
 Thumbs.db
 desktop.ini
 
-# =========================
+# =============================================================================
 # TESTING
-# =========================
+# =============================================================================
 .coverage
 htmlcov/
 .pytest_cache/
+.tox/

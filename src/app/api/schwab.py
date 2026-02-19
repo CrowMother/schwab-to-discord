@@ -5,14 +5,16 @@ from __future__ import annotations
 
 import time
 import logging
-from typing import List, Any
+from typing import List, Any, TYPE_CHECKING
 
 import schwabdev
 from requests.exceptions import RequestException, ConnectionError, Timeout
 
-from app.models.config import Config
 from app.utils.time import time_delta_to_iso_days
 from app.constants import Defaults
+
+if TYPE_CHECKING:
+    from app.core.config import Settings
 
 logger = logging.getLogger(__name__)
 
@@ -67,25 +69,25 @@ def _retry_with_backoff(func, max_retries: int = Defaults.MAX_RETRIES,
 class SchwabApi:
     """Wrapper around schwabdev client with retry logic."""
 
-    def __init__(self, config: Config):
+    def __init__(self, config: "Settings"):
         """
         Initialize Schwab API client.
 
         Args:
-            config: Application configuration with Schwab credentials
+            config: Application settings with Schwab credentials
         """
         logger.debug("Initializing Schwabdev client")
         self.client = schwabdev.Client(
             app_key=config.schwab_app_key,
             app_secret=config.schwab_app_secret,
-            callback_url=config.callback_url,
+            callback_url=config.callback_url,  # Uses property alias
             tokens_db=config.tokens_db,
             timeout=config.schwab_timeout,
             call_on_auth=config.call_on_auth
         )
         self._config = config
 
-    def get_orders(self, config: Config = None) -> List[Any]:
+    def get_orders(self, config: "Settings" = None) -> List[Any]:
         """
         Fetch orders from Schwab with retry logic.
 

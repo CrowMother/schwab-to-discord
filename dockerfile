@@ -26,6 +26,7 @@ RUN pip install --no-cache-dir openpyxl
 # Copy config templates and entry point
 COPY config ./config
 COPY main.py ./
+COPY export_to_gsheet.py ./
 
 # Make a persistent data dir for sqlite
 RUN mkdir -p /data
