@@ -95,7 +95,7 @@ def determine_outcome(gain_pct: float) -> str:
         return "BREAK EVEN"
 
 
-def get_weekly_trades(conn: sqlite3.Connection, days_back: int = 7) -> list[dict]:
+def get_weekly_trades(conn: sqlite3.Connection, days_back: int = 6) -> list[dict]:
     """
     Get SELL trades from the past N days with their cost basis info.
 
@@ -239,9 +239,9 @@ def export_weekly() -> int:
     conn = sqlite3.connect(db_path)
 
     try:
-        # Get trades from the past week (in chronological order)
-        trades = get_weekly_trades(conn, days_back=7)
-        logger.info(f"Found {len(trades)} SELL trades from the past week")
+        # Get trades from the past 6 days (in chronological order)
+        trades = get_weekly_trades(conn, days_back=6)
+        logger.info(f"Found {len(trades)} SELL trades from the past 6 days")
 
         if not trades:
             logger.info("No new trades to export")
